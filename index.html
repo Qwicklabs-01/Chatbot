@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+  <title>Aura - Intelligent Client-Side Mobile AI Assistant & Chatbot</title>
+  <meta name="description" content="Aura is a private, high-speed, local client-side mobile chatbot and productivity assistant. Features offline AI chat, voice synthesis, scientific solvers, PDF toolkit, and writing utilities.">
+  <meta name="keywords" content="aura ai, offline chatbot, private chatbot, browser ai, client-side ai, local chatbot, pdf manager, scientific calculator, grammar checker, voice assistant" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aura-ai.pages.dev/" />
+  
+  <!-- SMO / Open Graph (Facebook, LinkedIn, Discord) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Aura AI - Local Mobile Assistant & Private Chatbot" />
+  <meta property="og:description" content="Access private, high-speed, client-side AI chat, offline calculators, PDF watermarking, merging, text extractors, and writing tools entirely inside your browser." />
+  <meta property="og:url" content="https://aura-ai.pages.dev/" />
+  <meta property="og:image" content="https://aura-ai.pages.dev/assets/aura-og-preview.png" />
+  <meta property="og:site_name" content="Aura AI" />
+
+  <!-- SMO / Twitter Cards (X) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aura AI - Client-Side Mobile Assistant" />
+  <meta name="twitter:description" content="Run private, high-speed, client-side conversational AI, PDF actions, calculators, and text generators offline in your browser." />
+  <meta name="twitter:image" content="https://aura-ai.pages.dev/assets/aura-og-preview.png" />
+
+  <!-- Structured Data / JSON-LD Schema Markup (SEO) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Aura AI",
+      "alternateName": "Aura Intelligent Mobile Assistant",
+      "description": "Aura is a lightweight, local client-side mobile chatbot and productivity utility suite featuring offline chat, speech synthesis, scientific calculators, document utilities, and AI text assistants.",
+      "url": "https://aura-ai.pages.dev/",
+      "applicationCategory": "ProductivityApplication, UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Local Offline Conversational Chat",
+        "Voice Input & Speech Synthesis",
+        "Scientific Calculators Suite",
+        "PDF Text Extraction, Watermarking, and Document Merging",
+        "AI Paraphraser, Grammar Checker, and Plagiarism Analysis",
+        "Client-side Canvas Image Generation"
+      ]
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Apple iOS Mobile Web App Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Aura AI">
+  <link rel="apple-touch-icon" href="icon.svg">
+  
+  <!-- PDF Manipulation & Text Extraction Libraries (Offline Bundled) -->
+  <script src="libs/pdf-lib.min.js"></script>
+  <script src="libs/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script>
+    // Fallback to CDN in case local files are missing
+    if (typeof PDFLib === 'undefined') {
+      console.warn('Local pdf-lib not found. Loading from CDN...');
+      document.write('<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"><\/script>');
+    }
+    if (typeof pdfjsLib === 'undefined') {
+      console.warn('Local pdf.js not found. Loading from CDN...');
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"><\/script>');
+    }
+  </script>
+  <script>
+    // Point PDF.js to correct worker (Local or CDN fallback)
+    setTimeout(() => {
+      if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = window.location.protocol === 'file:' 
+          ? 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js' 
+          : 'libs/pdf.worker.min.js';
+      }
+    }, 100);
+  </script>
+</head>
+<body>
+
+  <!-- Main App Wrapper -->
+  <div class="device-wrapper">
+    <div class="app-container" style="display: flex; flex-direction: row; height: 100%; overflow: hidden;">
+      <!-- Left sliding history sidebar -->
+      <div id="history-sidebar" class="history-sidebar">
+        <div class="history-sidebar-header">
+          <h3>Chat Sessions</h3>
+          <button id="close-history-btn" class="drawer-close-btn" aria-label="Close History">&times;</button>
+        </div>
+        <button id="new-chat-btn" class="code-eval-btn" style="width: 100%; margin-bottom: 12px; height: 36px; display: flex; justify-content: center; gap: 8px; font-weight: 600;">
+          <span>+</span> Start New Chat
+        </button>
+        <div id="history-sessions-list" class="history-sessions-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- History Backup/Export buttons -->
+        <div style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <button id="export-json-btn" class="code-eval-btn" style="width: 100%; height: 36px; font-size: 12px; background: rgba(6, 182, 212, 0.1); border-color: var(--color-secondary); color: var(--color-secondary); font-weight: 600; display: flex; justify-content: center; gap: 6px; align-items: center;">
+            📥 Download Backup (JSON)
+          </button>
+          <button id="export-txt-btn" class="code-eval-btn" style="width: 100%; height: 36px; font-size: 12px; background: rgba(168, 85, 247, 0.1); border-color: var(--border-active); color: var(--color-primary); font-weight: 600; display: flex; justify-content: center; gap: 6px; align-items: center;">
+            📄 Export Transcript (TXT)
+          </button>
+        </div>
+
+        <!-- Copyright Footer -->
+        <div style="text-align: center; font-size: 10px; padding: 12px 0 4px 0; color: var(--text-muted); opacity: 0.8; font-weight: 500; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 12px; letter-spacing: 0.5px;">
+          Copyright &copy; 2026 Made by Sakshi
+        </div>
+      </div>
+
+      <!-- Left Vertical Skills Sidebar (SaaS Style) -->
+      <aside class="vertical-skills-sidebar">
+        <!-- New Chat Button -->
+        <button class="sidebar-new-btn" id="sidebar-new-btn" title="Start New Chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>New</span>
+        </button>
+
+        <!-- Projects / Sessions Button -->
+        <button class="sidebar-btn" id="sidebar-proj-btn" title="Chat Sessions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Projects</span>
+        </button>
+
+        <div style="width: 60%; height: 1px; background: var(--border-glass); margin: 6px 0;"></div>
+
+        <!-- AI Chat (Conversational UI) -->
+        <button class="sidebar-btn active" id="sidebar-chat-btn" title="AI Chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>AI Chat</span>
+        </button>
+
+        <!-- Paraphraser -->
+        <button class="sidebar-btn" id="sidebar-paraphraser-btn" title="Paraphraser">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>Paraphraser</span>
+        </button>
+
+        <!-- Grammar Checker -->
+        <button class="sidebar-btn" id="sidebar-grammar-checker-btn" title="Grammar Checker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            <path d="m9 14 2 2 4-4"></path>
+          </svg>
+          <span>Grammar</span>
+        </button>
+
+        <!-- AI Detector -->
+        <button class="sidebar-btn" id="sidebar-ai-detector-btn" title="AI Detector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="M20 12h2"></path>
+            <path d="M2 12h2"></path>
+          </svg>
+          <span>AI Detector</span>
+        </button>
+
+        <!-- Plagiarism Checker -->
+        <button class="sidebar-btn" id="sidebar-plagiarism-checker-btn" title="Plagiarism Checker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <circle cx="11.5" cy="13.5" r="2.5"></circle>
+            <line x1="16" y1="18" x2="13.3" y2="15.3"></line>
+          </svg>
+          <span>Plagiarism</span>
+        </button>
+
+        <!-- AI Humanizer -->
+        <button class="sidebar-btn" id="sidebar-ai-humanizer-btn" title="AI Humanizer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 21a6 6 0 0 0-12 0"></path>
+            <circle cx="12" cy="10" r="4"></circle>
+            <path d="M12 2v2"></path>
+          </svg>
+          <span>Humanizer</span>
+        </button>
+
+        <!-- AI Image Generator -->
+        <button class="sidebar-btn" id="sidebar-ai-image-generator-btn" title="AI Image Generator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span>Image Gen</span>
+        </button>
+
+        <!-- Translate -->
+        <button class="sidebar-btn" id="sidebar-translator-btn" title="Translate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="9" x2="19" y2="9"></line>
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+          </svg>
+          <span>Translate</span>
+        </button>
+
+        <!-- Summarizer -->
+        <button class="sidebar-btn" id="sidebar-summarizer-btn" title="Summarizer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="21" y1="10" x2="3" y2="10"></line>
+            <line x1="21" y1="6" x2="3" y2="6"></line>
+            <line x1="21" y1="14" x2="3" y2="14"></line>
+            <line x1="21" y1="18" x2="3" y2="18"></line>
+          </svg>
+          <span>Summarizer</span>
+        </button>
+
+        <!-- Citation Generator -->
+        <button class="sidebar-btn" id="sidebar-citation-generator-btn" title="Citation Generator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H5c-1.25 0-2 .75-2 2v3c0 1.25.75 2 2 2h3c0 2-1 4-3 6v4zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-3c-1.25 0-2 .75-2 2v3c0 1.25.75 2 2 2h3c0 2-1 4-3 6v4z"></path>
+          </svg>
+          <span>Citations</span>
+        </button>
+
+        <div style="width: 60%; height: 1px; background: var(--border-glass); margin: 6px 0;"></div>
+
+        <!-- PDF Tools -->
+        <button class="sidebar-btn" id="sidebar-pdf-btn" title="PDF Tools">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>PDF Tools</span>
+        </button>
+
+        <!-- Voice Synthesis -->
+        <button class="sidebar-btn" id="sidebar-voice-btn" title="Voice Synthesis">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span>Voice Config</span>
+        </button>
+
+        <!-- Calculators -->
+        <button class="sidebar-btn" id="sidebar-calculator-btn" title="Calculators">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+            <line x1="9" y1="22" x2="9" y2="16"></line>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="16" y1="22" x2="16" y2="16"></line>
+          </svg>
+          <span>Calculators</span>
+        </button>
+      </aside>
+
+      <!-- Main Right Workspace -->
+      <div class="main-workspace" style="display: flex; flex-direction: column; flex: 1; height: 100%; overflow: hidden; position: relative;">
+        <!-- Global Status Notification Banner -->
+        <div id="status-alert" class="status-alert" role="alert">Status Update</div>
+
+
+        <header class="app-header">
+          <div class="header-identity">
+            <!-- Hamburger History Toggle Menu -->
+            <button id="toggle-history-btn" class="header-btn" style="border-radius: 8px; width: 32px; height: 32px; margin-right: 4px;" title="Open Chat Sessions" aria-label="Open Chat Sessions">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            
+            <div class="bot-avatar-wrapper">
+              <div class="bot-avatar">A</div>
+              <div class="bot-status-dot"></div>
+            </div>
+            <div class="header-text">
+              <h1 id="bot-name">Aura AI</h1>
+              <p id="bot-status"><span>●</span> Online • Local Workspace</p>
+            </div>
+          </div>
+          <div class="header-actions">
+            <!-- Voice Output Toggle -->
+            <button id="toggle-voice-btn" class="header-btn" title="Toggle Voice Responses" aria-label="Toggle Voice Responses">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+            <!-- Clear Chat History -->
+            <button id="clear-chat-btn" class="header-btn" title="Clear Chat History" aria-label="Clear Chat History">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+            <!-- About & Support Info -->
+            <button id="about-btn" class="header-btn" title="About, Contact & Reviews" aria-label="About, Contact & Reviews">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- Conversational Chat Area -->
+        <div id="chat-view-container" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; height: 100%;">
+          <!-- Main Scrollable Chat Panel -->
+          <main class="chat-messages" id="chat-messages-container">
+            <!-- Message bubbles dynamically populated by JS -->
+          </main>
+
+          <!-- Horizontal scrolling Quick Suggestions -->
+          <div class="suggestion-wrapper" id="suggestions-container">
+            <span class="chip" onclick="handleChipClick('What is JavaScript?')">💡 What is JS?</span>
+            <span class="chip" onclick="handleChipClick('Tell me a joke')">😆 Tell a joke</span>
+            <span class="chip" onclick="handleChipClick('= Math.sin(Math.PI / 2) + Math.sqrt(81)')">🧮 Evaluate</span>
+            <span class="chip" onclick="handleChipClick('Help')">❓ Help Menu</span>
+          </div>
+
+          <!-- Bottom Chat Form & Input controls -->
+          <footer class="chat-footer">
+            <div class="input-row">
+              <!-- Voice Input/Speech Recognition Trigger -->
+              <button id="voice-input-btn" class="voice-btn" title="Speak to Aura" aria-label="Speak to Aura">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+              </button>
+              
+              <form id="chat-input-form" class="input-container" autocomplete="off">
+                <input type="text" id="chat-input-field" class="chat-input" placeholder="Type a message or use commands..." aria-label="Chat input field">
+                <button type="submit" id="send-msg-btn" class="send-btn" title="Send Message" aria-label="Send Message">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </footer>
+        </div>
+
+        <!-- Active Tool Workspace Area -->
+        <div id="tool-view-container" style="display: none; flex-direction: column; flex: 1; overflow: hidden; height: 100%; background: rgba(12, 8, 28, 0.2);">
+          <div id="skills-drawer" class="skills-panel" style="flex: 1; border: none; background: transparent; height: 100%; padding: 0;">
+            <!-- Sub tabs inside settings calculator mode -->
+            <div class="drawer-tabs" id="tool-panel-tabs" style="position: relative; display: none; padding: 12px 16px 8px 16px;">
+              <div id="drawer-tab-indicator" class="drawer-tab-indicator"></div>
+              <button id="tab-btn-voice" class="tab-btn active">🎙️ Voice</button>
+              <button id="tab-btn-pdf" class="tab-btn">📁 PDF & Files</button>
+              <button id="tab-btn-math" class="tab-btn">🧮 Calculators</button>
+              <button id="tab-btn-prompt" class="tab-btn" style="display: none;">📝 Writing Hub</button>
+            </div>
+
+            <div class="drawer-content-container" style="padding: 16px; margin-top: 0;">
+              <!-- Voice Tab Content -->
+              <div id="tab-content-voice" class="tab-content active">
+                <div class="skill-card">
+                  <div class="skill-card-top">
+                    <span class="skill-title">
+                      <span class="skill-icon">🔊</span>
+                      <span>Speech Synthesis (TTS)</span>
+                    </span>
+                    <span id="tts-status" class="skill-status-badge">Disabled</span>
+                  </div>
+                  <p class="skill-desc">Select a voice for reading back responses aloud. Toggle using the speaker icon in header.</p>
+                  <select id="voice-select-dropdown" class="code-eval-input" style="font-family: inherit;">
+                    <!-- Voices populated by JS -->
+                  </select>
+                  
+                  <!-- Speed & Pitch Sliders -->
+                  <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label class="prompt-label" style="margin-bottom: 0;">Speech Rate (Speed)</label>
+                        <span id="voice-rate-label" style="font-size: 11px; color: var(--color-secondary); font-weight: 600;">1.0x</span>
+                      </div>
+                      <input type="range" id="voice-rate-slider" min="0.5" max="2.0" step="0.1" value="1.0" class="premium-slider">
+                    </div>
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label class="prompt-label" style="margin-bottom: 0;">Speech Pitch</label>
+                        <span id="voice-pitch-label" style="font-size: 11px; color: var(--color-primary); font-weight: 600;">1.0</span>
+                      </div>
+                      <input type="range" id="voice-pitch-slider" min="0.5" max="1.5" step="0.1" value="1.0" class="premium-slider">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PDF & Files Tab Content -->
+              <div id="tab-content-pdf" class="tab-content">
+                <!-- Text/CSV File Parser -->
+                <div class="skill-card">
+                  <div class="skill-card-top">
+                    <span class="skill-title">
+                      <span class="skill-icon">📄</span>
+                      <span>Text / CSV File Parser</span>
+                    </span>
+                    <span id="file-status" class="skill-status-badge">No File Loaded</span>
+                  </div>
+                  <p class="skill-desc">Upload `.txt`, `.json`, or `.csv` files for chat parsing.</p>
+                  <div class="file-upload-zone" id="drag-drop-zone">
+                    <span>Drop file here or click to browse</span>
+                    <input type="file" id="file-uploader" class="file-input" accept=".txt,.json,.csv,.pdf,.docx,image/*">
+                  </div>
+                  <div id="file-info-container" class="file-details" style="display: none;">
+                    <span id="loaded-file-name">filename.txt</span>
+                    <button id="remove-file-btn" class="file-remove-btn" title="Unload File">&times;</button>
+                  </div>
+                </div>
+
+                <!-- PDF Toolkit -->
+                <div class="skill-card">
+                  <div class="skill-card-top">
+                    <span class="skill-title">
+                      <span class="skill-icon">📕</span>
+                      <span>PDF Toolkit (Edit, Extract, Merge)</span>
+                    </span>
+                    <span id="pdf-status" class="skill-status-badge">Ready</span>
+                  </div>
+                  
+                  <!-- PDF File Uploaders -->
+                  <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                    <div class="pdf-row-flex">
+                      <div class="file-upload-zone pdf-mini-uploader" id="pdf-zone-1">
+                        <span id="pdf-label-1">PDF File 1</span>
+                        <input type="file" id="pdf-uploader-1" class="file-input" accept=".pdf">
+                      </div>
+                      <div class="file-upload-zone pdf-mini-uploader" id="pdf-zone-2">
+                        <span id="pdf-label-2">PDF File 2 (for merging)</span>
+                        <input type="file" id="pdf-uploader-2" class="file-input" accept=".pdf">
+                      </div>
+                    </div>
+
+                    <!-- Watermark text input -->
+                    <div class="code-eval-row">
+                      <input type="text" id="pdf-watermark-text" class="code-eval-input" placeholder="Enter text to watermark..." value="AURA SECURE">
+                    </div>
+
+                    <!-- Watermark Opacity Slider -->
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label class="prompt-label" style="margin-bottom: 0;">Watermark Opacity</label>
+                        <span id="pdf-opacity-label" style="font-size: 11px; color: var(--color-accent); font-weight: 600;">0.25</span>
+                      </div>
+                      <input type="range" id="pdf-opacity-slider" min="0.1" max="1.0" step="0.05" value="0.25" class="premium-slider">
+                    </div>
+
+                    <!-- PDF Action buttons -->
+                    <div class="pdf-actions-grid">
+                      <button id="pdf-extract-btn" class="code-eval-btn">Extract Text</button>
+                      <button id="pdf-watermark-btn" class="code-eval-btn">Watermark PDF 1</button>
+                      <button id="pdf-merge-btn" class="code-eval-btn">Merge PDFs</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Math & Calculators Tab Content -->
+              <div id="tab-content-math" class="tab-content">
+                <!-- Universal Calculator Card -->
+                <div class="skill-card">
+                  <div class="skill-card-top">
+                    <span class="skill-title">
+                      <span class="skill-icon">🧮</span>
+                      <span>Universal Calculator</span>
+                    </span>
+                  </div>
+                  
+                  <!-- Mode Switcher -->
+                  <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
+                    <label class="prompt-label">Select Calculator Type</label>
+                    <select id="universal-mode-select" class="solver-select" style="width: 100%;">
+                      <optgroup label="Core Keypad">
+                        <option value="scientific-calculator">🧮 Scientific Keypad</option>
+                      </optgroup>
+                      <optgroup label="Financial Calculators">
+                        <option value="mortgage-calculator">🏠 Mortgage Calculator</option>
+                        <option value="loan-calculator">💵 Loan Calculator</option>
+                        <option value="compound-interest-calculator">📈 Compound Interest</option>
+                        <option value="discount-calculator">🏷️ Discount Calculator</option>
+                      </optgroup>
+                      <optgroup label="Fitness & Health">
+                        <option value="bmi-calculator">💪 BMI Calculator</option>
+                        <option value="bmr-calculator">🔥 BMR & Calorie Calculator</option>
+                      </optgroup>
+                      <optgroup label="Math & Solvers">
+                        <option value="quadratic-formula-calculator">📐 Quadratic Solver</option>
+                        <option value="statistics-calculator">📊 Stats Solver</option>
+                        <option value="conversion-calculator">⚖️ Unit Converter</option>
+                      </optgroup>
+                      <optgroup label="Other Tools">
+                        <option value="age-calculator">📅 Age Calculator</option>
+                        <option value="date-calculator">📆 Date & Duration</option>
+                        <option value="gpa-calculator">🏫 GPA Calculator</option>
+                        <option value="tip-calculator">🧾 Tip Calculator</option>
+                        <option value="base64-encode-decode">💻 Base64 Encoder</option>
+                        <option value="url-encode-decode">🔗 URL Encoder</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <!-- Dynamic input area -->
+                  <div id="universal-inputs-area" style="margin-top: 10px;"></div>
+
+                  <!-- Calculation action button -->
+                  <button id="universal-calculate-btn" class="code-eval-btn" style="width: 100%; margin-top: 12px; height: 38px; font-weight: 600;">Calculate</button>
+
+                  <!-- Live Output box -->
+                  <div id="universal-result-card" class="universal-result-card" style="display: none; margin-top: 12px;">
+                    <p class="solver-title">Calculation Output</p>
+                    <div id="universal-result-content" class="universal-result-text">Results...</div>
+                    
+                    <!-- Share to chat -->
+                    <button id="universal-send-chat-btn" class="code-eval-btn" style="width: 100%; margin-top: 8px; background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); color: var(--color-secondary);">
+                      Send to Chat Thread
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Writing Hub Tab Content -->
+              <div id="tab-content-prompt" class="tab-content">
+                <div class="skill-card">
+                  <div class="skill-card-top">
+                    <span class="skill-title">
+                      <span class="skill-icon">📝</span>
+                      <span>Writing Hub Tools</span>
+                    </span>
+                  </div>
+                  
+                  <!-- Mode Switcher (Hide dropdown selector label since Left sidebar is active selector) -->
+                  <div style="display: none; flex-direction: column; gap: 2px; margin-top: 2px;">
+                    <select id="writing-mode-select" class="solver-select" style="width: 100%;">
+                      <option value="paraphraser">🔄 Paraphraser</option>
+                      <option value="grammar-checker">✍️ Grammar Checker</option>
+                      <option value="ai-detector">🔍 AI Detector</option>
+                      <option value="plagiarism-checker">🕵️ Plagiarism Checker</option>
+                      <option value="ai-humanizer">🙋 AI Humanizer</option>
+                      <option value="ai-image-generator">🎨 AI Image Generator</option>
+                      <option value="translator">🔤 Translate</option>
+                      <option value="summarizer">📄 Summarizer</option>
+                      <option value="citation-generator">🗂️ Citation Generator</option>
+                      <option value="prompt-builder">💡 Prompt Creator</option>
+                      <option value="image-to-prompt">📸 Image to Prompt</option>
+                    </select>
+                  </div>
+
+                  <!-- Dynamic Input Area -->
+                  <div id="writing-inputs-area" style="margin-top: 0;"></div>
+
+                  <!-- Execution Action Button -->
+                  <button id="writing-execute-btn" class="code-eval-btn" style="width: 100%; margin-top: 12px; height: 38px; font-weight: 600;">Run Tool</button>
+
+                  <!-- Live Output box -->
+                  <div id="writing-result-card" class="universal-result-card" style="display: none; margin-top: 12px;">
+                    <p class="solver-title" id="writing-result-title">Processor Output</p>
+                    
+                    <!-- Media Preview for Image Generator -->
+                    <div id="writing-result-media" style="display: none; margin-top: 6px; justify-content: center;">
+                      <canvas id="gen-image-canvas" width="300" height="200" style="border-radius: 8px; border: 1px solid var(--border-glass); max-width: 100%; height: auto;"></canvas>
+                    </div>
+                    
+                    <div id="writing-result-content" class="universal-result-text">Results...</div>
+                    
+                    <!-- Sharing & Copy Action Button Row -->
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                      <button id="writing-copy-btn" class="code-eval-btn" style="flex: 1; background: rgba(255, 255, 255, 0.05); border-color: var(--border-glass); color: var(--text-main);">
+                        Copy Output
+                      </button>
+                      <button id="writing-send-chat-btn" class="code-eval-btn" style="flex: 1; background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); color: var(--color-secondary);">
+                        Send to Chat
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Mobile Bottom Navigation Bar (Visible only on mobile/tablet) -->
+          <nav class="mobile-bottom-nav">
+            <button class="mobile-nav-btn active" data-target="chat" title="AI Chat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Chat</span>
+            </button>
+            <button class="mobile-nav-btn" data-target="writing" title="Writing Tools">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Writing</span>
+            </button>
+            <button class="mobile-nav-btn" data-target="calculator" title="Calculators">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                <line x1="9" y1="22" x2="9" y2="16"></line>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="16" y1="22" x2="16" y2="16"></line>
+              </svg>
+              <span>Calculators</span>
+            </button>
+            <button class="mobile-nav-btn" data-target="pdf" title="PDF Tools">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <span>PDF</span>
+            </button>
+            <button class="mobile-nav-btn" id="mobile-nav-history-btn" title="Sessions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Sessions</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About, Contact & Reviews Modal -->
+  <div id="about-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2>Aura AI Info &amp; Support</h2>
+        <button id="close-about-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
+        
+        <!-- About Section -->
+        <section class="modal-section">
+          <h3>ℹ️ About Aura AI</h3>
+          <p>Aura AI is a modern, privacy-first mobile chatbot assistant built entirely client-side. Created by <strong>Sakshi</strong>, Aura is designed to bring powerful conversational intelligence, document parsers, and utilities directly to your device without sending any data to external servers.</p>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="modal-section">
+          <h3>⭐ User Reviews</h3>
+          <div id="reviews-container" class="reviews-list">
+            <!-- Populated dynamically -->
+          </div>
+          <form id="review-form" class="review-form" style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+            <h4 style="font-size: 12px; color: var(--text-main); font-weight: 600;">Write a Review</h4>
+            <div class="rating-stars" id="rating-stars">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+            </div>
+            <input type="text" id="review-author" placeholder="Your Name" required class="form-input">
+            <textarea id="review-text" placeholder="Your feedback..." required class="form-input" rows="2"></textarea>
+            <button type="submit" class="code-eval-btn" style="height: 32px; font-size: 12px; width: 100%;">Submit Review</button>
+          </form>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="modal-section" style="border-bottom: none; padding-bottom: 0;">
+          <h3>✉️ Contact Us</h3>
+          <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: flex; flex-direction: column; gap: 4px;">
+            <span>📞 Support: <a href="tel:6290873841" style="color: var(--color-secondary); text-decoration: none; font-weight: 600;">+91 6290873841</a></span>
+            <span>✉️ Email: <a href="mailto:qwicklabs2@gmail.com" style="color: var(--color-secondary); text-decoration: none; font-weight: 600;">qwicklabs2@gmail.com</a></span>
+          </p>
+          <form id="contact-form" class="contact-form" style="display: flex; flex-direction: column; gap: 8px;">
+            <input type="text" id="contact-name" placeholder="Name" required class="form-input">
+            <input type="email" id="contact-email" placeholder="Email Address" required class="form-input">
+            <textarea id="contact-message" placeholder="Type your message here..." required class="form-input" rows="3"></textarea>
+            <button type="submit" class="code-eval-btn" style="height: 34px; width: 100%;">Send Message</button>
+          </form>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('Service Worker registered successfully!', reg.scope))
+          .catch((err) => console.error('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

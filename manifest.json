@@ -1,0 +1,42 @@
+{
+  "id": "aura-ai-mobile-assistant",
+  "name": "Aura AI Mobile Assistant",
+  "short_name": "Aura AI",
+  "description": "A private, high-speed, local client-side mobile chatbot and productivity assistant. Features offline AI chat, calculators, and PDF managers.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#07050f",
+  "theme_color": "#07050f",
+  "orientation": "portrait",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "aura-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "aura-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "aura-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Aura AI Mobile Chat"
+    },
+    {
+      "src": "aura-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Aura AI Mobile Chat"
+    }
+  ]
+}
