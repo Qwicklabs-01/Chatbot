@@ -22,7 +22,7 @@ exports.handler = async function (event, context) {
     
     // Call Gemini API
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3.5-flash-lite',
       contents: [{ text: userMessage }],
       // config: { tools: [{ googleSearch: {} }] }
     });
