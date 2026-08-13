@@ -580,15 +580,21 @@ function updateClock() {
   hours = hours % 12;
   hours = hours ? hours : 12; 
   minutes = minutes < 10 ? '0' + minutes : minutes;
-  DOM.statusTime.textContent = `${hours}:${minutes} ${ampm}`;
+  if (DOM.statusTime) {
+    DOM.statusTime.textContent = `${hours}:${minutes} ${ampm}`;
+  }
 }
 
 function showAlert(text) {
-  DOM.statusAlert.textContent = text;
-  DOM.statusAlert.classList.add('show');
-  setTimeout(() => {
-    DOM.statusAlert.classList.remove('show');
-  }, 3500);
+  if (DOM.statusAlert) {
+    DOM.statusAlert.textContent = text;
+    DOM.statusAlert.classList.add('show');
+    setTimeout(() => {
+      DOM.statusAlert.classList.remove('show');
+    }, 3500);
+  } else {
+    console.log("ALERT:", text);
+  }
 }
 
 function scrollToBottom() {
@@ -887,11 +893,14 @@ async function generateBotResponse(input) {
     systemPrompt += `\n\nI have uploaded an image. Its dominant colors are: ${state.analysedImagePalette.join(', ')}. Keep this in mind if I ask about an image.`;
   }
 
-  // Fetch from Netlify Serverless Function (Cloud APIs)
+  // Determine API endpoint dynamically based on hosting environment
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const apiEndpoint = isLocal ? '/api/chat' : '/.netlify/functions/chat';
+
   try {
     const combinedPrompt = systemPrompt + "\n\nUser Question: " + input;
     
-    const response = await fetch('/.netlify/functions/chat', {
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: combinedPrompt })
@@ -901,7 +910,12 @@ async function generateBotResponse(input) {
       const data = await response.json();
       return data.reply || "No valid response from model.";
     } else {
-      return "⚠️ Could not connect to local AI backend. Please ensure the Node server and Ollama are running.";
+      try {
+        const errorData = await response.json();
+        return errorData.error || "⚠️ Server returned an error.";
+      } catch (e) {
+        return "⚠️ Could not connect to local AI backend. Please ensure the Node server is running.";
+      }
     }
   } catch (err) {
     console.error("AI API Error:", err);
