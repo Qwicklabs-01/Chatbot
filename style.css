@@ -38,6 +38,12 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-main);
   background-color: var(--bg-main);
@@ -47,17 +53,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   line-height: 1.5;
 }
 
 /* App Main Wrapper */
 .device-wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh; /* Fallback */
-  height: 100dvh;
   background: var(--bg-main);
   overflow: hidden;
   border-radius: 0;
@@ -66,7 +77,6 @@ body {
 @media (min-width: 768px) {
   .device-wrapper {
     width: 100%;
-    height: 100vh;
     border-radius: 0;
     border: none;
   }
@@ -443,6 +453,7 @@ body {
 /* Chat Messages Area */
 .chat-messages {
   flex: 1;
+  min-height: 0;
   padding: 20px;
   overflow-y: auto;
   display: flex;

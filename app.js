@@ -308,6 +308,10 @@ const DOM = {
 
 // --- Workspace Mode Switching Router ---
 function switchWorkspaceMode(mode) {
+  // Close sidebar on mobile if it was open
+  if (DOM.historySidebar) {
+    DOM.historySidebar.classList.remove('open');
+  }
   // Update sidebar active highlights
   const sidebarButtons = document.querySelectorAll('.vertical-skills-sidebar button');
   sidebarButtons.forEach(btn => btn.classList.remove('active'));

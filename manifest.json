@@ -3,7 +3,7 @@
   "name": "Aura AI Mobile Assistant",
   "short_name": "Aura AI",
   "description": "A private, high-speed, local client-side mobile chatbot and productivity assistant. Features offline AI chat, calculators, and PDF managers.",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#07050f",
   "theme_color": "#07050f",
