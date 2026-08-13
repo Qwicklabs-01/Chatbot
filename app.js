@@ -1742,9 +1742,26 @@ DOM.writingSendChatBtn.addEventListener('click', () => {
 // --- AI Writing Hub Math & NLP Algorithms ---
 
 async function fetchAI(prompt) {
-  const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
-  if (!res.ok) throw new Error('API failed');
-  return await res.text();
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const apiEndpoint = isLocal ? '/api/chat' : '/.netlify/functions/chat';
+  
+  const res = await fetch(apiEndpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: prompt })
+  });
+  
+  if (!res.ok) {
+    let errorMsg = 'API failed';
+    try {
+      const errorData = await res.json();
+      if (errorData.error) errorMsg = errorData.error;
+    } catch(e){}
+    throw new Error(errorMsg);
+  }
+  
+  const data = await res.json();
+  return data.reply || "No valid response from model.";
 }
 
 async function runParaphrase(text, style) {
