@@ -75,7 +75,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
     }
     contents.push({ text: prompt });
 
-    // Call Gemini API (Google Search requires billing enabled)
+    // Call Gemini API
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: contents,
