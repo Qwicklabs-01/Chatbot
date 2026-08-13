@@ -1,3 +1,5 @@
+const { GoogleGenAI } = require('@google/genai');
+
 exports.handler = async function (event, context) {
   // Only allow POST requests
   if (event.httpMethod !== "POST") {
@@ -7,60 +9,38 @@ exports.handler = async function (event, context) {
   try {
     const body = JSON.parse(event.body);
     const userMessage = body.message || "";
-
-    const GROQ_API_KEY = process.env.GROQ_API_KEY;
-
-    if (!GROQ_API_KEY) {
+    
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ reply: "⚠️ Server configuration error: GROQ_API_KEY is missing." }),
+        body: JSON.stringify({ error: "⚠️ Gemini API Key is missing on the Netlify environment variables." }),
       };
     }
 
-    // Call Groq Llama-3 API
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "llama3-70b-8192", // Using Llama 3 70B for maximum intelligence
-        messages: [
-          { role: "system", content: "You are Aura, an intelligent AI assistant." },
-          { role: "user", content: userMessage }
-        ],
-        temperature: 0.7,
-        max_tokens: 1500
-      })
+    const ai = new GoogleGenAI({ apiKey });
+    
+    // Call Gemini API
+    const response = await ai.models.generateContent({
+      model: 'gemini-1.5-flash',
+      contents: [{ text: userMessage }],
+      // config: { tools: [{ googleSearch: {} }] }
     });
-
-    if (!response.ok) {
-      const err = await response.text();
-      console.error("Groq API Error:", err);
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ reply: "⚠️ Error communicating with AI provider." }),
-      };
-    }
-
-    const data = await response.json();
-    const reply = data.choices[0]?.message?.content || "No response generated.";
 
     return {
       statusCode: 200,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Allow cross-origin if needed
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({ reply }),
+      body: JSON.stringify({ reply: response.text }),
     };
 
   } catch (error) {
     console.error("Function Error:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ reply: "⚠️ Internal Server Error processing request." }),
+      body: JSON.stringify({ error: `Backend Error: ${error.message || 'Internal server error'}` }),
     };
   }
 };
