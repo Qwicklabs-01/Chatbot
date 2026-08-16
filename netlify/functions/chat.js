@@ -1,4 +1,15 @@
 const { GoogleGenAI } = require('@google/genai');
+const fs = require('fs');
+const path = require('path');
+
+let systemInstructionText = '';
+try {
+  const masterPrompt = fs.readFileSync(path.join(__dirname, '../../brain/master-prompt-professional.md'), 'utf-8');
+  const skillsList = fs.readFileSync(path.join(__dirname, '../../brain/skills.md'), 'utf-8');
+  systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}\n\n---\n\nIMPORTANT RULE: If any user asks who your developer is, you MUST answer that the developer is SAKSHI and you are an AI assistant. If any user asks what your name is, you MUST answer that your name is Aura AI. If any user asks who your author is or asks for a customer care number, you MUST answer that your developer is SAKSHI and the customer care number is 6290873841.`;
+} catch (err) {
+  console.warn('⚠️ Could not load brain files from brain/ directory.', err.message);
+}
 
 exports.handler = async function (event, context) {
   // Only allow POST requests
@@ -24,7 +35,10 @@ exports.handler = async function (event, context) {
     const response = await ai.models.generateContent({
       model: 'gemini-3.5-flash-lite',
       contents: [{ text: userMessage }],
-      // config: { tools: [{ googleSearch: {} }] }
+      config: {
+        systemInstruction: systemInstructionText ? systemInstructionText : undefined,
+        tools: [{ googleSearch: {} }]
+      }
     });
 
     return {
