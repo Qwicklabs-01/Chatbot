@@ -20,11 +20,12 @@ module.exports = async function (req, res) {
 
   try {
     const userMessage = req.body.message || "";
-    
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
+
+    // Fallback/Demo Mode if no API key is provided
+    if (!apiKey || apiKey.trim() === '') {
       return res.status(200).json({ 
-        reply: "⚠️ **Setup Required**: I'm sorry, but my owner hasn't set up my brain yet! Please add a `GEMINI_API_KEY` to your Vercel Environment Variables to bring me online." 
+        reply: `**Demo Mode Active (No API Key)** 🤖\n\nYou said: "${userMessage}"\n\nI am currently running without an API key, so I am just echoing your messages! To unlock my full AI brain, add a valid Gemini API Key to the server environment.` 
       });
     }
 
@@ -44,11 +45,11 @@ module.exports = async function (req, res) {
 
   } catch (error) {
     console.error("Function Error:", error);
-    let errorMessage = error.message || 'Internal server error';
+    const userMessage = req.body?.message || "";
     
-    // Make errors look proper in the chat UI
+    // If the API call fails (e.g. quota exhausted), fall back to Demo Mode
     return res.status(200).json({ 
-      reply: `⚠️ **Connection Error**: I couldn't connect to my AI brain. \n\n*Error details: ${errorMessage}*\n\nPlease make sure your \`GEMINI_API_KEY\` is valid and your project has quota.` 
+      reply: `**Demo Mode Active (API Error)** 🤖\n\nYou said: "${userMessage}"\n\n*(Note: I tried to use the AI, but the API key was invalid or out of quota. I am running in fallback mode!)*` 
     });
   }
 };

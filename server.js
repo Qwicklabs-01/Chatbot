@@ -38,9 +38,9 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
     const file = req.file;
     
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
+    if (!apiKey || apiKey.trim() === '') {
       return res.json({ 
-        reply: "⚠️ **Setup Required**: I'm sorry, but my owner hasn't set up my brain yet! Please add your `GEMINI_API_KEY` to the `.env` file to bring me online." 
+        reply: `**Demo Mode Active (No API Key)** 🤖\n\nYou said: "${userMessage}"\n\nI am currently running without an API key, so I am just echoing your messages! To unlock my full AI brain, add a valid Gemini API Key to the .env file.` 
       });
     }
 
@@ -103,9 +103,9 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
   } catch (error) {
     console.error('Chat API Error:', error);
-    let errorMessage = error.message || 'Internal server error';
+    const userMessage = req.body?.message || "";
     return res.json({ 
-      reply: `⚠️ **Connection Error**: I couldn't connect to my AI brain. \n\n*Error details: ${errorMessage}*\n\nPlease make sure your \`GEMINI_API_KEY\` is valid.` 
+      reply: `**Demo Mode Active (API Error)** 🤖\n\nYou said: "${userMessage}"\n\n*(Note: I tried to use the AI, but the API key was invalid or out of quota. I am running in fallback mode!)*` 
     });
   }
 });
