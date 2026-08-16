@@ -5,9 +5,21 @@ const pdfParse = require('pdf-parse');
 const path = require('path');
 const cors = require('cors');
 const { GoogleGenAI } = require('@google/genai');
+const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
+
+// Load System Prompts (The Brain)
+let systemInstructionText = '';
+try {
+  const masterPrompt = fs.readFileSync(path.join(__dirname, 'brain', 'master-prompt-professional.md'), 'utf-8');
+  const skillsList = fs.readFileSync(path.join(__dirname, 'brain', 'skills.md'), 'utf-8');
+  systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}`;
+  console.log('✅ OmniBrain and Skills loaded successfully.');
+} catch (err) {
+  console.warn('⚠️ Could not load brain files from brain/ directory. Operating without custom system instructions.', err.message);
+}
 
 // Set up Multer for handling memory storage
 const upload = multer({ storage: multer.memoryStorage() });
@@ -79,7 +91,9 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
     const response = await ai.models.generateContent({
       model: 'gemini-3.5-flash-lite',
       contents: contents,
-      // config: { tools: [{ googleSearch: {} }] } // Requires billing
+      config: {
+        systemInstruction: systemInstructionText ? systemInstructionText : undefined
+      }
     });
 
     res.json({
