@@ -41,8 +41,7 @@ module.exports = async function (req, res) {
       model: 'gemini-3.5-flash-lite',
       contents: [{ text: rawMessage }],
       config: {
-        systemInstruction: systemInstructionText ? systemInstructionText : undefined,
-        tools: [{ googleSearch: {} }]
+        systemInstruction: systemInstructionText ? systemInstructionText : undefined
       }
     });
 
