@@ -45,7 +45,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey || apiKey.trim() === '') {
       return res.json({ 
-        reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode. To get real AI answers, please configure my Gemini API key!` 
+        reply: cleanMessage 
       });
     }
 
@@ -114,7 +114,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
       cleanMessage = rawMessage.split("User Question: ")[1].trim();
     }
     return res.json({ 
-      reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode because my API key ran out of quota.` 
+      reply: cleanMessage 
     });
   }
 });

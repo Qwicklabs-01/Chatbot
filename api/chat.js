@@ -30,7 +30,7 @@ module.exports = async function (req, res) {
     // Fallback/Demo Mode if no API key is provided
     if (!apiKey || apiKey.trim() === '') {
       return res.status(200).json({ 
-        reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode. To get real AI answers, please configure my Gemini API key!` 
+        reply: cleanMessage 
       });
     }
 
@@ -58,7 +58,7 @@ module.exports = async function (req, res) {
     
     // If the API call fails (e.g. quota exhausted), fall back to Demo Mode
     return res.status(200).json({ 
-      reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode because my API key ran out of quota.` 
+      reply: cleanMessage 
     });
   }
 };
