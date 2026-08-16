@@ -887,10 +887,10 @@ async function generateBotResponse(input) {
   }
 
   // Construct context for the AI
-  let systemPrompt = "You are Aura AI, a helpful, intelligent assistant. Be concise and friendly.";
+  let systemPrompt = "";
   
   if (state.loadedFile && state.loadedFile.content) {
-    systemPrompt += `\n\nI have attached a document named '${state.loadedFile.name}'. Please answer my questions based on this document content if relevant. \n\nDocument Content:\n${state.loadedFile.content.substring(0, 15000)}`;
+    systemPrompt += `I have attached a document named '${state.loadedFile.name}'. Please answer my questions based on this document content if relevant. \n\nDocument Content:\n${state.loadedFile.content.substring(0, 15000)}`;
   }
   
   if (state.analysedImagePalette && state.analysedImagePalette.length > 0) {
@@ -902,7 +902,10 @@ async function generateBotResponse(input) {
   const apiEndpoint = '/api/chat';
 
   try {
-    const combinedPrompt = systemPrompt + "\n\nUser Question: " + input;
+    let combinedPrompt = input;
+    if (systemPrompt) {
+      combinedPrompt = systemPrompt + "\n\nUser Question: " + input;
+    }
     
     const response = await fetch(apiEndpoint, {
       method: 'POST',
