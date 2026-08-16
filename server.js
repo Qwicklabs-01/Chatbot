@@ -39,8 +39,8 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
     
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return res.status(503).json({ 
-        error: '⚠️ Gemini API Key is missing. Please create a .env file based on .env.example and add your GEMINI_API_KEY to give the chatbot internet access and a brain.' 
+      return res.json({ 
+        reply: "⚠️ **Setup Required**: I'm sorry, but my owner hasn't set up my brain yet! Please add your `GEMINI_API_KEY` to the `.env` file to bring me online." 
       });
     }
 
@@ -103,7 +103,10 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
   } catch (error) {
     console.error('Chat API Error:', error);
-    res.status(500).json({ error: `Backend Error: ${error.message || 'Internal server error'}` });
+    let errorMessage = error.message || 'Internal server error';
+    return res.json({ 
+      reply: `⚠️ **Connection Error**: I couldn't connect to my AI brain. \n\n*Error details: ${errorMessage}*\n\nPlease make sure your \`GEMINI_API_KEY\` is valid.` 
+    });
   }
 });
 

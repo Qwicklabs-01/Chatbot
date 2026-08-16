@@ -24,8 +24,12 @@ exports.handler = async function (event, context) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "⚠️ Gemini API Key is missing on the Netlify environment variables." }),
+        statusCode: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ reply: "⚠️ **Setup Required**: I'm sorry, but my owner hasn't set up my brain yet! Please add a `GEMINI_API_KEY` to your Netlify Environment Variables to bring me online." }),
       };
     }
 
@@ -52,9 +56,16 @@ exports.handler = async function (event, context) {
 
   } catch (error) {
     console.error("Function Error:", error);
+    let errorMessage = error.message || 'Internal server error';
+    
+    // Make errors look proper in the chat UI
     return {
-      statusCode: 500,
-      body: JSON.stringify({ error: `Backend Error: ${error.message || 'Internal server error'}` }),
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ reply: `⚠️ **Connection Error**: I couldn't connect to my AI brain. \n\n*Error details: ${errorMessage}*\n\nPlease make sure your \`GEMINI_API_KEY\` is valid in your Netlify settings.` }),
     };
   }
 };
