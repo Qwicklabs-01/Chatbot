@@ -899,7 +899,7 @@ async function generateBotResponse(input) {
 
   // Determine API endpoint dynamically based on hosting environment
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = isLocal ? '/api/chat' : '/.netlify/functions/chat';
+  const apiEndpoint = '/api/chat';
 
   try {
     const combinedPrompt = systemPrompt + "\n\nUser Question: " + input;
@@ -1747,7 +1747,7 @@ DOM.writingSendChatBtn.addEventListener('click', () => {
 
 async function fetchAI(prompt) {
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = isLocal ? '/api/chat' : '/.netlify/functions/chat';
+  const apiEndpoint = '/api/chat';
   
   const res = await fetch(apiEndpoint, {
     method: 'POST',
