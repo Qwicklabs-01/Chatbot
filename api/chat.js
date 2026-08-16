@@ -38,7 +38,7 @@ module.exports = async function (req, res) {
     
     // Call Gemini API
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-3.5-flash-lite',
       contents: [{ text: rawMessage }],
       config: {
         systemInstruction: systemInstructionText ? systemInstructionText : undefined,
@@ -56,9 +56,19 @@ module.exports = async function (req, res) {
       cleanMessage = rawMessage.split("User Question: ")[1].trim();
     }
     
-    // If the API call fails (e.g. quota exhausted), fall back to Demo Mode
-    return res.status(200).json({ 
-      reply: cleanMessage 
+    // Extract the specific error message if it exists
+    let errorMessage = "An unknown error occurred.";
+    if (error && error.message) {
+      if (error.message.includes("429") || error.message.includes("quota") || error.message.includes("RESOURCE_EXHAUSTED")) {
+        errorMessage = "Error: Your Gemini API Key has exceeded its quota! Please provide a fresh API key in your Vercel settings.";
+      } else {
+        errorMessage = "API Error: " + error.message;
+      }
+    }
+    
+    // Fallback response handling if AI fails (Demo Mode / Echo)
+    return res.status(200).json({
+      reply: errorMessage
     });
   }
 };

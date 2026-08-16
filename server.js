@@ -108,13 +108,16 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
   } catch (error) {
     console.error('Chat API Error:', error);
-    const rawMessage = req.body?.message || "";
-    let cleanMessage = rawMessage;
-    if (rawMessage.includes("User Question: ")) {
-      cleanMessage = rawMessage.split("User Question: ")[1].trim();
+    let errorMessage = "An unknown error occurred.";
+    if (error && error.message) {
+      if (error.message.includes("429") || error.message.includes("quota") || error.message.includes("RESOURCE_EXHAUSTED")) {
+        errorMessage = "Error: Your Gemini API Key has exceeded its quota! Please provide a fresh API key in your Vercel settings.";
+      } else {
+        errorMessage = "API Error: " + error.message;
+      }
     }
     return res.json({ 
-      reply: cleanMessage 
+      reply: errorMessage 
     });
   }
 });
