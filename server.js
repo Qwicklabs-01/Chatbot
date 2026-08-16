@@ -34,19 +34,24 @@ app.use(express.static(__dirname));
  */
 app.post('/api/chat', upload.single('file'), async (req, res) => {
   try {
-    const userMessage = req.body.message || '';
+    const rawMessage = req.body.message || '';
     const file = req.file;
+    
+    let cleanMessage = rawMessage;
+    if (rawMessage.includes("User Question: ")) {
+      cleanMessage = rawMessage.split("User Question: ")[1].trim();
+    }
     
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey || apiKey.trim() === '') {
       return res.json({ 
-        reply: `**Demo Mode Active (No API Key)** 🤖\n\nYou said: "${userMessage}"\n\nI am currently running without an API key, so I am just echoing your messages! To unlock my full AI brain, add a valid Gemini API Key to the .env file.` 
+        reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode. To get real AI answers, please configure my Gemini API key!` 
       });
     }
 
     const ai = new GoogleGenAI({ apiKey });
     
-    let prompt = userMessage;
+    let prompt = rawMessage;
     let base64Image = null;
     let mimeType = null;
 
@@ -59,15 +64,15 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
         console.log('Parsing PDF...');
         const pdfData = await pdfParse(file.buffer);
         const extractedText = pdfData.text;
-        prompt = `Based on the following document context:\n\n---\n${extractedText}\n---\n\nUser query: ${userMessage}`;
+        prompt = `Based on the following document context:\n\n---\n${extractedText}\n---\n\nUser query: ${rawMessage}`;
       } else if (mime === 'text/plain' || mime === 'text/csv' || mime === 'application/json') {
         const textData = file.buffer.toString('utf-8');
-        prompt = `Based on the following file context:\n\n---\n${textData}\n---\n\nUser query: ${userMessage}`;
+        prompt = `Based on the following file context:\n\n---\n${textData}\n---\n\nUser query: ${rawMessage}`;
       } else if (mime.startsWith('image/')) {
         console.log('Processing Image...');
         base64Image = file.buffer.toString('base64');
         mimeType = mime;
-        prompt = userMessage || 'Describe this image in detail.';
+        prompt = rawMessage || 'Describe this image in detail.';
       } else {
         return res.status(400).json({ error: 'Unsupported file type.' });
       }
@@ -103,9 +108,13 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
   } catch (error) {
     console.error('Chat API Error:', error);
-    const userMessage = req.body?.message || "";
+    const rawMessage = req.body?.message || "";
+    let cleanMessage = rawMessage;
+    if (rawMessage.includes("User Question: ")) {
+      cleanMessage = rawMessage.split("User Question: ")[1].trim();
+    }
     return res.json({ 
-      reply: `**Demo Mode Active (API Error)** 🤖\n\nYou said: "${userMessage}"\n\n*(Note: I tried to use the AI, but the API key was invalid or out of quota. I am running in fallback mode!)*` 
+      reply: `You asked: "${cleanMessage}"\n\nI am currently running in offline Demo Mode because my API key ran out of quota.` 
     });
   }
 });
