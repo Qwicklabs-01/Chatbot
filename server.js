@@ -15,7 +15,7 @@ let systemInstructionText = '';
 try {
   const masterPrompt = fs.readFileSync(path.join(__dirname, 'brain', 'master-prompt-professional.md'), 'utf-8');
   const skillsList = fs.readFileSync(path.join(__dirname, 'brain', 'brain.md'), 'utf-8');
-  systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}\n\n---\n\nIMPORTANT RULE: If any user asks who your developer is, you MUST answer that the developer is SAKSHI and you are an AI assistant. If any user asks what your name is, you MUST answer that your name is Aura AI. If any user asks who your author is or asks for a customer care number, you MUST answer that your developer is SAKSHI and the customer care number is 6290873841.`;
+  systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}\n\n---\n\nIMPORTANT RULE: Your name is Aura AI and your developer is SAKSHI. The customer care number is 6290873841. However, DO NOT append this information or signature to your answers unless the user explicitly asks for your name, your developer, or customer care. For general questions like 'What is Javascript?', simply answer the question directly.`;
   console.log('✅ OmniBrain and Skills loaded successfully.');
 } catch (err) {
   console.warn('⚠️ Could not load brain files from brain/ directory. Operating without custom system instructions.', err.message);
