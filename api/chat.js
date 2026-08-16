@@ -38,7 +38,7 @@ module.exports = async function (req, res) {
     
     // Call Gemini API
     const response = await ai.models.generateContent({
-      model: 'gemini-3.5-flash-lite',
+      model: 'gemini-1.5-flash',
       contents: [{ text: rawMessage }],
       config: {
         systemInstruction: systemInstructionText ? systemInstructionText : undefined,

@@ -94,7 +94,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
     // Call Gemini API
     const response = await ai.models.generateContent({
-      model: 'gemini-3.5-flash-lite',
+      model: 'gemini-1.5-flash',
       contents: contents,
       config: {
         systemInstruction: systemInstructionText ? systemInstructionText : undefined,
