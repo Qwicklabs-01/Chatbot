@@ -54,9 +54,9 @@ app.use('/api/', apiLimiter);
  * Main API Endpoint for Chat & File Analysis
  * Route: POST /api/chat
  */
-app.get('/api/ping', (req, res) => res.json({ status: 'alive' }));
+app.get(['/api/ping', '/'], (req, res) => res.json({ status: 'alive' }));
 
-app.post('/api/chat', upload.single('file'), async (req, res) => {
+app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
   try {
     const rawMessage = req.body.message || '';
     const file = req.file;
@@ -136,10 +136,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
   }
 });
 
-// Fallback to index.html for SPA behavior
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
+// Removed res.sendFile fallback as Vercel static routing handles index.html
 
 if (!process.env.VERCEL) {
   const server = app.listen(PORT, '0.0.0.0', () => {
