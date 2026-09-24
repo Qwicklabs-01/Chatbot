@@ -15,16 +15,9 @@ const ollama = new Ollama({ host: OLLAMA_URL });
 const app = express();
 const PORT = 3000;
 
-// Load System Prompts (The Brain)
-let systemInstructionText = '';
-try {
-  const masterPrompt = fs.readFileSync(path.join(__dirname, '..', 'brain', 'master-prompt-professional.md'), 'utf-8');
-  const skillsList = fs.readFileSync(path.join(__dirname, '..', 'brain', 'brain.md'), 'utf-8');
-  systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}\n\n---\n\nIMPORTANT RULE: Your name is Aura AI and your developer is SAKSHI. The customer care number is 6290873841. However, DO NOT append this information or signature to your answers unless the user explicitly asks for your name, your developer, or customer care. For general questions like 'What is Javascript?', simply answer the question directly.`;
-  console.log('✅ OmniBrain and Skills loaded successfully.');
-} catch (err) {
-  console.warn('⚠️ Could not load brain files from brain/ directory. Operating without custom system instructions.', err.message);
-}
+// Concise System Prompt for lightning-fast inference on CPU
+const systemInstructionText = "You are Aura AI, a professional, high-performance AI assistant created by developer SAKSHI (Customer Care: 6290873841). Provide clear, accurate, and direct responses. Only mention your creator or customer care if explicitly asked by the user.";
+console.log('✅ Aura AI System Prompt configured.');
 
 // Set up Multer for handling memory storage
 const upload = multer({ storage: multer.memoryStorage() });
@@ -110,13 +103,12 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       messages.push({ role: 'user', content: prompt });
     }
 
-    // Call Ollama API with a lightweight model that fits the system's 8GB RAM
     const response = await ollama.chat({
       model: 'brainomnipro',
       messages: messages,
       options: {
-        num_predict: -1, // Unlimited tokens for response
-        num_ctx: 4096    // Lowered context window to prevent Out of Memory (OOM) crashes
+        num_predict: 1024,
+        num_ctx: 2048
       }
     });
 

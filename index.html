@@ -300,23 +300,6 @@
 
 
         <header class="app-header">
-          <div class="mobile-tool-selector" style="width: 100%; padding: 8px; background: var(--bg-surface); border-bottom: 1px solid var(--border-glass);">
-            <select id="mobile-tool-dropdown" style="width: 100%; padding: 8px; border-radius: var(--radius-sm); background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-glass); outline: none;">
-              <option value="sidebar-chat-btn">AI Chat</option>
-              <option value="sidebar-paraphraser-btn">Paraphraser</option>
-              <option value="sidebar-grammar-btn">Grammar Checker</option>
-              <option value="sidebar-detector-btn">AI Detector</option>
-              <option value="sidebar-plagiarism-btn">Plagiarism Checker</option>
-              <option value="sidebar-humanizer-btn">AI Humanizer</option>
-              <option value="sidebar-image-btn">Image Generator</option>
-              <option value="sidebar-translate-btn">Translator</option>
-              <option value="sidebar-summarize-btn">Summarizer</option>
-              <option value="sidebar-citation-btn">Citation Generator</option>
-              <option value="sidebar-pdf-btn">PDF Tools</option>
-              <option value="sidebar-voice-btn">Voice Config</option>
-              <option value="sidebar-calculator-btn">Calculators</option>
-            </select>
-          </div>
           <div class="header-identity">
             <!-- Hamburger History Toggle Menu -->
             <button id="toggle-history-btn" class="header-btn" style="border-radius: 8px; width: 32px; height: 32px; margin-right: 4px;" title="Open Chat Sessions" aria-label="Open Chat Sessions">
@@ -362,6 +345,25 @@
             </button>
           </div>
         </header>
+        
+        <!-- Mobile Quick Tools Selector (Visible on Mobile Only) -->
+        <div class="mobile-tool-selector" style="width: 100%; padding: 8px 12px; background: var(--bg-surface); border-bottom: 1px solid var(--border-glass);">
+          <select id="mobile-tool-dropdown" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-glass); outline: none; font-size: 14px; font-weight: 500;">
+            <option value="sidebar-chat-btn">💬 AI Chat Assistant</option>
+            <option value="sidebar-paraphraser-btn">✍️ Paraphraser</option>
+            <option value="sidebar-grammar-checker-btn">📝 Grammar Checker</option>
+            <option value="sidebar-ai-detector-btn">🔍 AI Detector</option>
+            <option value="sidebar-plagiarism-checker-btn">🛡️ Plagiarism Checker</option>
+            <option value="sidebar-ai-humanizer-btn">👤 AI Humanizer</option>
+            <option value="sidebar-ai-image-generator-btn">🎨 AI Image Generator</option>
+            <option value="sidebar-translator-btn">🌐 Language Translator</option>
+            <option value="sidebar-summarizer-btn">📑 Text Summarizer</option>
+            <option value="sidebar-citation-generator-btn">📚 Citation Generator</option>
+            <option value="sidebar-pdf-btn">📄 PDF Tools</option>
+            <option value="sidebar-voice-btn">🎙️ Voice Synthesis</option>
+            <option value="sidebar-calculator-btn">🧮 150+ Calculators</option>
+          </select>
+        </div>
 
         <!-- Conversational Chat Area -->
         <div id="chat-view-container" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; height: 100%;">
@@ -732,6 +734,20 @@
           </form>
         </section>
 
+        <!-- Backend Connection Settings -->
+        <section class="modal-section">
+          <h3>⚡ AI Engine &amp; Connection Settings</h3>
+          <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+            Aura AI runs offline client-side and connects to your local Node/Ollama backend. If accessing from Vercel on a mobile device or remote browser, enter your secure Tunnel or Ngrok URL below:
+          </p>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="api-endpoint-input" placeholder="Default: Auto (localhost:3000 / /api/chat)" class="form-input" style="flex: 1; font-size: 12px; height: 34px;">
+            <button id="save-endpoint-btn" class="code-eval-btn" style="height: 34px; padding: 0 14px; font-size: 12px; white-space: nowrap;">Save</button>
+            <button id="reset-endpoint-btn" class="code-eval-btn" style="height: 34px; padding: 0 10px; font-size: 12px; background: rgba(255,255,255,0.06); border-color: var(--border-glass);" title="Reset to Default">Reset</button>
+          </div>
+          <p id="endpoint-status-msg" style="font-size: 11px; margin-top: 6px; color: var(--color-secondary); font-weight: 500;"></p>
+        </section>
+
         <!-- Contact Section -->
         <section class="modal-section" style="border-bottom: none; padding-bottom: 0;">
           <h3>✉️ Contact Us</h3>
@@ -755,32 +771,34 @@
     </div>
   </div>
 
+  <!-- Core Application Scripts -->
   <script src="app.js"></script>
+  
   <script>
+    // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then((reg) => console.log('Service Worker registered successfully!', reg.scope))
-          .catch((err) => console.error('Service Worker registration failed:', err));
+          .then((reg) => console.log('✅ Service Worker registered successfully:', reg.scope))
+          .catch((err) => console.error('⚠️ Service Worker registration failed:', err));
       });
     }
-  </script>
-  <!-- Service Worker Registration for PWA / PWABuilder -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          })
-          .catch(err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
-    }
-  </script>
-  <script>
+
+    // UI Enhancements & Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
+      // Mobile Tool Dropdown
+      const dropdown = document.getElementById('mobile-tool-dropdown');
+      if (dropdown) {
+        dropdown.addEventListener('change', (e) => {
+          const targetId = e.target.value;
+          const targetBtn = document.getElementById(targetId);
+          if (targetBtn) {
+            targetBtn.click();
+          }
+        });
+      }
+
+      // Image Upload & Preview Controls
       const imageUploadBtn = document.getElementById('image-upload-btn');
       const imageUploadInput = document.getElementById('image-upload-input');
       const imagePreviewContainer = document.getElementById('image-preview-container');
@@ -796,42 +814,30 @@
           const file = e.target.files[0];
           if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-              imagePreview.src = e.target.result;
-              imagePreviewContainer.style.display = 'flex';
+            reader.onload = function(evt) {
+              if (imagePreview) imagePreview.src = evt.target.result;
+              if (imagePreviewContainer) imagePreviewContainer.style.display = 'flex';
             };
             reader.readAsDataURL(file);
             
-            // Re-use the existing universal file processor from app.js if available
             if (typeof processUniversalFile === 'function') {
               processUniversalFile(file);
             }
           }
         });
+      }
 
+      if (clearImageBtn) {
         clearImageBtn.addEventListener('click', () => {
-          imageUploadInput.value = '';
-          imagePreviewContainer.style.display = 'none';
-          imagePreview.src = '';
+          if (imageUploadInput) imageUploadInput.value = '';
+          if (imagePreviewContainer) imagePreviewContainer.style.display = 'none';
+          if (imagePreview) imagePreview.src = '';
           if (typeof state !== 'undefined') {
             state.loadedFile = { name: '', type: '', size: 0, content: '' };
-          }
-        });
-  <script>
-    // Mobile Tool Dropdown Logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const dropdown = document.getElementById('mobile-tool-dropdown');
-      if (dropdown) {
-        dropdown.addEventListener('change', (e) => {
-          const targetId = e.target.value;
-          const targetBtn = document.getElementById(targetId);
-          if (targetBtn) {
-            targetBtn.click();
           }
         });
       }
     });
   </script>
-  <script src="app.js"></script>
 </body>
 </html>
