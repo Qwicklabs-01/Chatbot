@@ -18,8 +18,8 @@ const PORT = 3000;
 // Load System Prompts (The Brain)
 let systemInstructionText = '';
 try {
-  const masterPrompt = fs.readFileSync(path.join(__dirname, 'brain', 'master-prompt-professional.md'), 'utf-8');
-  const skillsList = fs.readFileSync(path.join(__dirname, 'brain', 'brain.md'), 'utf-8');
+  const masterPrompt = fs.readFileSync(path.join(__dirname, '..', 'brain', 'master-prompt-professional.md'), 'utf-8');
+  const skillsList = fs.readFileSync(path.join(__dirname, '..', 'brain', 'brain.md'), 'utf-8');
   systemInstructionText = `${masterPrompt}\n\n---\n\n${skillsList}\n\n---\n\nIMPORTANT RULE: Your name is Aura AI and your developer is SAKSHI. The customer care number is 6290873841. However, DO NOT append this information or signature to your answers unless the user explicitly asks for your name, your developer, or customer care. For general questions like 'What is Javascript?', simply answer the question directly.`;
   console.log('✅ OmniBrain and Skills loaded successfully.');
 } catch (err) {
@@ -31,7 +31,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '..')));
 
 // Security & Professional Hardening
 app.use(helmet({
@@ -138,7 +138,7 @@ app.post('/api/chat', upload.single('file'), async (req, res) => {
 
 // Fallback to index.html for SPA behavior
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 if (!process.env.VERCEL) {

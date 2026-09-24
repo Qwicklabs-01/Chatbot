@@ -16,4 +16,4 @@ lt.stderr.on('data', (data) => {
 
 // 2. Boot the local Express Server
 console.log("🤖 Booting Local Node.js Server...");
-require('./server.js');
+require('./api/chat.js');
