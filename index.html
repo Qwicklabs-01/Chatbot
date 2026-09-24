@@ -300,6 +300,23 @@
 
 
         <header class="app-header">
+          <div class="mobile-tool-selector" style="width: 100%; padding: 8px; background: var(--bg-surface); border-bottom: 1px solid var(--border-glass);">
+            <select id="mobile-tool-dropdown" style="width: 100%; padding: 8px; border-radius: var(--radius-sm); background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-glass); outline: none;">
+              <option value="sidebar-chat-btn">AI Chat</option>
+              <option value="sidebar-paraphraser-btn">Paraphraser</option>
+              <option value="sidebar-grammar-btn">Grammar Checker</option>
+              <option value="sidebar-detector-btn">AI Detector</option>
+              <option value="sidebar-plagiarism-btn">Plagiarism Checker</option>
+              <option value="sidebar-humanizer-btn">AI Humanizer</option>
+              <option value="sidebar-image-btn">Image Generator</option>
+              <option value="sidebar-translate-btn">Translator</option>
+              <option value="sidebar-summarize-btn">Summarizer</option>
+              <option value="sidebar-citation-btn">Citation Generator</option>
+              <option value="sidebar-pdf-btn">PDF Tools</option>
+              <option value="sidebar-voice-btn">Voice Config</option>
+              <option value="sidebar-calculator-btn">Calculators</option>
+            </select>
+          </div>
           <div class="header-identity">
             <!-- Hamburger History Toggle Menu -->
             <button id="toggle-history-btn" class="header-btn" style="border-radius: 8px; width: 32px; height: 32px; margin-right: 4px;" title="Open Chat Sessions" aria-label="Open Chat Sessions">
@@ -800,8 +817,21 @@
             state.loadedFile = { name: '', type: '', size: 0, content: '' };
           }
         });
+  <script>
+    // Mobile Tool Dropdown Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdown = document.getElementById('mobile-tool-dropdown');
+      if (dropdown) {
+        dropdown.addEventListener('change', (e) => {
+          const targetId = e.target.value;
+          const targetBtn = document.getElementById(targetId);
+          if (targetBtn) {
+            targetBtn.click();
+          }
+        });
       }
     });
   </script>
+  <script src="app.js"></script>
 </body>
 </html>
