@@ -899,7 +899,7 @@ async function generateBotResponse(input) {
 
   // Determine API endpoint dynamically based on hosting environment
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = '/api/chat';
+  const apiEndpoint = isLocal ? '/api/chat' : 'https://omnibrain-pro-sakshi.loca.lt/api/chat';
 
   try {
     let combinedPrompt = input;
@@ -1750,7 +1750,7 @@ DOM.writingSendChatBtn.addEventListener('click', () => {
 
 async function fetchAI(prompt) {
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = '/api/chat';
+  const apiEndpoint = isLocal ? '/api/chat' : 'https://omnibrain-pro-sakshi.loca.lt/api/chat';
   
   const res = await fetch(apiEndpoint, {
     method: 'POST',
