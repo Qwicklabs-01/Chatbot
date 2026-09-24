@@ -9,7 +9,9 @@ const rateLimit = require('express-rate-limit');
 const { Ollama } = require('ollama');
 const fs = require('fs');
 
-const ollama = new Ollama();
+// Configure Ollama to connect to a remote URL if hosted on Vercel
+const OLLAMA_URL = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434';
+const ollama = new Ollama({ host: OLLAMA_URL });
 const app = express();
 const PORT = 3000;
 
