@@ -897,9 +897,8 @@ async function generateBotResponse(input) {
     systemPrompt += `\n\nI have uploaded an image. Its dominant colors are: ${state.analysedImagePalette.join(', ')}. Keep this in mind if I ask about an image.`;
   }
 
-  // Determine API endpoint dynamically based on hosting environment
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = isLocal ? '/api/chat' : 'https://omnibrain-pro-sakshi.loca.lt/api/chat';
+  // Point directly to the God Model's local Node server (supports fully offline PWA mode and bypasses Vercel limits)
+  const apiEndpoint = 'http://localhost:3000/api/chat';
 
   try {
     let combinedPrompt = input;
@@ -1749,8 +1748,8 @@ DOM.writingSendChatBtn.addEventListener('click', () => {
 // --- AI Writing Hub Math & NLP Algorithms ---
 
 async function fetchAI(prompt) {
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const apiEndpoint = isLocal ? '/api/chat' : 'https://omnibrain-pro-sakshi.loca.lt/api/chat';
+  // Point directly to the God Model's local Node server (supports fully offline PWA mode and bypasses Vercel limits)
+  const apiEndpoint = 'http://localhost:3000/api/chat';
   
   const res = await fetch(apiEndpoint, {
     method: 'POST',
