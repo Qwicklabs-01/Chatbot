@@ -9,8 +9,8 @@ const rateLimit = require('express-rate-limit');
 const { Ollama } = require('ollama');
 const fs = require('fs');
 
-// Configure Ollama to connect to a remote URL if hosted on Vercel
-const OLLAMA_URL = process.env.OLLAMA_HOST || 'https://omnibrain-pro-sakshi.loca.lt';
+// Connect directly to local Ollama on the same machine
+const OLLAMA_URL = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434';
 const ollama = new Ollama({ host: OLLAMA_URL });
 const app = express();
 const PORT = 3000;
@@ -110,13 +110,13 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       messages.push({ role: 'user', content: prompt });
     }
 
-    // Call Ollama API with unlimited tokens and high context
+    // Call Ollama API with dynamic tokens and conservative context
     const response = await ollama.chat({
       model: 'OmniBrain-Pro-Master',
       messages: messages,
       options: {
         num_predict: -1, // Unlimited tokens for response
-        num_ctx: 16384   // Large context window
+        num_ctx: 4096    // Lowered context window to prevent Out of Memory (OOM) crashes
       }
     });
 
