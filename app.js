@@ -879,75 +879,171 @@ function getApiEndpoint() {
   return '/api/chat';
 }
 
-// Client-Side Intelligent Offline / Online Fallback Brain
+// OmniBrain-Pro-Master Client Brain Engine (Created by Developer Sakshi)
 function generateClientFallbackResponse(input) {
   const q = input.trim();
   const lower = q.toLowerCase();
 
-  // 1. Creator & Identity Inquiries
+  // Mode: Chief Marketing Officer & GEO Optimization
+  if (lower.includes('seo') || lower.includes('geo') || lower.includes('search engine') || lower.includes('ranking') || lower.includes('aeo')) {
+    return `📈 **OmniBrain-Pro Master Model — SEO & GEO Optimization Blueprint**\n\n` +
+           `### 1. Generative Engine Optimization (GEO)\n` +
+           `Engineered for AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
+           `• **Authoritative Citations**: Boost visibility by **+40%** by citing primary source documentation.\n` +
+           `• **Concrete Metrics & Statistics**: Boost visibility by **+37%** with verified benchmark figures.\n` +
+           `• **Expert Quotations**: Boost authority by **+30%** with named practitioner references.\n` +
+           `• **Answer-First Structure**: Deliver conclusions immediately in sentence 1, followed by structured tables and bullet lists.\n\n` +
+           `### 2. Technical & Semantic SEO Architecture\n` +
+           `• **Core Web Vitals**: Target LCP ≤ 2.5s, INP ≤ 200ms, and CLS ≤ 0.1.\n` +
+           `• **Topic Clusters**: Link pillar pages to sub-topic spokes via semantic, descriptive anchor text.\n` +
+           `• **JSON-LD Schema**: Production-ready structured schema markup for rich snippets:\n\n` +
+           `\`\`\`json\n` +
+           `{\n` +
+           `  "@context": "https://schema.org",\n` +
+           `  "@type": "TechArticle",\n` +
+           `  "headline": "OmniBrain-Pro SEO & GEO Master Standards",\n` +
+           `  "author": { "@type": "Person", "name": "Sakshi" },\n` +
+           `  "publisher": { "@type": "Organization", "name": "Aura AI" }\n` +
+           `}\n` +
+           `\`\`\`\n\n` +
+           `*Operated under OmniBrain-Pro CMO Mode — Developed by Sakshi.*`;
+  }
+
+  // Mode: The Engineer (API Standards & Architecture)
+  if (lower.includes('api') || lower.includes('next.js') || lower.includes('backend') || lower.includes('code') || lower.includes('zod') || lower.includes('architecture')) {
+    return `⚡ **OmniBrain-Pro Master Model — Engineering Standards**\n\n` +
+           `### 1. Next.js App Router API Envelope Standard\n` +
+           `In production backend endpoints, ALWAYS enforce standardized schema response envelopes:\n\n` +
+           `\`\`\`typescript\n` +
+           `// Standard Envelope: { success, data, message, error, code }\n` +
+           `import { NextResponse } from "next/server";\n` +
+           `import { z } from "zod";\n\n` +
+           `const RequestSchema = z.object({\n` +
+           `  query: z.string().min(1),\n` +
+           `  limit: z.number().default(10)\n` +
+           `});\n\n` +
+           `export async function POST(req: Request) {\n` +
+           `  try {\n` +
+           `    const body = await req.json();\n` +
+           `    const validated = RequestSchema.parse(body);\n` +
+           `    return NextResponse.json({\n` +
+           `      success: true,\n` +
+           `      data: validated,\n` +
+           `      code: "SUCCESS_200"\n` +
+           `    });\n` +
+           `  } catch (err: any) {\n` +
+           `    return NextResponse.json({\n` +
+           `      success: false,\n` +
+           `      error: err.message,\n` +
+           `      code: "VALIDATION_ERROR_400"\n` +
+           `    }, { status: 400 });\n` +
+           `  }\n` +
+           `}\n` +
+           `\`\`\`\n\n` +
+           `*Adhering to TestMu AI & OmniBrain-Pro Production Engineering Standards.*`;
+  }
+
+  // Mode: Content Engineering (LinkedIn 21 Hooks & YouTube)
+  if (lower.includes('linkedin') || lower.includes('hook') || lower.includes('viral') || lower.includes('content') || lower.includes('youtube') || lower.includes('reels')) {
+    return `🔥 **OmniBrain-Pro Creator Studio — Content Engineering**\n\n` +
+           `### 1. LinkedIn 21 Hook Formulas & Feed Truncation\n` +
+           `• **Feed Truncation Rule**: Line 1 (Hook) ≤ 210 characters (desktop) and ≤ 3 lines (mobile).\n` +
+           `• **Line 2 = Payoff**: Deliver on the hook immediately before the "see more" link.\n` +
+           `• **The Top Hook Frameworks**:\n` +
+           `  1. *The Contrarian Frame*: "95% of creators do X. Here is why the top 1% do the opposite."\n` +
+           `  2. *The Hard Metric*: "How we scaled from 0 to 100k users in 45 days (exact breakdown)." \n` +
+           `  3. *The Paradox*: "The fastest way to finish a project is to stop starting new features."\n\n` +
+           `### 2. YouTube 0-15s Critical Retention Window\n` +
+           `• Sentence 1 must confirm the title/thumbnail premise within the first 6 words.\n` +
+           `• Open a high-stakes curiosity loop without prematurely revealing the core solution.\n\n` +
+           `*Operated under OmniBrain-Pro Creator Mode — Developed by Sakshi.*`;
+  }
+
+  // Mode: AI Music Studio (Songs & Lyrics)
+  if (lower.includes('music') || lower.includes('song') || lower.includes('lyrics') || lower.includes('suno') || lower.includes('udio')) {
+    return `🎵 **OmniBrain-Pro AI Music Studio (Designed by Sakshi)**\n\n` +
+           `• **12 Supported Languages**: Hindi, Hinglish, Punjabi, English, Tamil, Telugu, Bengali, Gujarati, Marathi, Kannada, Malayalam, Spanish.\n` +
+           `• **Master Genres & Tempos**: Bollywood Romantic (85 BPM), Punjabi Dhol / Sangeet (128 BPM), Ghazal / Sufi Soul (72 BPM), Desi Hip-Hop (92 BPM), Modern Pop (115 BPM).\n` +
+           `• **Production Arrangement Structure**: Mukhda (Hook) → Antara 1 → Antara 2 → Bridge → Outro.\n\n` +
+           `*Ready to generate lyrics or Suno/Udio prompt blueprints.*`;
+  }
+
+  // Mode: Feedigger Instagram Excavator
+  if (lower.includes('feedigger') || lower.includes('instagram') || lower.includes('engagement rate')) {
+    return `📊 **Feedigger Knowledge Model — Viral Excavator & Analytics**\n\n` +
+           `• **Project Architecture**: Standalone Node.js Express backend + PWA installable application.\n` +
+           `• **Engagement Rate (ER) Formula**: \`ER = ((Likes + Comments) / Views) * 100%\`\n` +
+           `• **Capabilities**: Auto-excavate 50+ posts, sort by viral reach, 1-click CSV export, 100% client-side privacy.\n\n` +
+           `*Operated under Feedigger Module — OmniBrain-Pro.*`;
+  }
+
+  // Identity & Creator Directives
   if (lower.includes('who are you') || lower.includes('who made you') || lower.includes('who created you') || lower.includes('developer') || lower.includes('sakshi') || lower.includes('creator') || lower.includes('your name')) {
-    return `✨ **I am Aura AI**, a state-of-the-art, privacy-focused mobile AI assistant and multi-discipline productivity suite.\n\n` +
-           `• **Developer**: Created with ❤️ by **Sakshi**\n` +
+    return `✨ **I am OmniBrain Pro Master Model (Aura AI)**, an elite AI assistant proudly created by **Developer Sakshi**.\n\n` +
+           `• **Developer**: Sakshi\n` +
            `• **Customer Care / Support**: [+91 6290873841](tel:6290873841)\n` +
            `• **Email**: [qwicklabs2@gmail.com](mailto:qwicklabs2@gmail.com)\n` +
-           `• **Core Engine**: Fully responsive, offline-first client architecture with optional local Ollama neural model connection.`;
+           `• **Active Modes**: The Engineer, The Creative Director, The Link Expert, The Designer & Artist, The Strategist & Scientist, and The Chief Marketing Officer (Growth & SEO Master).\n` +
+           `• **Quality Bar**: Studio-grade deliverables with real code, exact citations, and zero fluff.`;
   }
 
-  // 2. Greetings
+  // Greetings
   if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hello ') || lower.startsWith('hi ') || lower.startsWith('hey ') || lower.includes('good morning') || lower.includes('good evening')) {
-    return `👋 **Hello! Welcome to Aura AI.**\n\nI am your private, intelligent assistant. Here is what I can do for you right now:\n\n` +
-           `• 💬 **Ask any question** (Science, code, writing, general knowledge)\n` +
-           `• 🧮 **Use 150+ Calculators** (Financial, Math, Fitness, Engineering)\n` +
-           `• ✍️ **Writing Suite** (Paraphraser, Grammar, AI Detector, Humanizer)\n` +
-           `• 📄 **PDF Manager** (Watermarking, extraction, merging)\n` +
-           `• 🎙️ **Voice Synthesis** (Voice input & speech synthesis)\n\n` +
-           `*How can I help you today?*`;
+    return `👋 **Hello! Welcome to OmniBrain Pro Master Model (Aura AI).**\n\n` +
+           `I operate at professional studio and engineering standards. Here is how we can collaborate today:\n\n` +
+           `• 📈 **SEO, GEO & Growth Marketing** (Answer-first architecture, citations, schema)\n` +
+           `• ⚡ **Software & API Engineering** (Next.js, Zod, React, Node.js, algorithms)\n` +
+           `• 🔥 **Content Engineering** (LinkedIn 21 Hook formulas, YouTube scripts, Reels)\n` +
+           `• 🧮 **150+ Interactive Calculators** (Financial, Mathematical, Fitness)\n` +
+           `• 📄 **PDF Toolkit & Document Analysis**\n\n` +
+           `*What would you like to build or optimize today?*`;
   }
 
-  // 3. Capabilities / Help
+  // Capabilities / Help
   if (lower === 'help' || lower.includes('what can you do') || lower.includes('features') || lower.includes('commands')) {
-    return `🛠️ **Aura AI Workspace Capabilities**:\n\n` +
-           `1. **Calculators**: Type \`= Math.sqrt(144) + 25\` or select from 150+ calculators in the sidebar.\n` +
-           `2. **Math Solvers**: Type \`solve quadratic a=1 b=-5 c=6\` for step-by-step roots.\n` +
-           `3. **Document Analysis**: Click the attachment icon to upload and search PDFs or text files.\n` +
-           `4. **Writing Tools**: Access Paraphraser, Grammar Checker, Summarizer, and Citations from the sidebar.\n` +
-           `5. **Offline Support**: Aura works fully offline as an installable PWA application.`;
+    return `🛠️ **OmniBrain Pro Master Capabilities**:\n\n` +
+           `1. **The Engineer**: Full-stack code, Next.js API endpoints, debugging, and algorithms.\n` +
+           `2. **The Chief Marketing Officer**: Complete SEO, GEO, AEO, conversion optimization, and audit frameworks.\n` +
+           `3. **The Creative Director**: Midjourney/FLUX prompts, LinkedIn viral hooks, and video beat sheets.\n` +
+           `4. **150+ Calculators**: Interactive tools for mortgages, ROI, BMI, loans, and statistics in the sidebar.\n` +
+           `5. **Offline & Online PWA**: Fully functional client-side with optional local Ollama neural connection.`;
   }
 
-  // 4. Programming Questions (JavaScript, Python, Web Dev)
+  // Programming Questions (JavaScript, Python)
   if (lower.includes('what is javascript') || lower.includes('javascript') || lower.includes('what is js')) {
-    return `💻 **JavaScript (JS)** is a versatile, high-level programming language that powers the interactive behavior of modern websites, web applications, and backend servers (Node.js).\n\n` +
-           `### Core Features:\n` +
-           `• **Client & Server-Side**: Runs natively in all browsers and on servers via Node.js / Deno / Bun.\n` +
-           `• **Event-Driven & Asynchronous**: Utilizes an event loop for non-blocking I/O operations (Promises, async/await).\n` +
-           `• **Dynamic & Multi-Paradigm**: Supports object-oriented, imperative, and functional programming.\n\n` +
-           `\`\`\`javascript\n// Modern JavaScript Example\nconst computeProductivity = (tasks) => tasks.filter(t => t.completed).length;\nconsole.log("Tasks Done:", computeProductivity([{ completed: true }, { completed: false }]));\n\`\`\``;
+    return `💻 **JavaScript (JS) — OmniBrain Technical Briefing**\n\n` +
+           `JavaScript is a high-level, dynamic, multi-paradigm programming language that serves as the foundation of modern web architecture.\n\n` +
+           `### Core Engineering Strengths:\n` +
+           `• **Single-Threaded Non-Blocking I/O**: Driven by the V8 engine event loop and microtask queue.\n` +
+           `• **Universal Execution**: Runs natively in client browsers and on backends via Node.js, Deno, and Bun.\n` +
+           `• **Modern Paradigms**: First-class functions, closures, prototypal inheritance, and async/await syntax.\n\n` +
+           `\`\`\`javascript\n// Production Asynchronous Pattern\nasync function fetchResource(endpoint) {\n  const response = await fetch(endpoint);\n  if (!response.ok) throw new Error(\`HTTP \${response.status}\`);\n  return response.json();\n}\n\`\`\``;
   }
 
   if (lower.includes('what is python') || lower.includes('python')) {
-    return `🐍 **Python** is a widely-used, high-level, general-purpose programming language celebrated for its elegant, readable syntax and enormous ecosystem in AI, Data Science, and Web Development.\n\n` +
-           `### Key Strengths:\n` +
-           `• **Simplicity**: Readable code that closely resembles plain English.\n` +
-           `• **AI & ML**: The industry standard for TensorFlow, PyTorch, Scikit-learn, and Ollama.\n` +
-           `• **Batteries-Included**: Extensive standard library for networking, math, file I/O, and data processing.`;
+    return `🐍 **Python — OmniBrain Technical Briefing**\n\n` +
+           `Python is an interpreted, high-level programming language emphasizing readability and developer productivity.\n\n` +
+           `### Core Strengths:\n` +
+           `• **Standard for AI & ML**: Native runtime for PyTorch, TensorFlow, Hugging Face, and Ollama.\n` +
+           `• **Data Science Ecosystem**: NumPy, Pandas, Scipy, and Polars for high-throughput computation.\n` +
+           `• **Expressive Syntax**: Minimal boilerplate with powerful list comprehensions and generators.`;
   }
 
-  // 5. Arithmetic / Math evaluation in chat
+  // Arithmetic / Math evaluation in chat
   try {
     const cleanExpr = q.replace(/[^0-9+\-*/().^%]/g, '');
     if (cleanExpr.length >= 3 && /[0-9]/.test(cleanExpr) && /[+\-*/]/.test(cleanExpr)) {
       const sanitized = cleanExpr.replace(/\^/g, '**');
       const res = Function(`'use strict'; return (${sanitized})`)();
       if (typeof res === 'number' && !isNaN(res) && isFinite(res)) {
-        return `🧮 **Calculation Result**:\n\`${cleanExpr} = ${res}\``;
+        return `🧮 **OmniBrain Math Solver**:\n\`${cleanExpr} = ${res}\``;
       }
     }
   } catch (e) {}
 
-  // 6. Generic intelligent response
-  return `💡 **Aura AI Analysis**:\n\nRegarding "${q}":\n\n` +
-         `Aura has processed your input locally. All tools, calculators, and client-side processing functions are fully active.\n\n` +
-         `*(Note: For deep neural LLM generation, ensure your local Node server is running at \`http://localhost:3000\` or set your tunnel URL in the About & Settings modal).*`;
+  // Master Studio Answer
+  return `🧠 **OmniBrain-Pro Master Model**:\n\nRegarding "${q}":\n\n` +
+         `Processed under OmniBrain Pro studio standards. We can engineer technical solutions, construct viral content frameworks, optimize SEO & GEO visibility, or solve mathematical and business problems. How would you like to proceed?`;
 }
 
 // Bot Response Brain Engine
