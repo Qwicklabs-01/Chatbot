@@ -10,7 +10,7 @@ const { Ollama } = require('ollama');
 const fs = require('fs');
 
 // Configure Ollama to connect to a remote URL if hosted on Vercel
-const OLLAMA_URL = process.env.OLLAMA_HOST || 'https://late-kids-accept.loca.lt';
+const OLLAMA_URL = process.env.OLLAMA_HOST || 'https://omnibrain-pro-sakshi.loca.lt';
 const ollama = new Ollama({ host: OLLAMA_URL });
 const app = express();
 const PORT = 3000;
