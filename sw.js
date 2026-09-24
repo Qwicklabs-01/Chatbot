@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aura-ai-cache-v12';
+const CACHE_NAME = 'aura-ai-cache-v13';
 const ASSETS = [
   './',
   './index.html',
@@ -10,7 +10,8 @@ const ASSETS = [
   './manifest.json',
   './libs/pdf-lib.min.js',
   './libs/pdf.min.js',
-  './libs/pdf.worker.min.js'
+  './libs/pdf.worker.min.js',
+  './libs/mammoth.browser.min.js'
 ];
 
 self.addEventListener('install', (e) => {

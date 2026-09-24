@@ -1162,6 +1162,11 @@ async function generateBotResponse(input) {
     systemPrompt += `\n\nI have uploaded an image. Its dominant colors are: ${state.analysedImagePalette.join(', ')}. Keep this in mind if I ask about an image.`;
   }
 
+  // Fast offline return if device has no internet and is not running on local loopback
+  if (!navigator.onLine && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return generateClientFallbackResponse(input);
+  }
+
   // Attempt backend inference (Ollama Node server or Custom Tunnel)
   const apiEndpoint = getApiEndpoint();
 
@@ -2073,6 +2078,11 @@ function generateClientFallbackPrompt(prompt) {
 }
 
 async function fetchAI(prompt) {
+  // Fast offline return
+  if (!navigator.onLine && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return generateClientFallbackPrompt(prompt);
+  }
+
   const apiEndpoint = getApiEndpoint();
   
   try {
@@ -2748,13 +2758,15 @@ if (contactForm) {
 
 // --- Network Connectivity Status ---
 window.addEventListener('online', () => {
-  showAlert('You are back online.');
+  showAlert('Back Online: Network & Cloud AI connected.');
   const botStatus = document.getElementById('bot-status');
-  if (botStatus) botStatus.innerHTML = '<span>●</span> Online • Local Workspace';
+  if (botStatus) botStatus.innerHTML = '<span style="color: #10B981;">●</span> Online • OmniBrain AI';
+  auraAnalytics.logEvent('network_status_change', { status: 'online' });
 });
 
 window.addEventListener('offline', () => {
-  showAlert('You are offline. Local features still work.');
+  showAlert('Offline Mode Active: Local Client Engine running.');
   const botStatus = document.getElementById('bot-status');
-  if (botStatus) botStatus.innerHTML = '<span style="color: #F43F5E;">●</span> Offline • Local Workspace';
+  if (botStatus) botStatus.innerHTML = '<span style="color: #F59E0B;">●</span> Offline • Local Client Engine';
+  auraAnalytics.logEvent('network_status_change', { status: 'offline' });
 });
