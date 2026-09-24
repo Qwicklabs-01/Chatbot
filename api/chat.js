@@ -110,9 +110,9 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       messages.push({ role: 'user', content: prompt });
     }
 
-    // Call Ollama API with dynamic tokens and conservative context
+    // Call Ollama API with a lightweight model that fits the system's 8GB RAM
     const response = await ollama.chat({
-      model: 'OmniBrain-Pro-Master',
+      model: 'brainomnipro',
       messages: messages,
       options: {
         num_predict: -1, // Unlimited tokens for response
