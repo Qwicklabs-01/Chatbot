@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- Tab Switching Logic ---
-function switchTab(tabId) {
+function switchTab(tabId, silent = false) {
   state.activeTab = tabId;
   DOM.tabVoice.classList.toggle('active', tabId === 'voice');
   DOM.tabPdf.classList.toggle('active', tabId === 'pdf');
@@ -573,8 +573,10 @@ function switchTab(tabId) {
     DOM.tabIndicator.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
   }
   
-  showAlert(`Switched to ${tabId}`);
-  auraAnalytics.trackToolUsage(tabId, 'switch_tab');
+  if (!silent) {
+    showAlert(`Switched to ${tabId}`);
+    auraAnalytics.trackToolUsage(tabId, 'switch_tab');
+  }
 }
 
 DOM.tabVoice.addEventListener('click', () => switchTab('voice'));
@@ -2580,8 +2582,8 @@ if (DOM.removeFileBtn) {
 updateClock();
 setInterval(updateClock, 1000);
 loadHistory();
-setTimeout(() => switchTab(state.activeTab), 220); // Align sliding indicator background on startup
-showAlert('Aura Ready.');
+setTimeout(() => switchTab(state.activeTab, true), 220); // Align sliding indicator background on startup without toast
+console.log('✨ Aura AI initialized and ready.');
 
 // --- About Modal, Reviews and Contact Form Logic ---
 const aboutModal = document.getElementById('about-modal');

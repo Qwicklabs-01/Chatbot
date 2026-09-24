@@ -41,6 +41,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
+// Local development stubs for Vercel analytics & favicon
+app.get(['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'], (req, res) => {
+  res.type('application/javascript').send('// Local development analytics stub');
+});
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'aura-icon-192.png'));
+});
+
 // Security & Professional Hardening
 app.use(helmet({
   contentSecurityPolicy: false, // Prevent breaking local inline scripts
