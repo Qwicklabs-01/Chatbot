@@ -3,6 +3,78 @@
  * Pure Client-Side JavaScript Chat Engine & Skills (Universal Edition)
  */
 
+// --- Aura Telemetry, Console Logging & Google Analytics Engine ---
+const auraAnalytics = {
+  logEvent(eventName, params = {}) {
+    // 1. Google Analytics (gtag)
+    if (typeof window.gtag === 'function') {
+      try {
+        window.gtag('event', eventName, {
+          app_name: 'Aura AI',
+          timestamp: new Date().toISOString(),
+          ...params
+        });
+      } catch (err) {
+        console.warn('Google Analytics event error:', err);
+      }
+    }
+
+    // 2. Structured Console Output
+    console.log(`📊 [Aura Analytics] Event: ${eventName}`, params);
+  },
+
+  trackChat(userText, responseLength = 0, hasAttachment = false) {
+    this.logEvent('chat_message_sent', {
+      event_category: 'Engagement',
+      message_length: (userText || '').length,
+      has_attachment: hasAttachment,
+      response_length: responseLength
+    });
+  },
+
+  trackToolUsage(toolName, action = 'open') {
+    this.logEvent('tool_used', {
+      event_category: 'Tools',
+      tool_name: toolName,
+      action: action
+    });
+  },
+
+  trackCalculator(calcName, category) {
+    this.logEvent('calculator_computed', {
+      event_category: 'Calculators',
+      calculator_name: calcName,
+      calculator_category: category
+    });
+  },
+
+  trackLeadSubmission(type, name, rating = null) {
+    this.logEvent('lead_generated', {
+      event_category: 'Leads & Feedback',
+      lead_type: type, // 'review' or 'contact_form'
+      lead_name: name,
+      rating: rating
+    });
+  },
+
+  trackError(context, errorMessage) {
+    this.logEvent('app_error', {
+      event_category: 'Exceptions',
+      error_context: context,
+      error_message: errorMessage
+    });
+    console.error(`🚨 [Aura Telemetry Error] (${context}):`, errorMessage);
+  }
+};
+
+// Global Telemetry & Error Listeners
+window.addEventListener('error', (e) => {
+  auraAnalytics.trackError('window_error', e.message);
+});
+window.addEventListener('unhandledrejection', (e) => {
+  auraAnalytics.trackError('unhandled_promise', e.reason ? (e.reason.message || String(e.reason)) : 'Unknown rejection');
+});
+
 // --- Sitemap Calculator Database ---
 const financeList = ["Mortgage Calculator", "Loan Calculator", "Auto Loan Calculator", "Interest Calculator", "Payment Calculator", "Retirement Calculator", "Amortization Calculator", "Investment Calculator", "Currency Calculator", "Inflation Calculator", "Finance Calculator", "Mortgage Payoff Calculator", "Income Tax Calculator", "Compound Interest Calculator", "Salary Calculator", "401K Calculator", "Interest Rate Calculator", "Sales Tax Calculator", "House Affordability Calculator", "Savings Calculator", "Rent Calculator", "Marriage Tax Calculator", "Estate Tax Calculator", "Pension Calculator", "Social Security Calculator", "Annuity Calculator", "Annuity Payout Calculator", "Credit Card Calculator", "Credit Cards Payoff Calculator", "Debt Payoff Calculator", "Debt Consolidation Calculator", "Repayment Calculator", "Student Loan Calculator", "College Cost Calculator", "Simple Interest Calculator", "CD Calculator", "Bond Calculator", "Mutual Fund Calculator", "Roth IRA Calculator", "IRA Calculator", "RMD Calculator", "VAT Calculator", "Cash Back or Low Interest Calculator", "Auto Lease Calculator", "Depreciation Calculator", "Average Return Calculator", "Margin Calculator", "Discount Calculator", "Business Loan Calculator", "Debt-to-Income Ratio Calculator", "Real Estate Calculator", "Take-Home-Paycheck Calculator", "Personal Loan Calculator", "Boat Loan Calculator", "Lease Calculator", "Refinance Calculator", "Budget Calculator", "Rental Property Calculator", "IRR Calculator", "ROI Calculator", "APR Calculator", "FHA Loan Calculator", "VA Mortgage Calculator", "Home Equity Loan Calculator", "HELOC Calculator", "Down Payment Calculator", "Rent vs. Buy Calculator", "Payback Period Calculator", "Present Value Calculator", "Future Value Calculator", "Commission Calculator", "Mortgage Calculator UK", "Canadian Mortgage Calculator", "Mortgage Amortization Calculator", "Percent Off Calculator"];
 
@@ -502,6 +574,7 @@ function switchTab(tabId) {
   }
   
   showAlert(`Switched to ${tabId}`);
+  auraAnalytics.trackToolUsage(tabId, 'switch_tab');
 }
 
 DOM.tabVoice.addEventListener('click', () => switchTab('voice'));
@@ -850,6 +923,9 @@ function handleUserMessageSubmit(inputText) {
   state.chatHistory.push({ sender: 'user', text: trimmed, timestamp });
   saveHistory();
 
+  // Telemetry: Track User Engagement
+  auraAnalytics.trackChat(trimmed, 0, Boolean(state.loadedFile && state.loadedFile.content));
+
   showTypingIndicator();
 
   setTimeout(async () => {
@@ -860,6 +936,12 @@ function handleUserMessageSubmit(inputText) {
     appendMessageMarkup('bot', botResponse, botTimestamp, true);
     state.chatHistory.push({ sender: 'bot', text: botResponse, timestamp: botTimestamp });
     saveHistory();
+
+    // Telemetry: Track Bot Delivery
+    auraAnalytics.logEvent('bot_response_delivered', { 
+      response_length: (botResponse || '').length,
+      mode: 'OmniBrain-Pro'
+    });
   }, 800);
 }
 
@@ -2637,6 +2719,9 @@ if (reviewForm) {
     
     renderReviews();
     showAlert('Thank you for your review!');
+
+    // Telemetry: Track Review Lead
+    auraAnalytics.trackLeadSubmission('review', author, selectedRating);
   });
 }
 
@@ -2653,6 +2738,10 @@ if (contactForm) {
     // Simulate successful message send locally
     console.log("Feedback Message Submitted:", { name, email, message });
     showAlert('Message sent successfully!');
+
+    // Telemetry: Track Contact Lead
+    auraAnalytics.trackLeadSubmission('contact_form', name);
+
     contactForm.reset();
   });
 }
