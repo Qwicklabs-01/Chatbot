@@ -85,7 +85,7 @@
     }
   </script>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3.6">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0B0F19">
 
@@ -382,6 +382,18 @@
 
         <!-- Conversational Chat Area -->
         <div id="chat-view-container" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; height: 100%;">
+          <!-- OmniBrain-Pro-Master Active Modes Bar -->
+          <div class="omnibrain-mode-bar" id="omnibrain-mode-bar">
+            <span class="omnibrain-mode-label">🧠 Mode:</span>
+            <button class="omnibrain-mode-pill active" data-mode="auto" title="Auto-detect Best Mode">⚡ Auto</button>
+            <button class="omnibrain-mode-pill" data-mode="engineer" title="The Engineer (Code, API, Architecture)">💻 Engineer</button>
+            <button class="omnibrain-mode-pill" data-mode="creative" title="Creative Director (FLUX/Midjourney, Prompts)">🎨 Creative</button>
+            <button class="omnibrain-mode-pill" data-mode="cmo" title="Chief Marketing Officer (BeyondSEO 2.0, Growth)">📈 CMO & SEO</button>
+            <button class="omnibrain-mode-pill" data-mode="designer" title="Designer & Artist (UI/UX, 3D, Design Systems)">📐 Designer</button>
+            <button class="omnibrain-mode-pill" data-mode="link" title="The Link Expert (Deep URL Analysis)">🔗 Link Expert</button>
+            <button class="omnibrain-mode-pill" data-mode="strategist" title="Strategist & Scientist (30/60/90 Day Roadmaps)">🔬 Strategist</button>
+          </div>
+
           <!-- Main Scrollable Chat Panel -->
           <main class="chat-messages" id="chat-messages-container">
             <!-- Message bubbles dynamically populated by JS -->
@@ -391,6 +403,10 @@
           <div class="suggestion-wrapper" id="suggestions-container">
             <span class="chip" onclick="handleChipClick('What is JavaScript?')">💡 What is JS?</span>
             <span class="chip" onclick="handleChipClick('Tell me a joke')">😆 Tell a joke</span>
+            <span class="chip" onclick="handleChipClick('Generate Next.js API architecture with Zod')">💻 Next.js API</span>
+            <span class="chip" onclick="handleChipClick('Create a BeyondSEO 2.0 audit and GEO plan')">📈 SEO & GEO</span>
+            <span class="chip" onclick="handleChipClick('Create a Midjourney v6 prompt for cyberpunk city')">🎨 AI Art Prompt</span>
+            <span class="chip" onclick="handleChipClick('Roll a 20-sided dice')">🎲 Roll D20</span>
             <span class="chip" onclick="handleChipClick('= Math.sin(Math.PI / 2) + Math.sqrt(81)')">🧮 Evaluate</span>
             <span class="chip" onclick="handleChipClick('Help')">❓ Help Menu</span>
           </div>
@@ -557,8 +573,27 @@
                   <div class="skill-card-top">
                     <span class="skill-title">
                       <span class="skill-icon">🧮</span>
-                      <span>Universal Calculator</span>
+                      <span>Calculator Suite (Windows 11 Fluent Design)</span>
                     </span>
+                  </div>
+
+                  <!-- Quick Category Navigation Ribbon -->
+                  <div class="calc-nav-ribbon" id="calc-category-ribbon">
+                    <button class="calc-pill-btn active" data-calc="standard-calculator">🧮 Standard (Win 11)</button>
+                    <button class="calc-pill-btn" data-calc="scientific-calculator">🔬 Scientific</button>
+                    <button class="calc-pill-btn" data-calc="mortgage-calculator">🏠 Mortgage</button>
+                    <button class="calc-pill-btn" data-calc="loan-calculator">💵 Loan</button>
+                    <button class="calc-pill-btn" data-calc="compound-interest-calculator">📈 Interest</button>
+                    <button class="calc-pill-btn" data-calc="discount-calculator">🏷️ Discount</button>
+                    <button class="calc-pill-btn" data-calc="bmi-calculator">💪 BMI</button>
+                    <button class="calc-pill-btn" data-calc="bmr-calculator">🔥 Calories</button>
+                    <button class="calc-pill-btn" data-calc="quadratic-formula-calculator">📐 Quadratic</button>
+                    <button class="calc-pill-btn" data-calc="statistics-calculator">📊 Statistics</button>
+                    <button class="calc-pill-btn" data-calc="conversion-calculator">⚖️ Converter</button>
+                    <button class="calc-pill-btn" data-calc="age-calculator">📅 Age</button>
+                    <button class="calc-pill-btn" data-calc="tip-calculator">🧾 Tip</button>
+                    <button class="calc-pill-btn" data-calc="gpa-calculator">🏫 GPA</button>
+                    <button class="calc-pill-btn" data-calc="base64-encode-decode">💻 Base64</button>
                   </div>
                   
                   <!-- Mode Switcher -->
@@ -566,7 +601,8 @@
                     <label class="prompt-label">Select Calculator Type</label>
                     <select id="universal-mode-select" class="solver-select" style="width: 100%;">
                       <optgroup label="Core Keypad">
-                        <option value="scientific-calculator">🧮 Scientific Keypad</option>
+                        <option value="standard-calculator" selected>🧮 Standard Calculator (Windows 11)</option>
+                        <option value="scientific-calculator">🔬 Scientific Keypad</option>
                       </optgroup>
                       <optgroup label="Financial Calculators">
                         <option value="mortgage-calculator">🏠 Mortgage Calculator</option>
@@ -788,14 +824,28 @@
   </div>
 
   <!-- Core Application Scripts -->
-  <script src="app.js"></script>
+  <script src="app.js?v=3.6"></script>
   
   <script>
-    // PWA Service Worker Registration
+    // Force purge old service worker caches on load
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        names.forEach((name) => {
+          if (name !== 'aura-ai-cache-v18') {
+            caches.delete(name);
+          }
+        });
+      });
+    }
+
+    // PWA Service Worker Registration with Instant Cache Invalidation
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then((reg) => console.log('✅ Service Worker registered successfully:', reg.scope))
+        navigator.serviceWorker.register('./sw.js?v=3.6')
+          .then((reg) => {
+            reg.update(); // Enforce instant check for new versions on load
+            console.log('✅ Service Worker registered successfully:', reg.scope);
+          })
           .catch((err) => console.error('⚠️ Service Worker registration failed:', err));
       });
     }

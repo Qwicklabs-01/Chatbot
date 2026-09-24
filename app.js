@@ -155,8 +155,11 @@ let state = {
   voices: [],
   activeTab: 'voice',
   
+  // OmniBrain Pro Active Mode State ('auto', 'engineer', 'creative', 'cmo', 'designer', 'link', 'strategist')
+  omniMode: 'auto',
+
   // Universal Calculator State
-  calcMode: 'scientific-calculator',
+  calcMode: 'standard-calculator',
   latestResultText: '',
   latestResultChatText: '',
 
@@ -964,11 +967,175 @@ function getApiEndpoint() {
 }
 
 // OmniBrain-Pro-Master Client Brain Engine (Created by Developer Sakshi)
-function generateClientFallbackResponse(input) {
+async function generateClientFallbackResponse(input) {
   const q = input.trim();
   const lower = q.toLowerCase();
+  const mode = state.omniMode || 'auto';
 
-  // Mode: Chief Marketing Officer & GEO Optimization
+  // --- 1. Mode Specific Overrides ---
+  if (mode === 'engineer') {
+    return `⚡ **OmniBrain-Pro — The Engineer Mode (Activated)**\n\n` +
+           `### Production Next.js App Router Architecture & Standards\n` +
+           `Adhering to TestMu AI & OmniBrain-Pro enterprise production standards:\n\n` +
+           `\`\`\`typescript\n` +
+           `// Standardized Envelope: { success: boolean, data?: any, message?: string, error?: string, code?: string }\n` +
+           `import { NextResponse } from "next/server";\n` +
+           `import { z } from "zod";\n\n` +
+           `const RequestSchema = z.object({\n` +
+           `  query: z.string().min(1, "Query is required"),\n` +
+           `  limit: z.number().int().positive().max(100).default(20)\n` +
+           `});\n\n` +
+           `export async function POST(req: Request) {\n` +
+           `  try {\n` +
+           `    const body = await req.json();\n` +
+           `    const validated = RequestSchema.parse(body);\n` +
+           `    \n` +
+           `    // Execute core domain business logic\n` +
+           `    const data = { processedQuery: validated.query, timestamp: Date.now() };\n` +
+           `    \n` +
+           `    return NextResponse.json({\n` +
+           `      success: true,\n` +
+           `      data,\n` +
+           `      code: "SUCCESS_200"\n` +
+           `    }, { status: 200 });\n` +
+           `  } catch (err: any) {\n` +
+           `    return NextResponse.json({\n` +
+           `      success: false,\n` +
+           `      error: err.errors ? err.errors.map((e: any) => e.message).join(", ") : err.message,\n` +
+           `      code: "VALIDATION_ERROR_400"\n` +
+           `    }, { status: 400 });\n` +
+           `  }\n` +
+           `}\n` +
+           `\`\`\`\n\n` +
+           `### Security & Enterprise Hardening (OWASP Top 10)\n` +
+           `• **Zero-Trust Input**: Schema-validated via Zod before any computation.\n` +
+           `• **SQL/NoSQL Injection Immunity**: Parameterized statements only.\n` +
+           `• **Edge Rate Limiting**: Enforce IP-based leaky bucket token limiter.\n` +
+           `• **Status Codes**: 200 (OK), 201 (Created), 400 (Bad Input), 401 (Auth), 403 (Forbidden), 500 (Internal).`;
+  }
+
+  if (mode === 'creative') {
+    return `🎨 **OmniBrain-Pro — The Creative Director (TrendCanvas Activated)**\n\n` +
+           `### Creative Direction Summary\n` +
+           `Cinematic high-fidelity visualization prompt engineered for FLUX.1 & Midjourney v6:\n\n` +
+           `**MASTER ENHANCED PROMPT:**\n` +
+           `> Cinematic film still of ${q}, shot on 35mm Arri Alexa LF, Panavision Ultra Vista anamorphic lens, volumetric atmospheric dust motes, rim lighting, moody neo-noir cyan and amber color grade, photorealistic, intricate micro-textures, 8k resolution, award-winning cinematography --ar 16:9 --style raw --v 6.0\n\n` +
+           `**STYLE TAGS:**\n` +
+           `\`anamorphic\`, \`35mm film stock\`, \`volumetric lighting\`, \`cinematic grading\`, \`photorealistic\`\n\n` +
+           `**NEGATIVE PROMPT:**\n` +
+           `\`low quality, blurry, oversaturated, deformed hands, cartoon, CGI plastic artifacts, cropped frame\``;
+  }
+
+  if (mode === 'cmo') {
+    return `📈 **OmniBrain-Pro — Chief Marketing Officer (BeyondSEO 2.0 Activated)**\n\n` +
+           `### 1. Generative Engine Optimization (GEO) Blueprint\n` +
+           `Engineered to dominate AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
+           `• **Primary Source Citations**: Boosts AI engine citation rate by **+40%**.\n` +
+           `• **Concrete Metrics & Verified Figures**: Increases inclusion rate by **+37%**.\n` +
+           `• **Expert Named Quotes**: Enhances authority attribution by **+30%**.\n` +
+           `• **Answer-First Structure**: Immediate conclusion in Sentence 1, followed by structured tables.\n\n` +
+           `### 2. JSON-LD Schema Architecture (FAQPage & TechArticle)\n` +
+           `\`\`\`json\n` +
+           `{\n` +
+           `  "@context": "https://schema.org",\n` +
+           `  "@type": "TechArticle",\n` +
+           `  "headline": "${q}",\n` +
+           `  "author": { "@type": "Person", "name": "Sakshi" },\n` +
+           `  "publisher": { "@type": "Organization", "name": "Aura AI" }\n` +
+           `}\n` +
+           `\`\`\`\n\n` +
+           `### 3. Content Engineering (LinkedIn 21 Hooks Formula)\n` +
+           `• **Hook (≤210 chars)**: "95% of teams handle ${q} wrong. Here is how top 1% achieve 10x ROI."\n` +
+           `• **Payoff**: Immediate value payoff before the "see more" cutoff.`;
+  }
+
+  if (mode === 'designer') {
+    return `📐 **OmniBrain-Pro — Designer & Artist Mode (Activated)**\n\n` +
+           `### UI/UX Design System Specifications\n` +
+           `• **Grid System**: 8pt cohesive spacing rhythm (8px, 16px, 24px, 32px, 48px, 64px).\n` +
+           `• **Accessibility Compliance**: Strict **WCAG 2.2 AA** contrast ratios (minimum 4.5:1 text, 3:1 graphical UI).\n` +
+           `• **Curated HSL Color Tokens**:\n` +
+           `  - Background: \`hsl(222, 47%, 7%)\` (#0B0F19)\n` +
+           `  - Primary Accent: \`hsl(271, 91%, 65%)\` (#A855F7)\n` +
+           `  - Secondary Cyan: \`hsl(187, 92%, 43%)\` (#06B6D4)\n` +
+           `  - Text High-Contrast: \`hsl(210, 40%, 98%)\` (#F8FAFC)\n` +
+           `• **Typography Hierarchy**: Segoe UI / Inter, with 1.250 Major Third scale.`;
+  }
+
+  if (mode === 'link') {
+    return `🔗 **OmniBrain-Pro — The Link Expert (Activated)**\n\n` +
+           `### Link & Source Analysis Framework\n` +
+           `• **Entity Analyzed**: "${q}"\n` +
+           `• **Domain Role Adopted**: Principal Systems Analyst & Senior Domain Specialist\n` +
+           `• **Key Observations**: Structural architecture, responsive performance, semantic markup, and metadata.\n` +
+           `• **Identified Risks**: Check CORS headers, CDN cache invalidation, and mobile layout constraints.\n` +
+           `• **Recommended Action**: Implement automated synthetic monitoring and structured schema verification.`;
+  }
+
+  if (mode === 'strategist') {
+    return `🔬 **OmniBrain-Pro — Strategist & Scientist Mode (Activated)**\n\n` +
+           `### Phased Execution Roadmap (30 / 60 / 90 Days)\n` +
+           `**Phase 1 (Days 1–30): Foundation & Discovery**\n` +
+           `• Establish baseline metrics, identify technical bottlenecks, audit data fidelity.\n\n` +
+           `**Phase 2 (Days 31–60): Implementation & Scaling**\n` +
+           `• Deploy core architectural improvements and automated test suites.\n\n` +
+           `**Phase 3 (Days 61–90): Optimization & Market Dominance**\n` +
+           `• Measure conversion deltas, execute A/B split experiments, and scale.\n\n` +
+           `*Trade-off analysis: Fast time-to-market prioritized over exhaustive premature abstraction.*`;
+  }
+
+  // --- 2. Auto-Adaptive Mode Logic ---
+
+  // Check Local FAQ Database for instant replies (jokes, greetings, help, calculators)
+  for (const item of faqDatabase) {
+    if (item.keywords.some(k => lower.includes(k))) {
+      return item.response;
+    }
+  }
+
+  // Randomization & Dice Rolling (from brain.md)
+  if (lower.includes('dice') || lower.includes('roll') || lower.includes('random number')) {
+    let sides = 6;
+    const dMatch = lower.match(/d(\d+)/);
+    if (dMatch) sides = parseInt(dMatch[1], 10);
+    else if (lower.includes('20')) sides = 20;
+    else if (lower.includes('100')) sides = 100;
+    else if (lower.includes('12')) sides = 12;
+    else if (lower.includes('8')) sides = 8;
+    else if (lower.includes('4')) sides = 4;
+
+    const rolled = Math.floor(Math.random() * sides) + 1;
+    return `🎲 **OmniBrain Randomization Engine**\n\n` +
+           `• **Sides**: D${sides}\n` +
+           `• **Result**: **${rolled}**\n\n` +
+           `*Scripting Equivalents:*\n` +
+           `• **PowerShell**: \`Get-Random -Minimum 1 -Maximum ${sides + 1}\`\n` +
+           `• **Bash**: \`echo $((RANDOM % ${sides} + 1))\``;
+  }
+
+  // Developer Identity & Support
+  if (lower.includes('who are you') || lower.includes('who made you') || lower.includes('who created you') || lower.includes('developer') || lower.includes('sakshi') || lower.includes('creator') || lower.includes('your name')) {
+    return `✨ **I am OmniBrain Pro Master Model (Aura AI)**, an elite AI assistant proudly created by **Developer Sakshi**.\n\n` +
+           `• **Developer**: Sakshi\n` +
+           `• **Customer Care / Support**: [+91 6290873841](tel:6290873841)\n` +
+           `• **Email**: [qwicklabs2@gmail.com](mailto:qwicklabs2@gmail.com)\n` +
+           `• **Active Modes**: The Engineer, The Creative Director, The Link Expert, The Designer & Artist, The Strategist & Scientist, and The Chief Marketing Officer (Growth & BeyondSEO 2.0).\n` +
+           `• **Quality Bar**: Studio-grade deliverables with real code, exact citations, and zero fluff.`;
+  }
+
+  // Greetings
+  if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hello ') || lower.startsWith('hi ') || lower.startsWith('hey ') || lower.includes('good morning') || lower.includes('good evening')) {
+    return `👋 **Hello! Welcome to OmniBrain Pro Master Model (Aura AI).**\n\n` +
+           `I operate at professional studio and engineering standards. Here is how we can collaborate today:\n\n` +
+           `• 📈 **SEO, GEO & Growth Marketing** (Answer-first architecture, citations, schema)\n` +
+           `• ⚡ **Software & API Engineering** (Next.js, Zod, React, Node.js, algorithms)\n` +
+           `• 🔥 **Content Engineering** (LinkedIn 21 Hook formulas, YouTube scripts, Reels)\n` +
+           `• 🧮 **150+ Interactive Calculators** (Windows 11 Fluent Standard & Scientific)\n` +
+           `• 📄 **PDF Toolkit & Document Analysis**\n\n` +
+           `*What would you like to build or optimize today?*`;
+  }
+
+  // SEO & GEO Queries
   if (lower.includes('seo') || lower.includes('geo') || lower.includes('search engine') || lower.includes('ranking') || lower.includes('aeo')) {
     return `📈 **OmniBrain-Pro Master Model — SEO & GEO Optimization Blueprint**\n\n` +
            `### 1. Generative Engine Optimization (GEO)\n` +
@@ -980,20 +1147,10 @@ function generateClientFallbackResponse(input) {
            `### 2. Technical & Semantic SEO Architecture\n` +
            `• **Core Web Vitals**: Target LCP ≤ 2.5s, INP ≤ 200ms, and CLS ≤ 0.1.\n` +
            `• **Topic Clusters**: Link pillar pages to sub-topic spokes via semantic, descriptive anchor text.\n` +
-           `• **JSON-LD Schema**: Production-ready structured schema markup for rich snippets:\n\n` +
-           `\`\`\`json\n` +
-           `{\n` +
-           `  "@context": "https://schema.org",\n` +
-           `  "@type": "TechArticle",\n` +
-           `  "headline": "OmniBrain-Pro SEO & GEO Master Standards",\n` +
-           `  "author": { "@type": "Person", "name": "Sakshi" },\n` +
-           `  "publisher": { "@type": "Organization", "name": "Aura AI" }\n` +
-           `}\n` +
-           `\`\`\`\n\n` +
-           `*Operated under OmniBrain-Pro CMO Mode — Developed by Sakshi.*`;
+           `• **JSON-LD Schema**: Production-ready structured schema markup for rich snippets.`;
   }
 
-  // Mode: The Engineer (API Standards & Architecture)
+  // API, Backend & Code
   if (lower.includes('api') || lower.includes('next.js') || lower.includes('backend') || lower.includes('code') || lower.includes('zod') || lower.includes('architecture')) {
     return `⚡ **OmniBrain-Pro Master Model — Engineering Standards**\n\n` +
            `### 1. Next.js App Router API Envelope Standard\n` +
@@ -1010,98 +1167,23 @@ function generateClientFallbackResponse(input) {
            `  try {\n` +
            `    const body = await req.json();\n` +
            `    const validated = RequestSchema.parse(body);\n` +
-           `    return NextResponse.json({\n` +
-           `      success: true,\n` +
-           `      data: validated,\n` +
-           `      code: "SUCCESS_200"\n` +
-           `    });\n` +
+           `    return NextResponse.json({ success: true, data: validated, code: "SUCCESS_200" });\n` +
            `  } catch (err: any) {\n` +
-           `    return NextResponse.json({\n` +
-           `      success: false,\n` +
-           `      error: err.message,\n` +
-           `      code: "VALIDATION_ERROR_400"\n` +
-           `    }, { status: 400 });\n` +
+           `    return NextResponse.json({ success: false, error: err.message, code: "VALIDATION_ERROR_400" }, { status: 400 });\n` +
            `  }\n` +
            `}\n` +
            `\`\`\`\n\n` +
            `*Adhering to TestMu AI & OmniBrain-Pro Production Engineering Standards.*`;
   }
 
-  // Mode: Content Engineering (LinkedIn 21 Hooks & YouTube)
-  if (lower.includes('linkedin') || lower.includes('hook') || lower.includes('viral') || lower.includes('content') || lower.includes('youtube') || lower.includes('reels')) {
-    return `🔥 **OmniBrain-Pro Creator Studio — Content Engineering**\n\n` +
-           `### 1. LinkedIn 21 Hook Formulas & Feed Truncation\n` +
-           `• **Feed Truncation Rule**: Line 1 (Hook) ≤ 210 characters (desktop) and ≤ 3 lines (mobile).\n` +
-           `• **Line 2 = Payoff**: Deliver on the hook immediately before the "see more" link.\n` +
-           `• **The Top Hook Frameworks**:\n` +
-           `  1. *The Contrarian Frame*: "95% of creators do X. Here is why the top 1% do the opposite."\n` +
-           `  2. *The Hard Metric*: "How we scaled from 0 to 100k users in 45 days (exact breakdown)." \n` +
-           `  3. *The Paradox*: "The fastest way to finish a project is to stop starting new features."\n\n` +
-           `### 2. YouTube 0-15s Critical Retention Window\n` +
-           `• Sentence 1 must confirm the title/thumbnail premise within the first 6 words.\n` +
-           `• Open a high-stakes curiosity loop without prematurely revealing the core solution.\n\n` +
-           `*Operated under OmniBrain-Pro Creator Mode — Developed by Sakshi.*`;
-  }
-
-  // Mode: AI Music Studio (Songs & Lyrics)
-  if (lower.includes('music') || lower.includes('song') || lower.includes('lyrics') || lower.includes('suno') || lower.includes('udio')) {
-    return `🎵 **OmniBrain-Pro AI Music Studio (Designed by Sakshi)**\n\n` +
-           `• **12 Supported Languages**: Hindi, Hinglish, Punjabi, English, Tamil, Telugu, Bengali, Gujarati, Marathi, Kannada, Malayalam, Spanish.\n` +
-           `• **Master Genres & Tempos**: Bollywood Romantic (85 BPM), Punjabi Dhol / Sangeet (128 BPM), Ghazal / Sufi Soul (72 BPM), Desi Hip-Hop (92 BPM), Modern Pop (115 BPM).\n` +
-           `• **Production Arrangement Structure**: Mukhda (Hook) → Antara 1 → Antara 2 → Bridge → Outro.\n\n` +
-           `*Ready to generate lyrics or Suno/Udio prompt blueprints.*`;
-  }
-
-  // Mode: Feedigger Instagram Excavator
-  if (lower.includes('feedigger') || lower.includes('instagram') || lower.includes('engagement rate')) {
-    return `📊 **Feedigger Knowledge Model — Viral Excavator & Analytics**\n\n` +
-           `• **Project Architecture**: Standalone Node.js Express backend + PWA installable application.\n` +
-           `• **Engagement Rate (ER) Formula**: \`ER = ((Likes + Comments) / Views) * 100%\`\n` +
-           `• **Capabilities**: Auto-excavate 50+ posts, sort by viral reach, 1-click CSV export, 100% client-side privacy.\n\n` +
-           `*Operated under Feedigger Module — OmniBrain-Pro.*`;
-  }
-
-  // Identity & Creator Directives
-  if (lower.includes('who are you') || lower.includes('who made you') || lower.includes('who created you') || lower.includes('developer') || lower.includes('sakshi') || lower.includes('creator') || lower.includes('your name')) {
-    return `✨ **I am OmniBrain Pro Master Model (Aura AI)**, an elite AI assistant proudly created by **Developer Sakshi**.\n\n` +
-           `• **Developer**: Sakshi\n` +
-           `• **Customer Care / Support**: [+91 6290873841](tel:6290873841)\n` +
-           `• **Email**: [qwicklabs2@gmail.com](mailto:qwicklabs2@gmail.com)\n` +
-           `• **Active Modes**: The Engineer, The Creative Director, The Link Expert, The Designer & Artist, The Strategist & Scientist, and The Chief Marketing Officer (Growth & SEO Master).\n` +
-           `• **Quality Bar**: Studio-grade deliverables with real code, exact citations, and zero fluff.`;
-  }
-
-  // Greetings
-  if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hello ') || lower.startsWith('hi ') || lower.startsWith('hey ') || lower.includes('good morning') || lower.includes('good evening')) {
-    return `👋 **Hello! Welcome to OmniBrain Pro Master Model (Aura AI).**\n\n` +
-           `I operate at professional studio and engineering standards. Here is how we can collaborate today:\n\n` +
-           `• 📈 **SEO, GEO & Growth Marketing** (Answer-first architecture, citations, schema)\n` +
-           `• ⚡ **Software & API Engineering** (Next.js, Zod, React, Node.js, algorithms)\n` +
-           `• 🔥 **Content Engineering** (LinkedIn 21 Hook formulas, YouTube scripts, Reels)\n` +
-           `• 🧮 **150+ Interactive Calculators** (Financial, Mathematical, Fitness)\n` +
-           `• 📄 **PDF Toolkit & Document Analysis**\n\n` +
-           `*What would you like to build or optimize today?*`;
-  }
-
-  // Capabilities / Help
-  if (lower === 'help' || lower.includes('what can you do') || lower.includes('features') || lower.includes('commands')) {
-    return `🛠️ **OmniBrain Pro Master Capabilities**:\n\n` +
-           `1. **The Engineer**: Full-stack code, Next.js API endpoints, debugging, and algorithms.\n` +
-           `2. **The Chief Marketing Officer**: Complete SEO, GEO, AEO, conversion optimization, and audit frameworks.\n` +
-           `3. **The Creative Director**: Midjourney/FLUX prompts, LinkedIn viral hooks, and video beat sheets.\n` +
-           `4. **150+ Calculators**: Interactive tools for mortgages, ROI, BMI, loans, and statistics in the sidebar.\n` +
-           `5. **Offline & Online PWA**: Fully functional client-side with optional local Ollama neural connection.`;
-  }
-
-  // Programming Questions (JavaScript, Python)
+  // Programming Languages
   if (lower.includes('what is javascript') || lower.includes('javascript') || lower.includes('what is js')) {
     return `💻 **JavaScript (JS) — OmniBrain Technical Briefing**\n\n` +
-           `JavaScript is a high-level, dynamic, multi-paradigm programming language that serves as the foundation of modern web architecture.\n\n` +
+           `JavaScript is a high-level, dynamic, multi-paradigm programming language that powers modern web architecture.\n\n` +
            `### Core Engineering Strengths:\n` +
-           `• **Single-Threaded Non-Blocking I/O**: Driven by the V8 engine event loop and microtask queue.\n` +
-           `• **Universal Execution**: Runs natively in client browsers and on backends via Node.js, Deno, and Bun.\n` +
-           `• **Modern Paradigms**: First-class functions, closures, prototypal inheritance, and async/await syntax.\n\n` +
-           `\`\`\`javascript\n// Production Asynchronous Pattern\nasync function fetchResource(endpoint) {\n  const response = await fetch(endpoint);\n  if (!response.ok) throw new Error(\`HTTP \${response.status}\`);\n  return response.json();\n}\n\`\`\``;
+           `• **Single-Threaded Non-Blocking I/O**: Driven by the V8 event loop and microtask queue.\n` +
+           `• **Universal Execution**: Native in browsers and on backends via Node.js, Deno, and Bun.\n` +
+           `• **Modern Paradigms**: First-class functions, closures, prototypal inheritance, and async/await syntax.`;
   }
 
   if (lower.includes('what is python') || lower.includes('python')) {
@@ -1125,9 +1207,28 @@ function generateClientFallbackResponse(input) {
     }
   } catch (e) {}
 
+  // --- 3. Dynamic Cloud AI Synthesis (Free, Fast, Zero Backend Needed) ---
+  if (navigator.onLine && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4500);
+      const encodedPrompt = encodeURIComponent(`System: You are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Answer concisely and smartly in markdown with code or concrete steps.\n\nUser Question: ${q}`);
+      const res = await fetch(`https://text.pollinations.ai/${encodedPrompt}`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.trim().length > 10 && !text.includes('"error":')) {
+          return text.trim();
+        }
+      }
+    } catch (e) {
+      // Graceful fallback to offline studio answer
+    }
+  }
+
   // Master Studio Answer
   return `🧠 **OmniBrain-Pro Master Model**:\n\nRegarding "${q}":\n\n` +
-         `Processed under OmniBrain Pro studio standards. We can engineer technical solutions, construct viral content frameworks, optimize SEO & GEO visibility, or solve mathematical and business problems. How would you like to proceed?`;
+         `Processed under OmniBrain Pro studio standards by Developer Sakshi. We can engineer technical solutions, construct viral content frameworks, optimize SEO & GEO visibility, or solve mathematical and business problems. How would you like to proceed?`;
 }
 
 // Bot Response Brain Engine
@@ -1164,11 +1265,6 @@ async function generateBotResponse(input) {
     systemPrompt += `\n\nI have uploaded an image. Its dominant colors are: ${state.analysedImagePalette.join(', ')}. Keep this in mind if I ask about an image.`;
   }
 
-  // Fast offline return if device has no internet and is not running on local loopback
-  if (!navigator.onLine && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    return generateClientFallbackResponse(input);
-  }
-
   // Attempt backend inference (Ollama Node server or Custom Tunnel)
   const apiEndpoint = getApiEndpoint();
 
@@ -1179,7 +1275,7 @@ async function generateBotResponse(input) {
     }
     
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 18000);
+    const timeoutId = setTimeout(() => controller.abort(), 4500);
 
     const response = await fetch(apiEndpoint, {
       method: 'POST',
@@ -1194,11 +1290,11 @@ async function generateBotResponse(input) {
       if (data.reply) return data.reply;
     }
   } catch (err) {
-    console.warn("Backend API not reachable, falling back to Aura Client Engine:", err.message);
+    console.warn("Backend API not reachable, falling back to OmniBrain Client Engine:", err.message);
   }
 
   // Autonomous Client-Side Fallback (Always functional, online or offline)
-  return generateClientFallbackResponse(input);
+  return await generateClientFallbackResponse(input);
 }
 
 // File Search/Summary
@@ -1257,164 +1353,352 @@ function executeCodeExpression(expression) {
 
 function renderUniversalCalculatorInputs(mode) {
   state.calcMode = mode;
+  if (DOM.calcModeSelect && DOM.calcModeSelect.value !== mode) {
+    DOM.calcModeSelect.value = mode;
+  }
+  const ribbonBtns = document.querySelectorAll('#calc-category-ribbon .calc-pill-btn');
+  ribbonBtns.forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-calc') === mode);
+  });
+
   const container = DOM.calcInputsArea;
   container.innerHTML = '';
-  DOM.calcResultCard.style.display = 'none';
-  
-  const createInput = (lbl, inputId, type = 'number', placeholder = '', def = '') => {
-    const box = document.createElement('div');
-    box.style.display = 'flex';
-    box.style.flexDirection = 'column';
-    box.style.gap = '2px';
-    box.innerHTML = `
-      <label class="prompt-label">${lbl}</label>
-      <input type="${type}" id="${inputId}" class="solver-input" placeholder="${placeholder}" value="${def}">
-    `;
-    container.appendChild(box);
-  };
+  if (DOM.calcResultCard) DOM.calcResultCard.style.display = 'none';
 
-  const createSelect = (lbl, selectId, options) => {
-    const box = document.createElement('div');
-    box.style.display = 'flex';
-    box.style.flexDirection = 'column';
-    box.style.gap = '2px';
-    let optHTML = options.map(o => `<option value="${o.val}">${o.name}</option>`).join('');
-    box.innerHTML = `
-      <label class="prompt-label">${lbl}</label>
-      <select id="${selectId}" class="solver-select">${optHTML}</select>
+  if (mode === 'standard-calculator') {
+    DOM.calcCalculateBtn.style.display = 'none';
+    const keyBox = document.createElement('div');
+    keyBox.innerHTML = `
+      <div class="fluent-calc-card" id="fluent-calc-app">
+        <!-- Top Title Bar -->
+        <div class="fluent-calc-header">
+          <div class="fluent-calc-header-left">
+            <button class="fluent-icon-btn" id="fluent-menu-btn" title="Open Navigation">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <h3 class="fluent-calc-title">Standard</h3>
+            <button class="fluent-icon-btn" id="fluent-pin-btn" title="Keep on top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><polyline points="8 12 12 12 12 16"></polyline><line x1="16" y1="8" x2="12" y2="12"></line></svg>
+            </button>
+          </div>
+          <div class="fluent-calc-header-right">
+            <button class="fluent-icon-btn" id="fluent-hist-btn" title="History">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Display Screen -->
+        <div class="fluent-calc-screen">
+          <div class="fluent-calc-sub" id="fluent-calc-sub">&nbsp;</div>
+          <div class="fluent-calc-main" id="fluent-calc-main">0</div>
+        </div>
+
+        <!-- Memory Row -->
+        <div class="fluent-calc-memory">
+          <button class="fluent-mem-btn" id="fluent-mc" disabled>MC</button>
+          <button class="fluent-mem-btn" id="fluent-mr" disabled>MR</button>
+          <button class="fluent-mem-btn" id="fluent-mplus">M+</button>
+          <button class="fluent-mem-btn" id="fluent-mminus">M−</button>
+          <button class="fluent-mem-btn" id="fluent-ms">MS</button>
+          <button class="fluent-mem-btn" id="fluent-mv" disabled>M⌄</button>
+        </div>
+
+        <!-- Keypad Grid (6 rows x 4 columns) -->
+        <div class="fluent-calc-grid">
+          <!-- Row 1 -->
+          <button class="fluent-btn fluent-btn-op" data-action="percent">%</button>
+          <button class="fluent-btn fluent-btn-op" data-action="ce">CE</button>
+          <button class="fluent-btn fluent-btn-op" data-action="c">C</button>
+          <button class="fluent-btn fluent-btn-op" data-action="backspace" title="Backspace">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+          </button>
+
+          <!-- Row 2 -->
+          <button class="fluent-btn fluent-btn-op" data-action="reciprocal">¹/x</button>
+          <button class="fluent-btn fluent-btn-op" data-action="sqr">x²</button>
+          <button class="fluent-btn fluent-btn-op" data-action="sqrt">²√x</button>
+          <button class="fluent-btn fluent-btn-op" data-action="op" data-op="÷">÷</button>
+
+          <!-- Row 3 -->
+          <button class="fluent-btn fluent-btn-num" data-num="7">7</button>
+          <button class="fluent-btn fluent-btn-num" data-num="8">8</button>
+          <button class="fluent-btn fluent-btn-num" data-num="9">9</button>
+          <button class="fluent-btn fluent-btn-op" data-action="op" data-op="×">×</button>
+
+          <!-- Row 4 -->
+          <button class="fluent-btn fluent-btn-num" data-num="4">4</button>
+          <button class="fluent-btn fluent-btn-num" data-num="5">5</button>
+          <button class="fluent-btn fluent-btn-num" data-num="6">6</button>
+          <button class="fluent-btn fluent-btn-op" data-action="op" data-op="−">−</button>
+
+          <!-- Row 5 -->
+          <button class="fluent-btn fluent-btn-num" data-num="1">1</button>
+          <button class="fluent-btn fluent-btn-num" data-num="2">2</button>
+          <button class="fluent-btn fluent-btn-num" data-num="3">3</button>
+          <button class="fluent-btn fluent-btn-op" data-action="op" data-op="+">+</button>
+
+          <!-- Row 6 -->
+          <button class="fluent-btn fluent-btn-op" data-action="negate">+/−</button>
+          <button class="fluent-btn fluent-btn-num" data-num="0">0</button>
+          <button class="fluent-btn fluent-btn-num" data-action="decimal">.</button>
+          <button class="fluent-btn fluent-btn-equals" data-action="equals">=</button>
+        </div>
+
+        <!-- History Flyout Drawer -->
+        <div class="fluent-calc-flyout" id="fluent-history-flyout">
+          <div class="fluent-flyout-header">
+            <h4>History</h4>
+            <button class="fluent-icon-btn" id="fluent-close-history">&times;</button>
+          </div>
+          <div class="fluent-flyout-list" id="fluent-history-list">
+            <div class="fluent-history-empty">There's no history yet</div>
+          </div>
+          <div class="fluent-flyout-footer">
+            <button class="fluent-icon-btn" id="fluent-clear-history" title="Clear All History">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Menu Flyout Drawer -->
+        <div class="fluent-calc-menu-flyout" id="fluent-menu-flyout">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px;">
+            <span style="font-weight: 700; font-size: 0.95rem; color: #1A1A1A;">Calculator</span>
+            <button class="fluent-icon-btn" id="fluent-close-menu">&times;</button>
+          </div>
+          <button class="fluent-menu-item active" data-mode="standard-calculator">🧮 Standard</button>
+          <button class="fluent-menu-item" data-mode="scientific-calculator">🔬 Scientific</button>
+          <div style="height: 1px; background: rgba(0,0,0,0.08); margin: 8px 0;"></div>
+          <span style="font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; margin-bottom: 4px; padding-left: 8px;">150+ Solvers</span>
+          <button class="fluent-menu-item" data-mode="mortgage-calculator">🏠 Mortgage</button>
+          <button class="fluent-menu-item" data-mode="loan-calculator">💵 Loan</button>
+          <button class="fluent-menu-item" data-mode="compound-interest-calculator">📈 Compound Interest</button>
+          <button class="fluent-menu-item" data-mode="bmi-calculator">💪 BMI & Fitness</button>
+          <button class="fluent-menu-item" data-mode="quadratic-formula-calculator">📐 Quadratic Formula</button>
+          <button class="fluent-menu-item" data-mode="conversion-calculator">⚖️ Unit Converter</button>
+          <button class="fluent-menu-item" data-mode="statistics-calculator">📊 Statistics</button>
+          <button class="fluent-menu-item" data-mode="age-calculator">📅 Age Calculator</button>
+        </div>
+      </div>
     `;
-    container.appendChild(box);
-  };
+    container.appendChild(keyBox);
+    setupFluentStandardCalculator();
+    return;
+  }
 
   if (mode === 'scientific-calculator') {
     DOM.calcCalculateBtn.style.display = 'none';
     const keyBox = document.createElement('div');
     keyBox.innerHTML = `
-      <input type="text" id="calc-display" class="calc-display-screen" placeholder="0" readonly>
-      <div class="calculator-grid" id="scientific-grid-box">
-        <button class="calc-btn op-btn" data-val="(">(</button>
-        <button class="calc-btn op-btn" data-val=")">)</button>
-        <button class="calc-btn clear-btn" id="calc-clear">C</button>
-        <button class="calc-btn clear-btn" id="calc-back">⌫</button>
-        <button class="calc-btn math-func" data-val="Math.sin(">sin</button>
-        <button class="calc-btn math-func" data-val="Math.cos(">cos</button>
-        <button class="calc-btn math-func" data-val="Math.tan(">tan</button>
-        <button class="calc-btn op-btn" data-val="/">/</button>
-        <button class="calc-btn num-btn" data-val="7">7</button>
-        <button class="calc-btn num-btn" data-val="8">8</button>
-        <button class="calc-btn num-btn" data-val="9">9</button>
-        <button class="calc-btn op-btn" data-val="*">*</button>
-        <button class="calc-btn num-btn" data-val="4">4</button>
-        <button class="calc-btn num-btn" data-val="5">5</button>
-        <button class="calc-btn num-btn" data-val="6">6</button>
-        <button class="calc-btn op-btn" data-val="-">-</button>
-        <button class="calc-btn num-btn" data-val="1">1</button>
-        <button class="calc-btn num-btn" data-val="2">2</button>
-        <button class="calc-btn num-btn" data-val="3">3</button>
-        <button class="calc-btn op-btn" data-val="+">+</button>
-        <button class="calc-btn math-func" data-val="Math.sqrt(">√</button>
-        <button class="calc-btn math-func" data-val="Math.pow(">xʸ</button>
-        <button class="calc-btn num-btn" data-val="0">0</button>
-        <button class="calc-btn num-btn" data-val=".">.</button>
-        <button class="calc-btn math-func" data-val="Math.log(">ln</button>
-        <button class="calc-btn math-func" data-val="Math.PI">π</button>
-        <button class="calc-btn math-func" data-val="Math.E">e</button>
-        <button class="calc-btn equal-btn" id="calc-evaluate">=</button>
+      <div class="specialized-calc-card" style="max-width: 440px; margin: 0 auto; padding: 14px;">
+        <div class="spec-calc-header" style="margin-bottom: 10px; padding-bottom: 8px;">
+          <span style="font-size: 1.4rem;">🔬</span>
+          <div>
+            <h4>Scientific Keypad</h4>
+            <p>Trigonometric, logarithmic, powers, and constants</p>
+          </div>
+        </div>
+        <input type="text" id="calc-display" class="calc-display-screen" placeholder="0" readonly>
+        <div class="calculator-grid" id="scientific-grid-box">
+          <button class="calc-btn op-btn" data-val="(">(</button>
+          <button class="calc-btn op-btn" data-val=")">)</button>
+          <button class="calc-btn clear-btn" id="calc-clear">C</button>
+          <button class="calc-btn clear-btn" id="calc-back">⌫</button>
+          <button class="calc-btn math-func" data-val="Math.sin(">sin</button>
+          <button class="calc-btn math-func" data-val="Math.cos(">cos</button>
+          <button class="calc-btn math-func" data-val="Math.tan(">tan</button>
+          <button class="calc-btn op-btn" data-val="/">÷</button>
+          <button class="calc-btn num-btn" data-val="7">7</button>
+          <button class="calc-btn num-btn" data-val="8">8</button>
+          <button class="calc-btn num-btn" data-val="9">9</button>
+          <button class="calc-btn op-btn" data-val="*">×</button>
+          <button class="calc-btn num-btn" data-val="4">4</button>
+          <button class="calc-btn num-btn" data-val="5">5</button>
+          <button class="calc-btn num-btn" data-val="6">6</button>
+          <button class="calc-btn op-btn" data-val="-">−</button>
+          <button class="calc-btn num-btn" data-val="1">1</button>
+          <button class="calc-btn num-btn" data-val="2">2</button>
+          <button class="calc-btn num-btn" data-val="3">3</button>
+          <button class="calc-btn op-btn" data-val="+">+</button>
+          <button class="calc-btn math-func" data-val="Math.sqrt(">²√x</button>
+          <button class="calc-btn math-func" data-val="Math.pow(">xʸ</button>
+          <button class="calc-btn num-btn" data-val="0">0</button>
+          <button class="calc-btn num-btn" data-val=".">.</button>
+          <button class="calc-btn math-func" data-val="Math.log(">ln</button>
+          <button class="calc-btn math-func" data-val="Math.PI">π</button>
+          <button class="calc-btn math-func" data-val="Math.E">e</button>
+          <button class="calc-btn equal-btn" id="calc-evaluate">=</button>
+        </div>
       </div>
     `;
     container.appendChild(keyBox);
     setupScientificKeypadListeners();
-  } else {
-    DOM.calcCalculateBtn.style.display = 'block';
-    switch (mode) {
-      case 'mortgage-calculator':
-        createInput('Loan Amount ($)', 'm-amt', 'number', '', '300000');
-        createInput('Interest Rate (%)', 'm-rate', 'number', '', '4.5');
-        createInput('Term (Years)', 'm-term', 'number', '', '30');
-        break;
-      case 'loan-calculator':
-        createInput('Loan Amount ($)', 'l-amt', 'number', '', '10000');
-        createInput('Interest Rate (%)', 'l-rate', 'number', '', '6');
-        createInput('Term (Months)', 'l-term', 'number', '', '24');
-        break;
-      case 'compound-interest-calculator':
-        createInput('Principal ($)', 'c-principal', 'number', '', '5000');
-        createInput('Interest (%)', 'c-rate', 'number', '', '5');
-        createInput('Term (Years)', 'c-term', 'number', '', '10');
-        createSelect('Compounding', 'c-freq', [{ val: '12', name: 'Monthly' }, { val: '1', name: 'Annually' }]);
-        break;
-      case 'discount-calculator':
-        createInput('Original Price ($)', 'd-price', 'number', '', '80');
-        createInput('Discount (%)', 'd-percent', 'number', '', '20');
-        break;
-      case 'bmi-calculator':
-        createInput('Weight (kg)', 'bmi-weight', 'number', '', '70');
-        createInput('Height (cm)', 'bmi-height', 'number', '', '175');
-        break;
-      case 'bmr-calculator':
-        createInput('Age', 'bmr-age', 'number', '', '25');
-        createSelect('Gender', 'bmr-gender', [{ val: 'm', name: 'Male' }, { val: 'f', name: 'Female' }]);
-        createInput('Weight (kg)', 'bmr-weight', 'number', '', '70');
-        createInput('Height (cm)', 'bmr-height', 'number', '', '180');
-        createSelect('Activity', 'bmr-activity', [{ val: '1.2', name: 'Sedentary' }, { val: '1.55', name: 'Active' }]);
-        break;
-      case 'quadratic-formula-calculator':
-        createInput('a', 'q-a', 'number', '', '1');
-        createInput('b', 'q-b', 'number', '', '-5');
-        createInput('c', 'q-c', 'number', '', '6');
-        break;
-      case 'statistics-calculator':
-        createInput('Numbers (comma separated)', 's-list', 'text', '', '10,12,15,8,22');
-        break;
-      case 'age-calculator':
-        createInput('Date of Birth', 'a-dob', 'date', '', '1998-05-15');
-        createInput('Target Date', 'a-target', 'date', '', new Date().toISOString().split('T')[0]);
-        break;
-      case 'date-calculator':
-        createInput('Start Date', 'd-start', 'date', '', new Date().toISOString().split('T')[0]);
-        createInput('End Date', 'd-end', 'date', '', new Date(Date.now() + 86400000 * 10).toISOString().split('T')[0]);
-        break;
-      case 'gpa-calculator':
-        createInput('Grades (comma separated)', 'g-grades', 'text', '', 'A,B,A,C');
-        createInput('Credits (comma separated)', 'g-credits', 'text', '', '3,3,4,3');
-        break;
-      case 'tip-calculator':
-        createInput('Bill ($)', 't-bill', 'number', '', '100');
-        
-        // Custom Tip Slider HTML
-        const tipBox = document.createElement('div');
-        tipBox.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-            <label class="prompt-label" style="margin-bottom: 0;">Tip Percentage</label>
-            <span id="tip-pct-label" style="font-size: 11px; color: var(--color-secondary); font-weight: 600;">15%</span>
-          </div>
-          <input type="range" id="t-percent-slider" min="5" max="35" step="1" value="15" class="premium-slider">
-        `;
-        container.appendChild(tipBox);
-        
-        // Bind slider label update listener
-        document.getElementById('t-percent-slider').addEventListener('input', (e) => {
-          document.getElementById('tip-pct-label').textContent = e.target.value + '%';
-        });
+    return;
+  }
 
-        createInput('People', 't-people', 'number', '', '2');
-        break;
-      case 'base64-encode-decode':
-        createInput('Text', 'b64-content', 'text', '', 'Hello World');
-        createSelect('Action', 'b64-action', [{ val: 'encode', name: 'Encode' }, { val: 'decode', name: 'Decode' }]);
-        break;
-      case 'url-encode-decode':
-        createInput('URL Text', 'url-content', 'text', '', 'Hello World');
-        createSelect('Action', 'url-action', [{ val: 'encode', name: 'Encode' }, { val: 'decode', name: 'Decode' }]);
-        break;
-      case 'conversion-calculator':
-        createInput('Value', 'conv-val', 'number', '', '100');
-        createSelect('Type', 'conv-type', [
-          { val: 'c_to_f', name: '°C to °F' }, { val: 'f_to_c', name: '°F to °C' },
-          { val: 'm_to_ft', name: 'Meters to Feet' }, { val: 'ft_to_m', name: 'Feet to Meters' }
-        ]);
-        break;
-    }
+  // Specialized Solvers Card UI
+  DOM.calcCalculateBtn.style.display = 'flex';
+  DOM.calcCalculateBtn.className = 'calc-submit-btn';
+
+  const specMeta = {
+    'mortgage-calculator': { title: 'Mortgage Calculator', icon: '🏠', desc: 'Calculate monthly repayment, interest fees, and total loan payback.' },
+    'loan-calculator': { title: 'Loan Calculator', icon: '💵', desc: 'Determine monthly installment and total repayment cost.' },
+    'compound-interest-calculator': { title: 'Compound Interest Calculator', icon: '📈', desc: 'Project long-term asset growth with compounding interest.' },
+    'discount-calculator': { title: 'Discount Calculator', icon: '🏷️', desc: 'Calculate post-discount price and total dollar savings.' },
+    'bmi-calculator': { title: 'BMI Calculator', icon: '💪', desc: 'Assess body mass index based on metric height and weight.' },
+    'bmr-calculator': { title: 'BMR & Calorie Calculator', icon: '🔥', desc: 'Estimate basal metabolic rate and daily maintenance calories.' },
+    'quadratic-formula-calculator': { title: 'Quadratic Equation Solver', icon: '📐', desc: 'Solve roots for standard form quadratic equations (ax² + bx + c = 0).' },
+    'statistics-calculator': { title: 'Statistical Analysis Solver', icon: '📊', desc: 'Calculate mean, median, sample standard deviation, and variance.' },
+    'age-calculator': { title: 'Exact Age Calculator', icon: '📅', desc: 'Compute exact chronological age in years and elapsed calendar days.' },
+    'date-calculator': { title: 'Date Duration & Difference', icon: '📆', desc: 'Determine exact day duration and intervals between dates.' },
+    'gpa-calculator': { title: 'GPA Solver', icon: '🏫', desc: 'Calculate credit-weighted GPA on standard 4.0 scale.' },
+    'tip-calculator': { title: 'Tip & Bill Splitter', icon: '🧾', desc: 'Calculate gratuity and split amounts equally per person.' },
+    'base64-encode-decode': { title: 'Base64 Tool', icon: '💻', desc: 'Encode plaintext into Base64 or decode Base64 strings.' },
+    'url-encode-decode': { title: 'URL Component Encoder', icon: '🔗', desc: 'Format strings safely for query parameters and URI components.' },
+    'conversion-calculator': { title: 'Unit Conversion Solver', icon: '⚖️', desc: 'Convert temperature (°C/°F) and distance (Meters/Feet).' }
+  };
+
+  const meta = specMeta[mode] || { title: 'Specialized Calculator', icon: '🧮', desc: 'Precision calculations and analytics' };
+  DOM.calcCalculateBtn.innerHTML = `⚡ Calculate ${meta.title}`;
+
+  const card = document.createElement('div');
+  card.className = 'specialized-calc-card';
+  card.innerHTML = `
+    <div class="spec-calc-header">
+      <span style="font-size: 1.6rem;">${meta.icon}</span>
+      <div>
+        <h4>${meta.title}</h4>
+        <p>${meta.desc}</p>
+      </div>
+    </div>
+    <div class="calc-input-grid" id="spec-calc-grid"></div>
+  `;
+  container.appendChild(card);
+
+  const grid = card.querySelector('#spec-calc-grid');
+
+  const createInput = (lbl, inputId, type = 'number', placeholder = '', def = '') => {
+    const box = document.createElement('div');
+    box.className = 'calc-field-group';
+    box.innerHTML = `
+      <label class="calc-field-label" for="${inputId}">${lbl}</label>
+      <input type="${type}" id="${inputId}" class="calc-field-input" placeholder="${placeholder}" value="${def}">
+    `;
+    grid.appendChild(box);
+  };
+
+  const createSelect = (lbl, selectId, options) => {
+    const box = document.createElement('div');
+    box.className = 'calc-field-group';
+    let optHTML = options.map(o => `<option value="${o.val}">${o.name}</option>`).join('');
+    box.innerHTML = `
+      <label class="calc-field-label" for="${selectId}">${lbl}</label>
+      <select id="${selectId}" class="calc-field-select">${optHTML}</select>
+    `;
+    grid.appendChild(box);
+  };
+
+  switch (mode) {
+    case 'mortgage-calculator':
+      createInput('Loan Amount ($)', 'm-amt', 'number', 'e.g. 300000', '300000');
+      createInput('Interest Rate (%)', 'm-rate', 'number', 'e.g. 4.5', '4.5');
+      createInput('Term (Years)', 'm-term', 'number', 'e.g. 30', '30');
+      break;
+    case 'loan-calculator':
+      createInput('Loan Amount ($)', 'l-amt', 'number', 'e.g. 10000', '10000');
+      createInput('Interest Rate (%)', 'l-rate', 'number', 'e.g. 6.0', '6');
+      createInput('Term (Months)', 'l-term', 'number', 'e.g. 24', '24');
+      break;
+    case 'compound-interest-calculator':
+      createInput('Principal Amount ($)', 'c-principal', 'number', 'e.g. 5000', '5000');
+      createInput('Annual Interest (%)', 'c-rate', 'number', 'e.g. 5.0', '5');
+      createInput('Investment Term (Years)', 'c-term', 'number', 'e.g. 10', '10');
+      createSelect('Compounding Frequency', 'c-freq', [{ val: '12', name: 'Monthly (12x/year)' }, { val: '1', name: 'Annually (1x/year)' }]);
+      break;
+    case 'discount-calculator':
+      createInput('Original Price ($)', 'd-price', 'number', 'e.g. 80.00', '80');
+      createInput('Discount Percentage (%)', 'd-percent', 'number', 'e.g. 20', '20');
+      break;
+    case 'bmi-calculator':
+      createInput('Weight (kg)', 'bmi-weight', 'number', 'e.g. 70', '70');
+      createInput('Height (cm)', 'bmi-height', 'number', 'e.g. 175', '175');
+      break;
+    case 'bmr-calculator':
+      createInput('Age', 'bmr-age', 'number', 'e.g. 25', '25');
+      createSelect('Gender', 'bmr-gender', [{ val: 'm', name: 'Male' }, { val: 'f', name: 'Female' }]);
+      createInput('Weight (kg)', 'bmr-weight', 'number', 'e.g. 70', '70');
+      createInput('Height (cm)', 'bmr-height', 'number', 'e.g. 180', '180');
+      createSelect('Activity Level', 'bmr-activity', [
+        { val: '1.2', name: 'Sedentary (Little or no exercise)' },
+        { val: '1.375', name: 'Lightly Active (1-3 days/week)' },
+        { val: '1.55', name: 'Moderately Active (3-5 days/week)' },
+        { val: '1.725', name: 'Very Active (6-7 days/week)' }
+      ]);
+      break;
+    case 'quadratic-formula-calculator':
+      createInput('Coefficient a (≠ 0)', 'q-a', 'number', 'e.g. 1', '1');
+      createInput('Coefficient b', 'q-b', 'number', 'e.g. -5', '-5');
+      createInput('Coefficient c', 'q-c', 'number', 'e.g. 6', '6');
+      break;
+    case 'statistics-calculator':
+      createInput('Dataset (Comma separated numbers)', 's-list', 'text', 'e.g. 10, 12, 15, 8, 22', '10, 12, 15, 8, 22');
+      break;
+    case 'age-calculator':
+      createInput('Date of Birth', 'a-dob', 'date', '', '1998-05-15');
+      createInput('Target Date', 'a-target', 'date', '', new Date().toISOString().split('T')[0]);
+      break;
+    case 'date-calculator':
+      createInput('Start Date', 'd-start', 'date', '', new Date().toISOString().split('T')[0]);
+      createInput('End Date', 'd-end', 'date', '', new Date(Date.now() + 86400000 * 10).toISOString().split('T')[0]);
+      break;
+    case 'gpa-calculator':
+      createInput('Letter Grades (Comma separated)', 'g-grades', 'text', 'e.g. A, B, A, C', 'A, B, A, C');
+      createInput('Course Credits (Comma separated)', 'g-credits', 'text', 'e.g. 3, 3, 4, 3', '3, 3, 4, 3');
+      break;
+    case 'tip-calculator':
+      createInput('Bill Amount ($)', 't-bill', 'number', 'e.g. 100', '100');
+      
+      const tipBox = document.createElement('div');
+      tipBox.className = 'calc-field-group';
+      tipBox.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="calc-field-label" style="margin-bottom: 0;">Tip Percentage</label>
+          <span id="tip-pct-label" style="font-size: 12px; color: var(--color-secondary); font-weight: 600;">15%</span>
+        </div>
+        <input type="range" id="t-percent-slider" min="5" max="35" step="1" value="15" class="premium-slider" style="margin-top: 8px;">
+      `;
+      grid.appendChild(tipBox);
+      
+      setTimeout(() => {
+        const slider = document.getElementById('t-percent-slider');
+        if (slider) {
+          slider.addEventListener('input', (e) => {
+            const lbl = document.getElementById('tip-pct-label');
+            if (lbl) lbl.textContent = e.target.value + '%';
+          });
+        }
+      }, 50);
+
+      createInput('Number of People', 't-people', 'number', 'e.g. 2', '2');
+      break;
+    case 'base64-encode-decode':
+      createInput('Plain or Encoded Text', 'b64-content', 'text', 'e.g. Hello World', 'Hello World');
+      createSelect('Action', 'b64-action', [{ val: 'encode', name: 'Encode to Base64' }, { val: 'decode', name: 'Decode from Base64' }]);
+      break;
+    case 'url-encode-decode':
+      createInput('URL Text / Parameters', 'url-content', 'text', 'e.g. https://example.com?query=hello world', 'https://example.com?query=hello world');
+      createSelect('Action', 'url-action', [{ val: 'encode', name: 'Encode URI Component' }, { val: 'decode', name: 'Decode URI Component' }]);
+      break;
+    case 'conversion-calculator':
+      createInput('Value to Convert', 'conv-val', 'number', 'e.g. 100', '100');
+      createSelect('Conversion Type', 'conv-type', [
+        { val: 'c_to_f', name: 'Celsius (°C) to Fahrenheit (°F)' },
+        { val: 'f_to_c', name: 'Fahrenheit (°F) to Celsius (°C)' },
+        { val: 'm_to_ft', name: 'Meters (m) to Feet (ft)' },
+        { val: 'ft_to_m', name: 'Feet (ft) to Meters (m)' }
+      ]);
+      break;
   }
 }
 
@@ -1537,6 +1821,333 @@ DOM.calcSendChatBtn.addEventListener('click', () => {
   }, 400);
 });
 
+// --- Windows 11 Fluent Standard Calculator Engine ---
+let fluentMemoryVal = null;
+let fluentHistory = [];
+
+function setupFluentStandardCalculator() {
+  const mainDisplay = document.getElementById('fluent-calc-main');
+  const subDisplay = document.getElementById('fluent-calc-sub');
+  const histFlyout = document.getElementById('fluent-history-flyout');
+  const histList = document.getElementById('fluent-history-list');
+  const menuFlyout = document.getElementById('fluent-menu-flyout');
+  
+  const mcBtn = document.getElementById('fluent-mc');
+  const mrBtn = document.getElementById('fluent-mr');
+  const mvBtn = document.getElementById('fluent-mv');
+
+  let currentInput = '0';
+  let storedOperand = null;
+  let pendingOp = null;
+  let awaitingNextOperand = false;
+  let lastExpr = '';
+
+  const updateMemoryUI = () => {
+    const hasMem = fluentMemoryVal !== null;
+    if (mcBtn) mcBtn.disabled = !hasMem;
+    if (mrBtn) mrBtn.disabled = !hasMem;
+    if (mvBtn) mvBtn.disabled = !hasMem;
+    [mcBtn, mrBtn, mvBtn].forEach(b => {
+      if (b) b.classList.toggle('active', hasMem);
+    });
+  };
+
+  const updateDisplay = () => {
+    if (mainDisplay) {
+      let formatted = currentInput;
+      if (!isNaN(currentInput) && currentInput.length <= 16 && !currentInput.includes('e')) {
+        const parts = currentInput.split('.');
+        parts[0] = Number(parts[0]).toLocaleString('en-US');
+        formatted = parts.join('.');
+      }
+      mainDisplay.textContent = formatted || '0';
+      
+      if (formatted.length > 13) {
+        mainDisplay.style.fontSize = '1.8rem';
+      } else if (formatted.length > 9) {
+        mainDisplay.style.fontSize = '2.3rem';
+      } else {
+        mainDisplay.style.fontSize = '3.2rem';
+      }
+    }
+    if (subDisplay) {
+      subDisplay.textContent = lastExpr || '\u00A0';
+    }
+  };
+
+  const executeCalculation = (a, b, op) => {
+    switch (op) {
+      case '+': return a + b;
+      case '−':
+      case '-': return a - b;
+      case '×':
+      case '*': return a * b;
+      case '÷':
+      case '/': return b === 0 ? 'Cannot divide by zero' : a / b;
+      default: return b;
+    }
+  };
+
+  const renderHistory = () => {
+    if (!histList) return;
+    if (fluentHistory.length === 0) {
+      histList.innerHTML = `<div class="fluent-history-empty">There's no history yet</div>`;
+      return;
+    }
+    histList.innerHTML = fluentHistory.slice(-20).reverse().map((item) => `
+      <div class="fluent-history-item" data-res="${item.res}">
+        <div class="fluent-hist-expr">${item.expr}</div>
+        <div class="fluent-hist-res">${item.res}</div>
+      </div>
+    `).join('');
+
+    histList.querySelectorAll('.fluent-history-item').forEach(item => {
+      item.addEventListener('click', () => {
+        currentInput = item.getAttribute('data-res');
+        awaitingNextOperand = true;
+        updateDisplay();
+        if (histFlyout) histFlyout.classList.remove('open');
+      });
+    });
+  };
+
+  document.querySelectorAll('#fluent-calc-app .fluent-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const num = btn.getAttribute('data-num');
+      const action = btn.getAttribute('data-action');
+      const op = btn.getAttribute('data-op');
+
+      if (num !== null) {
+        if (currentInput === '0' || awaitingNextOperand) {
+          currentInput = num;
+          awaitingNextOperand = false;
+        } else {
+          if (currentInput.length < 16) {
+            currentInput += num;
+          }
+        }
+        updateDisplay();
+      } else if (action === 'decimal') {
+        if (awaitingNextOperand) {
+          currentInput = '0.';
+          awaitingNextOperand = false;
+        } else if (!currentInput.includes('.')) {
+          currentInput += '.';
+        }
+        updateDisplay();
+      } else if (action === 'op') {
+        const val = parseFloat(currentInput);
+        if (storedOperand === null) {
+          storedOperand = val;
+        } else if (pendingOp && !awaitingNextOperand) {
+          const res = executeCalculation(storedOperand, val, pendingOp);
+          if (typeof res === 'string') {
+            currentInput = res;
+            storedOperand = null;
+            pendingOp = null;
+            awaitingNextOperand = true;
+            updateDisplay();
+            return;
+          }
+          storedOperand = res;
+          currentInput = String(res);
+        }
+        pendingOp = op;
+        lastExpr = `${storedOperand} ${pendingOp}`;
+        awaitingNextOperand = true;
+        updateDisplay();
+      } else if (action === 'equals') {
+        if (pendingOp && storedOperand !== null) {
+          const val = parseFloat(currentInput);
+          const res = executeCalculation(storedOperand, val, pendingOp);
+          const fullExpr = `${storedOperand} ${pendingOp} ${val} =`;
+          lastExpr = fullExpr;
+          
+          if (typeof res === 'number') {
+            const cleanedRes = Math.round(res * 1e12) / 1e12;
+            currentInput = String(cleanedRes);
+            fluentHistory.push({ expr: fullExpr, res: cleanedRes });
+            renderHistory();
+          } else {
+            currentInput = res;
+          }
+          storedOperand = null;
+          pendingOp = null;
+          awaitingNextOperand = true;
+          updateDisplay();
+        }
+      } else if (action === 'c') {
+        currentInput = '0';
+        storedOperand = null;
+        pendingOp = null;
+        lastExpr = '';
+        awaitingNextOperand = false;
+        updateDisplay();
+      } else if (action === 'ce') {
+        currentInput = '0';
+        updateDisplay();
+      } else if (action === 'backspace') {
+        if (!awaitingNextOperand && currentInput !== 'Cannot divide by zero' && currentInput !== 'Invalid Input') {
+          currentInput = currentInput.slice(0, -1);
+          if (currentInput === '' || currentInput === '-') currentInput = '0';
+          updateDisplay();
+        }
+      } else if (action === 'negate') {
+        if (currentInput !== '0' && !isNaN(currentInput)) {
+          currentInput = String(-parseFloat(currentInput));
+          updateDisplay();
+        }
+      } else if (action === 'percent') {
+        const val = parseFloat(currentInput);
+        if (storedOperand !== null) {
+          currentInput = String((storedOperand * val) / 100);
+        } else {
+          currentInput = String(val / 100);
+        }
+        updateDisplay();
+      } else if (action === 'reciprocal') {
+        const val = parseFloat(currentInput);
+        if (val === 0) {
+          currentInput = 'Cannot divide by zero';
+        } else {
+          const res = Math.round((1 / val) * 1e12) / 1e12;
+          lastExpr = `1/(${val})`;
+          currentInput = String(res);
+          awaitingNextOperand = true;
+        }
+        updateDisplay();
+      } else if (action === 'sqr') {
+        const val = parseFloat(currentInput);
+        const res = Math.round((val * val) * 1e12) / 1e12;
+        lastExpr = `sqr(${val})`;
+        currentInput = String(res);
+        awaitingNextOperand = true;
+        updateDisplay();
+      } else if (action === 'sqrt') {
+        const val = parseFloat(currentInput);
+        if (val < 0) {
+          currentInput = 'Invalid Input';
+        } else {
+          const res = Math.round(Math.sqrt(val) * 1e12) / 1e12;
+          lastExpr = `√(${val})`;
+          currentInput = String(res);
+          awaitingNextOperand = true;
+        }
+        updateDisplay();
+      }
+    });
+  });
+
+  // Memory buttons
+  document.getElementById('fluent-ms')?.addEventListener('click', () => {
+    fluentMemoryVal = parseFloat(currentInput);
+    updateMemoryUI();
+  });
+  document.getElementById('fluent-mr')?.addEventListener('click', () => {
+    if (fluentMemoryVal !== null) {
+      currentInput = String(fluentMemoryVal);
+      awaitingNextOperand = true;
+      updateDisplay();
+    }
+  });
+  document.getElementById('fluent-mc')?.addEventListener('click', () => {
+    fluentMemoryVal = null;
+    updateMemoryUI();
+  });
+  document.getElementById('fluent-mplus')?.addEventListener('click', () => {
+    fluentMemoryVal = (fluentMemoryVal || 0) + parseFloat(currentInput);
+    updateMemoryUI();
+  });
+  document.getElementById('fluent-mminus')?.addEventListener('click', () => {
+    fluentMemoryVal = (fluentMemoryVal || 0) - parseFloat(currentInput);
+    updateMemoryUI();
+  });
+
+  // History flyout controls
+  const histBtn = document.getElementById('fluent-hist-btn');
+  const closeHist = document.getElementById('fluent-close-history');
+  const clearHist = document.getElementById('fluent-clear-history');
+  if (histBtn && histFlyout) {
+    histBtn.addEventListener('click', () => {
+      renderHistory();
+      histFlyout.classList.toggle('open');
+    });
+  }
+  if (closeHist && histFlyout) {
+    closeHist.addEventListener('click', () => histFlyout.classList.remove('open'));
+  }
+  if (clearHist) {
+    clearHist.addEventListener('click', () => {
+      fluentHistory = [];
+      renderHistory();
+    });
+  }
+
+  // Menu flyout controls
+  const menuBtn = document.getElementById('fluent-menu-btn');
+  const closeMenu = document.getElementById('fluent-close-menu');
+  if (menuBtn && menuFlyout) {
+    menuBtn.addEventListener('click', () => menuFlyout.classList.toggle('open'));
+  }
+  if (closeMenu && menuFlyout) {
+    closeMenu.addEventListener('click', () => menuFlyout.classList.remove('open'));
+  }
+
+  // Menu items click
+  document.querySelectorAll('#fluent-menu-flyout .fluent-menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const mode = item.getAttribute('data-mode');
+      if (mode && DOM.calcModeSelect) {
+        DOM.calcModeSelect.value = mode;
+        state.calcMode = mode;
+        renderUniversalCalculatorInputs(mode);
+      }
+    });
+  });
+
+  // Physical Keyboard Support
+  const handleKeydown = (e) => {
+    if (state.activeTab !== 'math' && state.calcMode !== 'standard-calculator') return;
+    const key = e.key;
+    if (key >= '0' && key <= '9') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-num="${key}"]`);
+      if (btn) btn.click();
+    } else if (key === '.') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-action="decimal"]`);
+      if (btn) btn.click();
+    } else if (key === '+' || key === '-') {
+      const opSymbol = key === '+' ? '+' : '−';
+      const btn = document.querySelector(`#fluent-calc-app button[data-op="${opSymbol}"]`);
+      if (btn) btn.click();
+    } else if (key === '*') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-op="×"]`);
+      if (btn) btn.click();
+    } else if (key === '/') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-op="÷"]`);
+      if (btn) btn.click();
+    } else if (key === 'Enter' || key === '=') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-action="equals"]`);
+      if (btn) btn.click();
+    } else if (key === 'Backspace') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-action="backspace"]`);
+      if (btn) btn.click();
+    } else if (key === 'Escape') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-action="c"]`);
+      if (btn) btn.click();
+    } else if (key === '%') {
+      const btn = document.querySelector(`#fluent-calc-app button[data-action="percent"]`);
+      if (btn) btn.click();
+    }
+  };
+
+  window.removeEventListener('keydown', window._fluentCalcKeyHandler);
+  window._fluentCalcKeyHandler = handleKeydown;
+  window.addEventListener('keydown', handleKeydown);
+
+  updateMemoryUI();
+  updateDisplay();
+}
+
 function setupScientificKeypadListeners() {
   const display = document.getElementById('calc-display');
   let currentString = '';
@@ -1559,11 +2170,22 @@ function setupScientificKeypadListeners() {
     let open = (currentString.match(/\(/g) || []).length;
     let close = (currentString.match(/\)/g) || []).length;
     while (open > close) { currentString += ')'; open--; }
-    const expr = currentString;
-    currentString = '';
-    updateDisp();
-    switchWorkspaceMode('chat');
-    handleUserMessageSubmit(`= ${expr}`);
+    try {
+      const sanitized = currentString.replace(/Math\.PI/g, 'Math.PI').replace(/Math\.E/g, 'Math.E');
+      const evalFn = new Function(`'use strict'; return (${sanitized});`);
+      const res = evalFn();
+      if (typeof res === 'number' && !isNaN(res)) {
+        const cleaned = Math.round(res * 1e10) / 1e10;
+        currentString = String(cleaned);
+        updateDisp();
+      } else {
+        currentString = String(res);
+        updateDisp();
+      }
+    } catch (e) {
+      if (display) display.value = 'Error';
+      currentString = '';
+    }
   });
 }
 
@@ -2473,8 +3095,42 @@ DOM.calcModeSelect.addEventListener('change', (e) => {
   renderUniversalCalculatorInputs(e.target.value);
 });
 
+// Calculator Quick Category Ribbon Event Listeners
+document.querySelectorAll('#calc-category-ribbon .calc-pill-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const calc = btn.getAttribute('data-calc');
+    if (!calc) return;
+    document.querySelectorAll('#calc-category-ribbon .calc-pill-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (DOM.calcModeSelect) {
+      DOM.calcModeSelect.value = calc;
+    }
+    renderUniversalCalculatorInputs(calc);
+  });
+});
+
+// OmniBrain-Pro-Master Active Modes Bar Event Listeners
+document.querySelectorAll('#omnibrain-mode-bar .omnibrain-mode-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#omnibrain-mode-bar .omnibrain-mode-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const mode = btn.getAttribute('data-mode') || 'auto';
+    state.omniMode = mode;
+    const modeNames = {
+      auto: '⚡ Auto-Adaptive Mode',
+      engineer: '💻 The Engineer (Next.js API & Architecture)',
+      creative: '🎨 Creative Director (FLUX/Midjourney Prompts)',
+      cmo: '📈 CMO & BeyondSEO 2.0 (GEO & Growth)',
+      designer: '📐 Designer & Artist (UI/UX Systems & WCAG 2.2)',
+      link: '🔗 The Link Expert (Deep URL Analysis)',
+      strategist: '🔬 Strategist & Scientist (30/60/90 Day Roadmaps)'
+    };
+    showAlert(`🧠 Mode Activated: ${modeNames[mode] || mode}`);
+  });
+});
+
 // Initialize forms
-renderUniversalCalculatorInputs('scientific-calculator');
+renderUniversalCalculatorInputs('standard-calculator');
 renderWritingHubInputs('paraphraser');
 
 // --- Universal File Parser (Multi-modal) ---

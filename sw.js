@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aura-ai-cache-v16';
+const CACHE_NAME = 'aura-ai-cache-v18';
 const ASSETS = [
   './',
   './index.html',
@@ -38,33 +38,33 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Cache First Strategy for reliable offline execution
+// Network-First Strategy for Online Speed & Zero-Latency Updates, with Instant Cache Fallback when Offline
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
-  
+
+  const url = new URL(e.request.url);
+  // Do not intercept API requests
+  if (url.pathname.startsWith('/api/')) return;
+
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      // 1. Return cached response if found
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      // 2. Otherwise, fetch from network
-      return fetch(e.request).then((networkResponse) => {
-        // Cache the new response for future offline use
-        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+    fetch(e.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(e.request, responseToCache);
           });
         }
         return networkResponse;
-      }).catch((err) => {
-        // 3. If both cache and network fail, return index.html for navigation requests
-        if (e.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-        throw err;
-      });
-    })
+      })
+      .catch(() => {
+        // Fallback to cache when offline
+        return caches.match(e.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          if (e.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });

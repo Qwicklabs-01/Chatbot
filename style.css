@@ -1386,3 +1386,748 @@ body {
     font-size: 1rem;
   }
 }
+
+/* ==========================================================
+   WINDOWS 11 FLUENT STANDARD CALCULATOR (EXACT UI/UX DESIGN)
+   ========================================================== */
+.fluent-calc-card {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  background: #F3F3F3;
+  color: #1F1F1F;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+  font-family: "Segoe UI Variable Display", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+}
+
+/* Title / Header Bar */
+.fluent-calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 2px 12px;
+}
+
+.fluent-calc-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fluent-calc-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1F1F1F;
+  margin: 0;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fluent-icon-btn {
+  background: transparent;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  color: #2D2D2D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.fluent-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.fluent-icon-btn:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.fluent-calc-header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Display Screen */
+.fluent-calc-screen {
+  padding: 6px 16px 12px 16px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 96px;
+}
+
+.fluent-calc-sub {
+  font-size: 0.9rem;
+  color: #727272;
+  min-height: 20px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fluent-calc-main {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: #1A1A1A;
+  line-height: 1.05;
+  letter-spacing: -0.8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.fluent-calc-main::-webkit-scrollbar {
+  display: none;
+}
+
+/* Memory Row (MC, MR, M+, M-, MS, Mv) */
+.fluent-calc-memory {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px 4px 8px;
+}
+
+.fluent-mem-btn {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: #767676;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.fluent-mem-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1A1A1A;
+}
+
+.fluent-mem-btn.active {
+  color: #1A1A1A;
+  font-weight: 700;
+}
+
+.fluent-mem-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Keypad Grid (6 rows, 4 columns) */
+.fluent-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5px;
+  padding: 2.5px;
+  background: #E8E8E8;
+}
+
+.fluent-btn {
+  height: 52px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  font-family: inherit;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: background 0.1s ease, transform 0.05s ease;
+}
+
+/* Number buttons */
+.fluent-btn-num {
+  background: #FFFFFF;
+  color: #1A1A1A;
+  font-size: 19px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.fluent-btn-num:hover {
+  background: #F8F8F8;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.fluent-btn-num:active {
+  background: #EEEEEE;
+  transform: scale(0.98);
+}
+
+/* Operator / Function buttons */
+.fluent-btn-op {
+  background: #F9F9F9;
+  color: #1A1A1A;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.fluent-btn-op:hover {
+  background: #EFEFEF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.fluent-btn-op:active {
+  background: #E4E4E4;
+  transform: scale(0.98);
+}
+
+/* Equals Button (Signature Windows Accent Blue) */
+.fluent-btn-equals {
+  background: #0067C0;
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 103, 192, 0.35);
+}
+
+.fluent-btn-equals:hover {
+  background: #005FB8;
+}
+
+.fluent-btn-equals:active {
+  background: #0050A0;
+  transform: scale(0.98);
+}
+
+/* History Flyout Drawer */
+.fluent-calc-flyout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(243, 243, 243, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  transform: translateX(100%);
+  transition: transform 0.22s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.fluent-calc-flyout.open {
+  transform: translateX(0);
+}
+
+.fluent-flyout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.fluent-flyout-header h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.fluent-flyout-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.fluent-history-empty {
+  color: #888888;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+.fluent-history-item {
+  padding: 10px 12px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  text-align: right;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.fluent-history-item:hover {
+  background: #F0F4F9;
+  border-color: #0067C0;
+}
+
+.fluent-hist-expr {
+  font-size: 0.82rem;
+  color: #6E6E6E;
+  margin-bottom: 2px;
+}
+
+.fluent-hist-res {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.fluent-flyout-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Menu Flyout Drawer (Modes) */
+.fluent-calc-menu-flyout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  background: #F3F3F3;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  transform: translateX(-100%);
+  transition: transform 0.22s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.fluent-calc-menu-flyout.open {
+  transform: translateX(0);
+}
+
+.fluent-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: #1A1A1A;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+  width: 100%;
+}
+
+.fluent-menu-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.fluent-menu-item.active {
+  background: rgba(0, 103, 192, 0.1);
+  color: #0067C0;
+  font-weight: 600;
+}
+
+/* ==========================================================
+   CALCULATOR SUITE: MODERN NAV RIBBON & SPECIALIZED CARDS
+   ========================================================== */
+.calc-suite-header {
+  margin-bottom: 12px;
+}
+
+.calc-suite-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px 0;
+}
+
+.calc-suite-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Scrollable Category Ribbon */
+.calc-nav-ribbon {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 10px 2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: 14px;
+}
+
+.calc-nav-ribbon::-webkit-scrollbar {
+  display: none;
+}
+
+.calc-pill-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+  outline: none;
+}
+
+.calc-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.calc-pill-btn.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(168, 85, 247, 0.35);
+  font-weight: 600;
+}
+
+/* Specialized Calculator Form Card */
+.specialized-calc-card {
+  background: rgba(18, 24, 38, 0.75);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-glass);
+}
+
+.spec-calc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.spec-calc-header h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.spec-calc-header p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 2px 0 0 0;
+}
+
+/* Input Grid */
+.calc-input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.calc-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.calc-field-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.calc-field-input, .calc-field-select {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+}
+
+.calc-field-input:focus, .calc-field-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.25);
+}
+
+/* Primary Calculate Button */
+.calc-submit-btn {
+  width: 100%;
+  height: 42px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.1s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.35);
+}
+
+.calc-submit-btn:hover {
+  opacity: 0.95;
+  box-shadow: 0 6px 18px rgba(168, 85, 247, 0.45);
+}
+
+.calc-submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Result Dashboard Card */
+.calc-result-dashboard {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: rgba(11, 15, 25, 0.85);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.calc-result-header {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.calc-result-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.calc-result-details {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-bottom: 12px;
+}
+
+.calc-result-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ==========================================================
+   SCIENTIFIC KEYPAD GRID & DISPLAY (PIXEL PERFECT)
+   ========================================================== */
+.calc-display-screen {
+  width: 100%;
+  height: 56px;
+  background: rgba(11, 15, 25, 0.95);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: #FFFFFF;
+  font-size: 1.55rem;
+  font-weight: 600;
+  text-align: right;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  font-family: inherit;
+  outline: none;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.calc-btn {
+  height: 46px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-glass);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+  user-select: none;
+  outline: none;
+}
+
+.calc-btn.num-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.calc-btn.num-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.calc-btn.op-btn {
+  background: rgba(168, 85, 247, 0.15);
+  color: #D8B4FE;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.calc-btn.op-btn:hover {
+  background: rgba(168, 85, 247, 0.28);
+  color: #FFFFFF;
+}
+
+.calc-btn.math-func {
+  background: rgba(6, 182, 212, 0.12);
+  color: #67E8F9;
+  border-color: rgba(6, 182, 212, 0.25);
+  font-size: 0.92rem;
+}
+
+.calc-btn.math-func:hover {
+  background: rgba(6, 182, 212, 0.25);
+  color: #FFFFFF;
+}
+
+.calc-btn.clear-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FCA5A5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.calc-btn.clear-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #FFFFFF;
+}
+
+.calc-btn.equal-btn {
+  background: linear-gradient(135deg, #0067C0, #0078D4);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 103, 192, 0.4);
+}
+
+.calc-btn.equal-btn:hover {
+  background: linear-gradient(135deg, #0078D4, #1084D8);
+  box-shadow: 0 6px 16px rgba(0, 103, 192, 0.6);
+}
+
+.calc-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================
+   OMNIBRAIN PRO MASTER MODE RIBBON & PILLS
+   ========================================================== */
+.omnibrain-mode-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(11, 15, 25, 0.85);
+  border-bottom: 1px solid var(--border-glass);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  user-select: none;
+  z-index: 10;
+}
+
+.omnibrain-mode-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.omnibrain-mode-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 4px;
+}
+
+.omnibrain-mode-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.omnibrain-mode-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.omnibrain-mode-pill.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #FFFFFF;
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.35);
+}
+
+
+
+
