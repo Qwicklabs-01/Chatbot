@@ -139,15 +139,17 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Aura AI Server running at http://localhost:${PORT}/`);
-  console.log(`Ready to connect to local Ollama API.`);
-});
+if (!process.env.VERCEL) {
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Aura AI Server running at http://localhost:${PORT}/`);
+    console.log(`Ready to connect to local Ollama API.`);
+  });
 
-// Prevent Node.js from timing out on massive, long-running generations
-server.keepAliveTimeout = 0; 
-server.headersTimeout = 0;
-server.timeout = 0;
+  // Prevent Node.js from timing out on massive, long-running generations
+  server.keepAliveTimeout = 0; 
+  server.headersTimeout = 0;
+  server.timeout = 0;
+}
 
 // Export for Vercel Serverless
 module.exports = app;
