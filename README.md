@@ -1,94 +1,97 @@
-# 🧠 OmniBrain Pro Master & Aura AI Chatbot
+# Aura AI - Intelligent Client-Side Mobile Assistant & Chatbot
 
-![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
-![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20PWA%20%7C%20Desktop-lightgrey.svg)
-![Powered By](https://img.shields.io/badge/Powered%20By-Ollama%20%7C%20Llama%203.2%20Vision-orange.svg)
-
-Welcome to the ultimate AI ecosystem combining the **OmniBrain-Pro-Master God Model** and the **Aura AI Mobile-Responsive Chatbot**. Designed for professional creators, engineers, and full-stack marketers, this suite runs 100% locally with offline capability.
+Aura AI is a high-speed, local, and 100% client-side mobile chatbot and productivity utility suite running entirely inside your browser. No cloud APIs, no backend database, and complete offline capability.
 
 ---
 
-## 🚀 1. How to Use and Test
+## 🚀 How to Run Locally
 
-### Setup the God Model
-1. Open your terminal in the `OmniBrain-Pro-Master` folder.
-2. Ensure you have Ollama installed and the base model downloaded (`ollama pull llama3.2-vision`).
-3. Compile the model: 
-   ```bash
-   ollama create OmniBrain-Pro-Master -f Modelfile
-   ```
+### Step 1: Open Your Terminal
+Open **PowerShell** or **Command Prompt** and navigate to this project folder:
+```bash
+cd c:\Users\Sakshi\Downloads\chatbot
+```
 
-### Launch the Chatbot
-1. Open your terminal in the `Chatbot` folder.
-2. Install dependencies (if you haven't already):
-   ```bash
-   npm install
-   ```
-3. Start the secure Node.js server:
-   ```bash
-   npm start
-   ```
-4. Open your browser and navigate to `http://localhost:3000`.
+### Step 2: Start the Built-in Server
+Run the local static server:
+```bash
+node server.js
+```
+*(If you see an `EADDRINUSE` error, it means the server is already active and running. Proceed directly to the next step).*
 
-### Testing Mobile & PWA
-To test on your mobile device, ensure your phone is on the same Wi-Fi network as your host machine, find your machine's local IP (e.g., `192.168.1.x`), and go to `http://192.168.1.x:3000` on your mobile browser. Tap **"Add to Home Screen"** to install it natively.
+### Step 3: Open in Browser
+Open your browser and visit:
+[**http://localhost:3000/**](http://localhost:3000/)
 
 ---
 
-## 📝 2. Release Notes (v1.0.0)
-- **Screenshot-to-Code Workflow**: Integrated Llama 3.2 Vision to parse screenshots into 1:1 pixel-perfect React/Tailwind code.
-- **Enterprise Security**: Hardened backend with `helmet` and `express-rate-limit`. Infinite timeouts enabled for massive token generation (`num_predict: -1`).
-- **Creator Master System**: Added 25 Unhinged Agent Personas, AI Music Studio directives, and HyperFrames Motion Blueprints.
-- **BeyondSEO 2.0**: Embedded comprehensive SEO & Search Marketing (Technical, Programmatic, Local, ASO, Video).
-- **Feedigger Architecture**: Injected knowledge model for Instagram viral excavation, ER sorting, and CSV exports.
+## 🌐 How to Host Online for Free on Netlify (Step-by-Step)
+
+Since Aura AI runs entirely on the client side (directly in the browser), you can host it online 100% free without setting up databases or servers.
+
+### Step 1: Open Netlify Drop
+1. Open your web browser and go to [**app.netlify.com/drop**](https://app.netlify.com/drop).
+2. *(Optional but recommended)*: Log in or create a free account so you can edit your site name later.
+
+### Step 2: Drag and Drop the Folder
+1. Open your computer's **File Explorer** and locate your `chatbot` folder (at `c:\Users\Sakshi\Downloads\chatbot`).
+2. Drag the entire `chatbot` folder and drop it onto the big dotted box on the Netlify Drop webpage that says **"Drag and drop your site folder here"**.
+
+### Step 3: View Your Live App
+1. Wait 5–10 seconds for the upload to complete.
+2. Netlify will generate a live URL for you (e.g., `https://random-name-12345.netlify.app`).
+3. Click the link to open your live mobile chatbot online!
+
+### Step 4: Customize Your Link Name (Optional)
+1. In your Netlify dashboard for this site, click on **Site configuration** (or **Site settings**).
+2. Scroll down to **Site info** and click **Change site name**.
+3. Type a custom name like `aura-ai-assistant` and click **Save**.
+4. Your new link will be: `https://aura-ai-assistant.netlify.app`!
 
 ---
 
-## ⚡ 3. Powered By
-- **[Ollama](https://ollama.ai/)** – For lightning-fast, privacy-first local inference.
-- **[Meta Llama 3.2 Vision](https://ai.meta.com/llama/)** – The core foundation model driving multimodal analysis.
-- **[Node.js & Express](https://nodejs.org/)** – Powering the robust, enterprise-secured backend.
-- **Vanilla JS & CSS** – For the ultra-lightweight, mobile-responsive PWA frontend.
+## 📱 How to Install on Mobile Devices (PWA)
+
+Aura AI is configured as a Progressive Web App (PWA) supporting offline access and fullscreen native displays on both Android and iOS.
+
+### 📱 For iPhone & iPad (iOS)
+1. Open your live hosted URL in **Safari** on your iOS device.
+2. Tap the **Share** button (the square icon with an upward arrow at the bottom).
+3. Scroll down and tap **Add to Home Screen**.
+4. Name the application **Aura AI** and tap **Add**.
+5. It will appear on your iOS home screen as a borderless, fullscreen mobile app!
+
+### 🤖 For Android
+1. Open your live hosted URL in **Chrome** on your Android device.
+2. Tap the **Menu (three dots)** in the top right, or click the native **"Install App"** banner that slides up from the bottom.
+3. Tap **Install** to add the application directly to your home screen and app drawer.
 
 ---
 
-## 🔗 4. Badge File
-*Badges are displayed at the top of this document for easy repository visibility.*
+## 🛠️ How to Compile to a Native Android APK (Free)
+
+If you want to compile Aura AI into a native Android `.apk` file that anyone can download and sideload for free, follow these steps:
+
+1. **Host Online**: Deploy your app online using the Netlify instructions above and copy the live URL.
+2. **Go to PWABuilder**: Visit [**PWABuilder.com**](https://www.pwabuilder.com/) (a 100% free tool maintained by Microsoft).
+3. **Paste URL**: Paste your live website URL and click **Start**.
+4. **Package App**: PWABuilder will automatically read the `manifest.json`, `sw.js` (offline service worker), and `icon.svg` files.
+5. **Download Package**: Click **Package for Store** or **Build My App**, select **Android**, and click **Download**.
+6. Inside the downloaded package, you will have a signed, clean `.apk` file ready to install and share!
+
+### How to Extract and Install the Compiled APK
+
+1. **Extract the ZIP File**: Double-click the downloaded `.zip` file on your computer and extract its contents. Inside, you will see two main files:
+   - `app-release.apk`: This is the installer file for Android phones!
+   - `app-release.aab`: This is the Android App Bundle file (you only need this if you want to publish your app to the Google Play Store in the future).
+2. **Install it on Your Mobile Phone**:
+   - Send the `app-release.apk` file to your Android phone (you can send it to yourself via email, WhatsApp, Telegram, Google Drive, or connect your phone via USB).
+   - On your phone, tap the `.apk` file to open it.
+   - If your phone asks for permission to install from "Unknown Sources" or your file manager, click **Allow/Settings** to grant it (this is normal for apps installed outside the Google Play Store).
+   - Tap **Install**.
+
+You now have a fully compiled, native Android app version of your Aura AI chatbot! You can share this `.apk` file with anyone, and they can install and run it on their mobile device fully offline!
 
 ---
 
-## 📜 5. License
-This project is licensed under the **MIT License**. You are free to use, modify, and distribute this software for personal or commercial use, provided that the original copyright notice is included.
-
----
-
-## 👀 6. See Also
-- [Ollama Documentation](https://github.com/jmorganca/ollama)
-- [Feedigger Project Repo](https://github.com/)
-- [BeyondSEO Growth Frameworks](https://github.com/beyondtahir/beyondseo)
-- [Screenshot-to-Code](https://github.com/abi/screenshot-to-code)
-
----
-
-## 🤝 7. Contributors
-- **Creator & Lead Developer:** Sakshi
-
-*A special thanks to the open-source community for the models and frameworks that made this ecosystem possible.*
-
----
-
-## ©️ 8. Copyright & License
-**Copyright &copy; 2026 Made by Developer Sakshi.** 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
-
----
-
-## 💬 9. Join Us On
-Connect with us to stay updated on the latest AI workflows and model releases!
-- **Discord:** [Join the Developer Community](#)
-- **Twitter / X:** [@DeveloperSakshi](#)
-- **GitHub:** [Follow Sakshi](#)
-- **Support & Contact:** `+91 6290873841` | `qwicklabs2@gmail.com`
+*Copyright © 2026 Made by Sakshi. All Rights Reserved.*
