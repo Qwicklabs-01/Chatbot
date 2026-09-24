@@ -54,6 +54,8 @@ app.use('/api/', apiLimiter);
  * Main API Endpoint for Chat & File Analysis
  * Route: POST /api/chat
  */
+app.get('/api/ping', (req, res) => res.json({ status: 'alive' }));
+
 app.post('/api/chat', upload.single('file'), async (req, res) => {
   try {
     const rawMessage = req.body.message || '';
