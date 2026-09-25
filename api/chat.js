@@ -248,6 +248,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
     }
 
     // 4. Robust Free Cloud LLM Gateway (Pollinations)
+    if (!botReply) {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 60000);
