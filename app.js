@@ -516,7 +516,20 @@ document.addEventListener('DOMContentLoaded', () => {
     'design',
     'design-system',
     'slides',
-    'ui-styling'
+    'ui-styling',
+    'auto',
+    'engineer',
+    'creative',
+    'cmo-seo',
+    'designer',
+    'link-expert',
+    'strategist',
+    'superpowers',
+    'nextjs-api',
+    'seo-geo',
+    'ai-art-prompt',
+    'roll-d20',
+    'help-menu'
   ];
 
   modes.forEach(mode => {
