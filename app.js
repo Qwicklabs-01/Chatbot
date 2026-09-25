@@ -933,21 +933,28 @@ function handleUserMessageSubmit(inputText) {
 
   showTypingIndicator();
 
-  setTimeout(async () => {
-    removeTypingIndicator();
-    const botResponse = await generateBotResponse(trimmed);
-    const botTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    
-    appendMessageMarkup('bot', botResponse, botTimestamp, true);
-    state.chatHistory.push({ sender: 'bot', text: botResponse, timestamp: botTimestamp });
-    saveHistory();
+  (async () => {
+    try {
+      const botResponse = await generateBotResponse(trimmed);
+      removeTypingIndicator();
+      const botTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      
+      appendMessageMarkup('bot', botResponse, botTimestamp, true);
+      state.chatHistory.push({ sender: 'bot', text: botResponse, timestamp: botTimestamp });
+      saveHistory();
 
-    // Telemetry: Track Bot Delivery
-    auraAnalytics.logEvent('bot_response_delivered', { 
-      response_length: (botResponse || '').length,
-      mode: 'OmniBrain-Pro'
-    });
-  }, 800);
+      // Telemetry: Track Bot Delivery
+      auraAnalytics.logEvent('bot_response_delivered', { 
+        response_length: (botResponse || '').length,
+        mode: 'OmniBrain-Pro'
+      });
+    } catch (err) {
+      removeTypingIndicator();
+      const botTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const fallbackMsg = `⚠️ Sorry, unable to process message: ${err.message || 'Please check your connection.'}`;
+      appendMessageMarkup('bot', fallbackMsg, botTimestamp);
+    }
+  })();
 }
 
 // Dynamic API Endpoint Resolver (Works on Localhost, Vercel, PWA & Custom Tunnels)
@@ -1208,16 +1215,25 @@ async function generateClientFallbackResponse(input) {
   } catch (e) {}
 
   // --- 3. Dynamic Cloud AI Synthesis (Free, Fast, Zero Backend Needed) ---
-  if (navigator.onLine && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+  if (navigator.onLine) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4500);
-      const encodedPrompt = encodeURIComponent(`System: You are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Answer concisely and smartly in markdown with code or concrete steps.\n\nUser Question: ${q}`);
-      const res = await fetch(`https://text.pollinations.ai/${encodedPrompt}`, { signal: controller.signal });
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const res = await fetch('https://text.pollinations.ai/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'system', content: 'You are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Answer smartly and helpfully in markdown.' },
+            { role: 'user', content: q }
+          ]
+        }),
+        signal: controller.signal
+      });
       clearTimeout(timeoutId);
       if (res.ok) {
         const text = await res.text();
-        if (text && text.trim().length > 10 && !text.includes('"error":')) {
+        if (text && text.trim().length > 5 && !text.includes('"error":')) {
           return text.trim();
         }
       }
@@ -1275,7 +1291,7 @@ async function generateBotResponse(input) {
     }
     
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4500);
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
 
     const response = await fetch(apiEndpoint, {
       method: 'POST',

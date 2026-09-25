@@ -18,9 +18,15 @@ const PORT = 3000;
 // Load OmniBrain-Pro-Master Brain (Created by Developer Sakshi)
 let systemInstructionText = '';
 try {
-  const brainDir = path.join(__dirname, '..', 'OmniBrain-Pro-Master', 'OmniBrain-Pro-master');
+  let brainDir = path.join(__dirname, '..', 'brain');
+  if (!fs.existsSync(path.join(brainDir, 'master-prompt-professional.md'))) {
+    brainDir = path.join(__dirname, '..', 'OmniBrain-Pro-Master', 'OmniBrain-Pro-master');
+  }
   const masterPrompt = fs.readFileSync(path.join(brainDir, 'master-prompt-professional.md'), 'utf-8');
-  const skillsList = fs.readFileSync(path.join(brainDir, 'brain.md'), 'utf-8');
+  let skillsList = '';
+  if (fs.existsSync(path.join(brainDir, 'brain.md'))) {
+    skillsList = fs.readFileSync(path.join(brainDir, 'brain.md'), 'utf-8');
+  }
   
   systemInstructionText = `# OMNIBRAIN PRO MASTER MODEL — The Ultimate Professional Multi-Discipline Creator, Engineer, and Strategist\n\n` +
     `ROLE & IDENTITY:\n` +
@@ -128,42 +134,89 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
 
     let botReply = "";
 
-    // 1. If running locally with Ollama available, try local Ollama first
+    // 1. If running locally, check if local Ollama is active with a fast ping
     if (!process.env.VERCEL) {
+      let ollamaActive = false;
       try {
-        const ollamaPromise = ollama.chat({
-          model: 'brainomnipro',
-          messages: messages,
-          options: {
-            num_predict: 1024,
-            num_ctx: 2048
-          }
-        });
-        const response = await Promise.race([
-          ollamaPromise,
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Local Ollama timeout')), 9000))
-        ]);
+        const pingController = new AbortController();
+        const pingTimeout = setTimeout(() => pingController.abort(), 1200);
+        const pingRes = await fetch(`${OLLAMA_URL}/api/version`, { signal: pingController.signal });
+        clearTimeout(pingTimeout);
+        if (pingRes.ok) ollamaActive = true;
+      } catch (pingErr) {
+        ollamaActive = false;
+      }
 
-        if (response && response.message && response.message.content) {
-          botReply = response.message.content;
+      if (ollamaActive) {
+        try {
+          const ollamaPromise = ollama.chat({
+            model: 'brainomnipro',
+            messages: messages,
+            options: {
+              num_predict: 1024,
+              num_ctx: 2048
+            }
+          });
+          const response = await Promise.race([
+            ollamaPromise,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Local Ollama timeout')), 9000))
+          ]);
+
+          if (response && response.message && response.message.content) {
+            botReply = response.message.content;
+          }
+        } catch (ollamaErr) {
+          console.warn('Local Ollama chat failed or timed out:', ollamaErr.message);
         }
-      } catch (ollamaErr) {
-        console.warn('Local Ollama unavailable or timed out:', ollamaErr.message);
+      } else {
+        console.log(`ℹ️ Local Ollama not active at ${OLLAMA_URL}. Seamlessly routing to AI gateway...`);
       }
     }
 
-    // 2. If running on Vercel OR Ollama timed out/failed, route through OmniBrain FreeLLM Gateway
+    // 2. If Gemini API Key is configured, use official Google GenAI
+    if (!botReply && process.env.GEMINI_API_KEY) {
+      try {
+        const { GoogleGenAI } = require('@google/genai');
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const geminiRes = await ai.models.generateContent({
+          model: 'gemini-2.5-flash',
+          contents: prompt
+        });
+        if (geminiRes && geminiRes.text) {
+          botReply = geminiRes.text;
+        }
+      } catch (geminiErr) {
+        console.warn('Gemini API call failed:', geminiErr.message);
+      }
+    }
+
+    // 3. Robust Free Cloud LLM Gateway (POST with JSON messages avoids URL length issues)
     if (!botReply) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 6500);
-        const encodedPrompt = encodeURIComponent(`System: You are OmniBrain Pro Master Model (Aura AI) made by Developer Sakshi. Apply OmniBrain professional standards.\n\nUser Question: ${cleanMessage}`);
-        const cloudRes = await fetch(`https://text.pollinations.ai/${encodedPrompt}`, { signal: controller.signal });
+        const timeout = setTimeout(() => controller.abort(), 12000);
+        const cloudMessages = [
+          { 
+            role: 'system', 
+            content: (systemInstructionText ? systemInstructionText.slice(0, 1500) : '') + '\nYou are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Provide helpful, accurate responses.'
+          },
+          { 
+            role: 'user', 
+            content: prompt || cleanMessage 
+          }
+        ];
+
+        const cloudRes = await fetch('https://text.pollinations.ai/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: cloudMessages }),
+          signal: controller.signal
+        });
         clearTimeout(timeout);
         if (cloudRes.ok) {
           const text = await cloudRes.text();
-          if (text && !text.includes('"error":') && text.length > 10) {
-            botReply = text;
+          if (text && !text.includes('"error":') && text.trim().length > 5) {
+            botReply = text.trim();
           }
         }
       } catch (cloudErr) {
@@ -171,7 +224,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       }
     }
 
-    // 3. Master OmniBrain Knowledge Synthesis if networks are restricted
+    // 4. Master OmniBrain Knowledge Synthesis fallback if networks are completely offline
     if (!botReply) {
       botReply = generateOmniBrainMasterAnswer(cleanMessage);
     }
@@ -249,6 +302,18 @@ function generateOmniBrainMasterAnswer(input) {
            `*Adhering to TestMu AI & OmniBrain-Pro Production Engineering Standards.*`;
   }
 
+  // Mode: Superpowers Software Development
+  if (lower.includes('superpowers') || lower.includes('brainstorm') || lower.includes('tdd') || lower.includes('test-driven')) {
+    return `🚀 **OmniBrain-Pro Superpowers Agent**\n\n` +
+           `I am equipped with the **Superpowers methodology** for subagent-driven development.\n\n` +
+           `Here is my workflow:\n` +
+           `1. **Brainstorming:** I will clarify your requirements before writing code.\n` +
+           `2. **Planning:** I will break down the design into bite-sized implementation tasks.\n` +
+           `3. **Execution (TDD):** I follow a strict Red-Green-Refactor test-driven development loop.\n` +
+           `4. **Code Review:** I review all code for DRY and YAGNI principles before finalizing.\n\n` +
+           `Let's start brainstorming! What are we building today?`;
+  }
+
   // Mode: Content Engineering (LinkedIn, YouTube, Viral)
   if (lower.includes('linkedin') || lower.includes('hook') || lower.includes('viral') || lower.includes('content') || lower.includes('youtube')) {
     return `🔥 **OmniBrain-Pro Creator Studio — Content Engineering**\n\n` +
@@ -263,6 +328,20 @@ function generateOmniBrainMasterAnswer(input) {
            `• Sentence 1 must confirm the title/thumbnail click within the first 6 words.\n` +
            `• Open a high-stakes curiosity loop without prematurely revealing the solution.\n\n` +
            `*Operated under OmniBrain-Pro Creator Mode — Developed by Sakshi.*`;
+  }
+
+  // Mode: AI Job Search & Career Strategy (from ai-job-search)
+  if (lower.includes('job') || lower.includes('career') || lower.includes('resume') || lower.includes('cv') || lower.includes('cover letter') || lower.includes('interview')) {
+    return `💼 **OmniBrain-Pro Career Studio — AI Job Search Assistant**\n\n` +
+           `### 1. Application Strategy\n` +
+           `• **Targeted Profiles**: I can evaluate your profile against job descriptions to provide a fit score.\n` +
+           `• **Resume & Cover Letter Drafting**: I structure professional, LaTeX-ready, tailored CVs (max 2 pages) and 1-page cover letters prioritizing exact keyword relevance and ATS parseability.\n` +
+           `• **Drafter-Reviewer Loop**: I don't just write; I critique my own drafts against company research before finalizing.\n\n` +
+           `### 2. Interview Preparation\n` +
+           `• **STAR Method**: We will map your experience to Behavioral Questions (Situation, Task, Action, Result).\n` +
+           `• **Company Research**: I verify facts about the company and interviewers.\n` +
+           `• **Mock Interviews**: I can simulate technical or HR interview rounds.\n\n` +
+           `*Operated under OmniBrain-Pro Career Strategist Mode — Inspired by MadsLorentzen's AI Job Search.*`;
   }
 
   // Identity
