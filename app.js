@@ -528,6 +528,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Special: proj button opens history drawer
+  const projBtn = document.getElementById('sidebar-proj-btn');
+  if (projBtn) {
+    projBtn.addEventListener('click', () => {
+      if (DOM.historySidebar) DOM.historySidebar.classList.add('open');
+    });
+  }
+
   const calcBtn = document.getElementById('sidebar-calculator-btn');
   if (calcBtn) {
     calcBtn.addEventListener('click', () => switchWorkspaceMode('calculator'));
@@ -2753,6 +2761,17 @@ function renderWritingHubInputs(mode) {
 
     case 'ai-art-prompt': switchWorkspaceMode('designer'); break;
 
+    case 'pdf':
+      {
+        // PDF tool is handled by switchTab('pdf-tools') in switchWorkspaceMode
+        // This case intentionally falls through to the tool view
+      }
+      break;
+    case 'voice':
+      {
+        // Voice tool handled by switchTab('voice') in switchWorkspaceMode
+      }
+      break;
     case 'roll-d20':
       {
         const d = document.createElement('div');
