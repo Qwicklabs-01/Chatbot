@@ -545,34 +545,10 @@
 
         <!-- Conversational Chat Area -->
         <div id="chat-view-container" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; height: 100%;">
-          <!-- OmniBrain-Pro-Master Active Modes Bar -->
-          <div class="omnibrain-mode-bar" id="omnibrain-mode-bar">
-            <span class="omnibrain-mode-label">🧠 Mode:</span>
-            <button class="omnibrain-mode-pill active" data-mode="auto" title="Auto-detect Best Mode">⚡ Auto</button>
-            <button class="omnibrain-mode-pill" data-mode="engineer" title="The Engineer (Code, API, Architecture)">💻 Engineer</button>
-            <button class="omnibrain-mode-pill" data-mode="creative" title="Creative Director (FLUX/Midjourney, Prompts)">🎨 Creative</button>
-            <button class="omnibrain-mode-pill" data-mode="cmo" title="Chief Marketing Officer (BeyondSEO 2.0, Growth)">📈 CMO & SEO</button>
-            <button class="omnibrain-mode-pill" data-mode="designer" title="Designer & Artist (UI/UX, 3D, Design Systems)">📐 Designer</button>
-            <button class="omnibrain-mode-pill" data-mode="link" title="The Link Expert (Deep URL Analysis)">🔗 Link Expert</button>
-            <button class="omnibrain-mode-pill" data-mode="strategist" title="Strategist & Scientist (30/60/90 Day Roadmaps)">🔬 Strategist</button>
-          </div>
-
           <!-- Main Scrollable Chat Panel -->
           <main class="chat-messages" id="chat-messages-container">
             <!-- Message bubbles dynamically populated by JS -->
           </main>
-
-          <!-- Horizontal scrolling Quick Suggestions -->
-          <div class="suggestion-wrapper" id="suggestions-container">
-            <span class="chip" onclick="handleChipClick('What is JavaScript?')">💡 What is JS?</span>
-            <span class="chip" onclick="handleChipClick('Find me a tech job and tailor my CV')">💼 AI Job Search</span>
-            <span class="chip" onclick="handleChipClick('Use superpowers to brainstorm a new app')">🚀 Superpowers</span>
-            <span class="chip" onclick="handleChipClick('Generate Next.js API architecture with Zod')">💻 Next.js API</span>
-            <span class="chip" onclick="handleChipClick('Create a BeyondSEO 2.0 audit and GEO plan')">📈 SEO & GEO</span>
-            <span class="chip" onclick="handleChipClick('Create a Midjourney v6 prompt for cyberpunk city')">🎨 AI Art Prompt</span>
-            <span class="chip" onclick="handleChipClick('Roll a 20-sided dice')">🎲 Roll D20</span>
-            <span class="chip" onclick="handleChipClick('Help')">❓ Help Menu</span>
-          </div>
 
           <!-- Bottom Chat Form & Input controls -->
           <footer class="chat-footer">
