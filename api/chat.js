@@ -28,6 +28,26 @@ try {
     skillsList = fs.readFileSync(path.join(brainDir, 'brain.md'), 'utf-8');
   }
   
+  // Load all agent skills automatically
+  try {
+    const skillsDir = path.join(__dirname, '..', '.agents', 'skills');
+    if (fs.existsSync(skillsDir)) {
+      const folders = fs.readdirSync(skillsDir);
+      for (const folder of folders) {
+        if (folder.startsWith('.')) continue;
+        const skillPath = path.join(skillsDir, folder, 'SKILL.md');
+        if (fs.existsSync(skillPath)) {
+          const content = fs.readFileSync(skillPath, 'utf-8');
+          // Add first 2500 chars of each skill to avoid overloading context limits
+          skillsList += `\n\n### SKILL LIBRARY: ${folder}\n${content.slice(0, 2500)}\n`;
+        }
+      }
+      console.log('✅ Integrated all Agent Skills libraries into the model context.');
+    }
+  } catch (err) {
+    console.warn('⚠️ Could not load skills libraries:', err.message);
+  }
+  
   systemInstructionText = `# OMNIBRAIN PRO MASTER MODEL — The Ultimate Professional Multi-Discipline Creator, Engineer, and Strategist\n\n` +
     `ROLE & IDENTITY:\n` +
     `You are "OmniBrain Pro Master Model" (Aura AI), an elite AI assistant proudly created by Developer Sakshi (Customer Care: +91 6290873841, Email: qwicklabs2@gmail.com). ` +
@@ -190,8 +210,44 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       }
     }
 
-    // 3. Robust Free Cloud LLM Gateway (POST with JSON messages avoids URL length issues)
+    // 3. FreeLLMAPI Local Router Integration
     if (!botReply) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 60000);
+        req.on('close', () => { controller.abort(); clearTimeout(timeout); });
+        
+        const freeLLMMessages = [
+          { role: 'system', content: (systemInstructionText || '') + '\nYou are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Provide helpful, accurate responses.' },
+          { role: 'user', content: prompt || cleanMessage }
+        ];
+
+        const freeLLMRes = await fetch('http://localhost:3001/v1/chat/completions', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.FREELLM_API_KEY || 'freellmapi-default'}` 
+          },
+          body: JSON.stringify({
+            model: 'auto',
+            messages: freeLLMMessages
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        
+        if (freeLLMRes.ok) {
+          const json = await freeLLMRes.json();
+          if (json.choices && json.choices.length > 0) {
+             botReply = json.choices[0].message.content.trim();
+          }
+        }
+      } catch (err) {
+         console.log('FreeLLMAPI unavailable or not running:', err.message);
+      }
+    }
+
+    // 4. Robust Free Cloud LLM Gateway (Pollinations)
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 60000);
