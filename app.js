@@ -561,6 +561,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Mobile Tool Dropdown Handler
+  const mobileToolDropdown = document.getElementById('mobile-tool-dropdown');
+  if (mobileToolDropdown) {
+    mobileToolDropdown.addEventListener('change', (e) => {
+      const selectedBtnId = e.target.value;
+      // Extract mode from button id: "sidebar-{mode}-btn" -> "{mode}"
+      const mode = selectedBtnId.replace('sidebar-', '').replace('-btn', '');
+      switchWorkspaceMode(mode);
+    });
+  }
 });
 
 // --- Tab Switching Logic ---
