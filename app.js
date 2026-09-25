@@ -499,22 +499,19 @@ document.addEventListener('DOMContentLoaded', () => {
     chatBtn.addEventListener('click', () => switchWorkspaceMode('chat'));
   }
 
-  const modes = [
+    const modes = [
     'paraphraser',
     'grammar-checker',
     'ai-detector',
     'plagiarism-checker',
     'ai-humanizer',
-
+    'youtube-automation',
+    'ai-job-search',
     'translator',
     'summarizer',
     'citation-generator',
-    'youtube-automation',
-
-    'ai-job-search',
     'auto',
     'engineer',
-    'creative',
     'designer',
     'link-expert',
     'strategist',
@@ -2328,6 +2325,24 @@ function renderWritingHubInputs(mode) {
       createTextarea('Enter AI Text to Humanize', 'h-text', 'Paste AI output...', 'Furthermore, it is crucial to recognize that we must delve into this aspect.');
       break;
     case 'ai-image-generator': switchWorkspaceMode('designer'); break;
+    case 'ai-job-search':
+      {
+        const d = document.createElement('div');
+        d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">💼</div><h3 style="color:var(--color-primary);margin-bottom:6px;">AI Job Search</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">Find jobs, tailor your CV, write cover letters and prepare for interviews.</p></div>`;
+        container.appendChild(d);
+        createSelect('Job Search Task', 'job-task', [
+          { val: 'cv-tailor', name: '📄 Tailor CV to Job Description' },
+          { val: 'cover-letter', name: '✉️ Write Cover Letter' },
+          { val: 'linkedin', name: '💼 Optimize LinkedIn Profile' },
+          { val: 'interview-prep', name: '🎤 Interview Preparation' },
+          { val: 'job-evaluate', name: '⚖️ Evaluate Job Offer' },
+          { val: 'salary-negotiation', name: '💰 Salary Negotiation Script' },
+          { val: 'job-search', name: '🔍 Job Search Strategy' }
+        ]);
+        createInput('Job Title / Role', 'job-title', 'text', 'e.g. Senior Frontend Developer', '');
+        createTextarea('Paste Job Description or Your CV', 'job-text', 'Paste the job description or your current CV here...', '');
+      }
+      break;
     case 'translator':
       createTextarea('Enter Text to Translate', 't-text', 'Enter text...', 'Hello, welcome to our smart chatbot!');
       createSelect('Target Language', 't-lang', [
@@ -2355,6 +2370,24 @@ function renderWritingHubInputs(mode) {
       document.getElementById('s-length-slider').addEventListener('input', (e) => {
         document.getElementById('sum-len-label').textContent = e.target.value;
       });
+      break;
+    case 'youtube-automation':
+      {
+        const d = document.createElement('div');
+        d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">📺</div><h3 style="color:var(--color-primary);margin-bottom:6px;">YouTube Automation</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">Scripts, titles, descriptions, tags, thumbnails and channel strategy.</p></div>`;
+        container.appendChild(d);
+        createSelect('YouTube Task', 'yt-task', [
+          { val: 'script', name: '📝 Video Script Writer' },
+          { val: 'title-desc', name: '🏷️ Title & Description Optimizer' },
+          { val: 'tags', name: '🔖 Tags & Keywords Generator' },
+          { val: 'thumbnail', name: '🖼️ Thumbnail Concept & Prompt' },
+          { val: 'hook', name: '🎣 Hook & Intro Writer' },
+          { val: 'channel-strategy', name: '📈 Channel Growth Strategy' },
+          { val: 'shorts', name: '📱 YouTube Shorts Script' }
+        ]);
+        createInput('Video Topic / Niche', 'yt-topic', 'text', 'e.g. How to make money with AI in 2026...', '');
+        createTextarea('Additional Details', 'yt-text', 'Target audience, tone, video length, competitors...', '');
+      }
       break;
     case 'citation-generator':
       createInput('Author (Last, First)', 'c-author', 'text', 'e.g. Smith, John', 'Smith, John');
