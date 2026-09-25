@@ -155,7 +155,8 @@ let state = {
   voices: [],
   activeTab: 'voice',
   
-  // OmniBrain Pro Active Mode State ('auto', 'engineer', 'creative', 'cmo', 'designer', 'link', 'strategist')
+  // OmniBrain Pro Active Mode State ('auto', 'engineer',
+ 'cmo', 'designer', 'link', 'strategist')
   omniMode: 'auto',
 
   // Universal Calculator State
@@ -504,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'ai-detector',
     'plagiarism-checker',
     'ai-humanizer',
-    'ai-image-generator',
+
     'translator',
     'summarizer',
     'citation-generator',
@@ -520,7 +521,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'superpowers',
     'nextjs-api',
     'seo',
-    'ai-art-prompt',
     'roll-d20',
     'help-menu'
   ];
@@ -2328,15 +2328,7 @@ function renderWritingHubInputs(mode) {
     case 'ai-humanizer':
       createTextarea('Enter AI Text to Humanize', 'h-text', 'Paste AI output...', 'Furthermore, it is crucial to recognize that we must delve into this aspect.');
       break;
-    case 'ai-image-generator':
-      createTextarea('Describe the Image (Prompt)', 'img-text', 'e.g. sunset beach, retro cyberpunk grid...', 'retro cyberpunk neon city grid');
-      createSelect('Art Style', 'img-style', [
-        { val: 'cyberpunk', name: '🌆 Cyberpunk Grid' },
-        { val: 'watercolor', name: '🎨 Pastel Watercolor' },
-        { val: 'retro', name: '🌅 Retro Neon Sunset' },
-        { val: 'abstract', name: '🌀 Dynamic Abstract' }
-      ]);
-      break;
+    case 'ai-image-generator': switchWorkspaceMode('designer'); break;
     case 'translator':
       createTextarea('Enter Text to Translate', 't-text', 'Enter text...', 'Hello, welcome to our smart chatbot!');
       createSelect('Target Language', 't-lang', [
@@ -2535,23 +2527,7 @@ function renderWritingHubInputs(mode) {
       }
       break;
 
-    case 'creative':
-      {
-        const d = document.createElement('div');
-        d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">🎨</div><h3 style="color:var(--color-primary);margin-bottom:6px;">Creative Director Mode</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">FLUX/Midjourney prompts, storytelling, creative writing and content.</p></div>`;
-        container.appendChild(d);
-        createSelect('Creative Type', 'cr-type', [
-          { val: 'story', name: '📖 Short Story / Fiction' },
-          { val: 'poem', name: '🎶 Poem / Lyrics' },
-          { val: 'script', name: '🎬 Script / Screenplay' },
-          { val: 'blog', name: '✍️ Blog Post / Article' },
-          { val: 'ad-copy', name: '📣 Ad Copy / Tagline' },
-          { val: 'midjourney', name: '🖼️ Midjourney Prompt' },
-          { val: 'flux', name: '⚡ FLUX Image Prompt' }
-        ]);
-        createTextarea('Your Creative Brief', 'cr-text', 'Describe your creative vision or topic...', '');
-      }
-      break;
+    case 'creative': switchWorkspaceMode('designer'); break;
 
     // cmo-seo removed — merged into seo
       {
@@ -2574,10 +2550,17 @@ function renderWritingHubInputs(mode) {
 
     case 'designer':
       {
-        const d = document.createElement('div');
-        d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">🎨</div><h3 style="color:var(--color-primary);margin-bottom:6px;">Designer Studio</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">UI/UX, Brand Identity, Banners, Design Systems, Slides & More — all in one place.</p></div>`;
-        container.appendChild(d);
-        createSelect('Design Task', 'des-task', [
+        const header = document.createElement('div');
+        header.innerHTML = `
+          <div style="text-align:center;padding:16px 10px 8px;">
+            <div style="font-size:40px;margin-bottom:8px;">🎨</div>
+            <h3 style="color:var(--color-primary);font-size:18px;font-weight:800;margin-bottom:4px;">Designer Studio</h3>
+            <p style="color:var(--text-muted);font-size:11px;line-height:1.5;">UI/UX · Brand · Banner · Art Prompts · Image Gen · Creative Writing · Design Systems — all in one.</p>
+          </div>
+        `;
+        container.appendChild(header);
+
+        createSelect('What Do You Want To Create?', 'des-task', [
           { val: 'ui-ux', name: '🖥️ UI/UX Design (Web/App)' },
           { val: 'wireframe', name: '📐 Wireframe & UX Flow' },
           { val: 'design-system', name: '🧩 Design System & Tokens' },
@@ -2586,33 +2569,51 @@ function renderWritingHubInputs(mode) {
           { val: 'social-media', name: '📱 Social Media Graphics' },
           { val: 'slides', name: '📊 Presentation Slides' },
           { val: 'color-palette', name: '🎨 Color Palette & Typography' },
-          { val: 'css-styling', name: '💅 CSS & UI Styling' },
+          { val: 'css-styling', name: '💅 CSS & UI Styling Code' },
           { val: '3d-art', name: '🌐 3D Art Direction' },
           { val: 'icon-design', name: '🔷 Icon & Illustration Design' },
-          { val: 'mockup', name: '📱 Mockup & Prototype' }
+          { val: 'mockup', name: '📱 Mockup & Prototype' },
+          { val: 'midjourney', name: '🎨 Midjourney v6 Art Prompt' },
+          { val: 'flux', name: '⚡ FLUX 1.1 Image Prompt' },
+          { val: 'dalle3', name: '🤖 DALL·E 3 Image Prompt' },
+          { val: 'ai-image', name: '🖼️ AI Image Generation Prompt' },
+          { val: 'story', name: '📖 Creative Story / Fiction' },
+          { val: 'blog', name: '✍️ Creative Blog / Article' },
+          { val: 'ad-copy', name: '📣 Ad Copy & Taglines' }
         ]);
-        createSelect('Platform / Output', 'des-platform', [
+
+        createSelect('Platform / Output Format', 'des-platform', [
           { val: 'web', name: '🌐 Web Application' },
           { val: 'mobile', name: '📱 Mobile App (iOS/Android)' },
-          { val: 'desktop', name: '🖥️ Desktop Application' },
+          { val: 'desktop', name: '🖥️ Desktop App' },
           { val: 'facebook', name: '👍 Facebook (1200×628)' },
           { val: 'instagram', name: '📷 Instagram (1080×1080)' },
           { val: 'linkedin', name: '💼 LinkedIn (1200×627)' },
           { val: 'twitter', name: '🐦 Twitter/X (1600×900)' },
           { val: 'youtube', name: '▶️ YouTube Thumbnail (1280×720)' },
-          { val: 'print', name: '🖨️ Print / A4' }
+          { val: 'print', name: '🖨️ Print / A4' },
+          { val: 'any', name: '✨ Any / General' }
         ]);
-        createSelect('Style', 'des-style', [
+
+        createSelect('Visual Style', 'des-style', [
           { val: 'modern', name: '✨ Modern & Minimal' },
           { val: 'glassmorphism', name: '🔮 Glassmorphism' },
-          { val: 'dark', name: '🌑 Dark Mode' },
+          { val: 'dark', name: '🌑 Dark Mode / Neon' },
           { val: 'gradient', name: '🌈 Bold Gradient' },
+          { val: 'photorealistic', name: '📷 Photorealistic' },
+          { val: 'cinematic', name: '🎬 Cinematic / Movie Still' },
+          { val: 'anime', name: '🎌 Anime / Manga' },
           { val: 'retro', name: '📼 Retro / Vintage' },
+          { val: 'cyberpunk', name: '🌆 Cyberpunk / Sci-Fi' },
+          { val: 'fantasy', name: '🧙 Fantasy / Epic' },
           { val: 'corporate', name: '👔 Corporate / Professional' },
-          { val: 'playful', name: '🎉 Playful / Fun' },
-          { val: 'brutalist', name: '⬛ Brutalist / Raw' }
+          { val: 'playful', name: '🎉 Playful / Vibrant' },
+          { val: 'brutalist', name: '⬛ Brutalist / Raw' },
+          { val: 'oil-painting', name: '🖌️ Oil Painting' },
+          { val: 'minimalist', name: '⬜ Minimalist / Clean' }
         ]);
-        createTextarea('Design Brief', 'des-text', 'Describe the design you need — colors, mood, target audience, key elements...', '');
+
+        createTextarea('Describe What You Need', 'des-text', 'e.g. Create a dark glassmorphism UI for a fintech mobile app with purple gradients and modern typography...', '');
       }
       break;
 
@@ -2708,30 +2709,7 @@ function renderWritingHubInputs(mode) {
       }
       break;
 
-    case 'ai-art-prompt':
-      {
-        const d = document.createElement('div');
-        d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">🖼️</div><h3 style="color:var(--color-primary);margin-bottom:6px;">AI Art Prompt Generator</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">Generate stunning Midjourney v6, FLUX, DALL·E 3, and Stable Diffusion prompts.</p></div>`;
-        container.appendChild(d);
-        createSelect('AI Art Platform', 'art-platform', [
-          { val: 'midjourney', name: '🎨 Midjourney v6' },
-          { val: 'flux', name: '⚡ FLUX 1.1 Pro' },
-          { val: 'dalle3', name: '🤖 DALL·E 3' },
-          { val: 'stable-diffusion', name: '🌊 Stable Diffusion XL' },
-          { val: 'ideogram', name: '🔤 Ideogram v2' }
-        ]);
-        createSelect('Art Style', 'art-style', [
-          { val: 'photorealistic', name: '📷 Photorealistic' },
-          { val: 'cinematic', name: '🎬 Cinematic / Movie Still' },
-          { val: 'anime', name: '🎌 Anime / Manga' },
-          { val: 'oil-painting', name: '🖌️ Oil Painting' },
-          { val: 'cyberpunk', name: '🌆 Cyberpunk / Neon' },
-          { val: 'fantasy', name: '🧙 Fantasy / Sci-Fi' },
-          { val: 'minimalist', name: '⬜ Minimalist / Clean' }
-        ]);
-        createTextarea('Describe Your Scene or Subject', 'art-text', 'e.g. A lone astronaut exploring a purple alien jungle at golden hour...', '');
-      }
-      break;
+    case 'ai-art-prompt': switchWorkspaceMode('designer'); break;
 
     case 'roll-d20':
       {
