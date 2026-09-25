@@ -195,6 +195,10 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 60000);
+        req.on('close', () => {
+          controller.abort();
+          clearTimeout(timeout);
+        });
         const cloudMessages = [
           { 
             role: 'system', 
