@@ -690,7 +690,6 @@ function showAlert(text) {
       DOM.statusAlert.classList.remove('show');
     }, 3500);
   } else {
-    console.log("ALERT:", text);
   }
 }
 
@@ -3702,7 +3701,7 @@ if (contactForm) {
     if (!name || !email || !message) return;
     
     // Simulate successful message send locally
-    console.log("Feedback Message Submitted:", { name, email, message });
+    
     showAlert('Message sent successfully!');
 
     // Telemetry: Track Contact Lead
