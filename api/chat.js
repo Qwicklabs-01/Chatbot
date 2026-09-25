@@ -63,8 +63,16 @@ try {
 // Set up Multer for handling memory storage
 const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(cors());
-app.use(express.json());
+// Enterprise-Grade Security & CORS
+app.use(cors({
+  origin: '*', // Allows Localtunnel/Vercel dynamic domains
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Payload limits to prevent DoS attacks
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.static(path.join(__dirname, '..')));
 
 // Local development stubs for Vercel analytics & favicon
@@ -75,10 +83,21 @@ app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'aura-icon-192.png'));
 });
 
-// Security & Professional Hardening
+// Security & Professional Hardening via Helmet
 app.use(helmet({
-  contentSecurityPolicy: false, // Prevent breaking local inline scripts
-  crossOriginEmbedderPolicy: false
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.vercel-insights.com", "https://www.googletagmanager.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https:", "http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:11434"]
+    }
+  },
+  crossOriginEmbedderPolicy: false,
+  xXssProtection: true,
+  xFrameOptions: { action: 'deny' }
 }));
 
 const apiLimiter = rateLimit({
