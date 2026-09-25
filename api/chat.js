@@ -194,11 +194,11 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
     if (!botReply) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 12000);
+        const timeout = setTimeout(() => controller.abort(), 60000);
         const cloudMessages = [
           { 
             role: 'system', 
-            content: (systemInstructionText ? systemInstructionText.slice(0, 1500) : '') + '\nYou are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Provide helpful, accurate responses.'
+            content: (systemInstructionText ? systemInstructionText : '') + '\nYou are OmniBrain Pro Master Model (Aura AI), an elite AI assistant created by Developer Sakshi. Provide helpful, accurate responses.'
           },
           { 
             role: 'user', 
