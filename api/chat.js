@@ -38,8 +38,8 @@ try {
         const skillPath = path.join(skillsDir, folder, 'SKILL.md');
         if (fs.existsSync(skillPath)) {
           const content = fs.readFileSync(skillPath, 'utf-8');
-          // Add first 2500 chars of each skill to avoid overloading context limits
-          skillsList += `\n\n### SKILL LIBRARY: ${folder}\n${content.slice(0, 2500)}\n`;
+          // Add first 500 chars of each skill to avoid overloading context limits
+          skillsList += `\n\n### SKILL LIBRARY: ${folder}\n${content.slice(0, 500)}\n`;
         }
       }
       console.log('✅ Integrated all Agent Skills libraries into the model context.');
@@ -198,7 +198,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
           });
           const response = await Promise.race([
             ollamaPromise,
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Local Ollama timeout')), 9000))
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Local Ollama timeout')), 3000))
           ]);
 
           if (response && response.message && response.message.content) {
@@ -233,7 +233,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
     if (!botReply) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 60000);
+        const timeout = setTimeout(() => controller.abort(), 5000);
         req.on('close', () => { controller.abort(); clearTimeout(timeout); });
         
         const freeLLMMessages = [
@@ -270,7 +270,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
     if (!botReply) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 60000);
+        const timeout = setTimeout(() => controller.abort(), 15000);
         req.on('close', () => {
           controller.abort();
           clearTimeout(timeout);
