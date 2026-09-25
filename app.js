@@ -155,8 +155,7 @@ let state = {
   voices: [],
   activeTab: 'voice',
   
-  // OmniBrain Pro Active Mode State ('auto', 'engineer',
- 'cmo', 'designer', 'link', 'strategist')
+  // OmniBrain Pro Active Mode State ('auto', 'engineer', 'cmo', 'designer', 'link', 'strategist')
   omniMode: 'auto',
 
   // Universal Calculator State
