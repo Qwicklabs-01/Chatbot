@@ -507,7 +507,16 @@ document.addEventListener('DOMContentLoaded', () => {
     'ai-image-generator',
     'translator',
     'summarizer',
-    'citation-generator'
+    'citation-generator',
+    'youtube-automation',
+    'ui-ux-pro-max',
+    'ai-job-search',
+    'banner-design',
+    'brand',
+    'design',
+    'design-system',
+    'slides',
+    'ui-styling'
   ];
 
   modes.forEach(mode => {
