@@ -74,8 +74,7 @@
     }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=3.7">
-  <link rel="stylesheet" href="aura-pro-ui.css?v=1.0">
+  <link rel="stylesheet" href="style.css?v=3.6">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0B0F19">
 
@@ -898,7 +897,7 @@
   </div>
 
   <!-- Core Application Scripts -->
-  <script src="app.js?v=3.7"></script>
+  <script src="app.js?v=3.6"></script>
   
   <script>
     // Force purge old service worker caches on load
@@ -918,6 +917,7 @@
         navigator.serviceWorker.register('./sw.js?v=3.6')
           .then((reg) => {
             reg.update(); // Enforce instant check for new versions on load
+            console.log('✅ Service Worker registered successfully:', reg.scope);
           })
           .catch((err) => console.error('⚠️ Service Worker registration failed:', err));
       });
