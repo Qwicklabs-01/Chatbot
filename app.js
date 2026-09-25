@@ -2467,6 +2467,9 @@ function renderWritingHubInputs(mode) {
         showAlert('Image removed.');
       });
       break;
+    default:
+      createTextarea(`Enter details for ${mode.replace(/-/g, ' ')}`, 'generic-text', 'Type your requirements here...', '');
+      break;
   }
   
   // Show default execute button for all other tools
@@ -2616,6 +2619,12 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
       const keywords = getVal('an-keywords'), genre = getVal('an-genre');
       chatText = `Image Analysis and Prompt Generation.`;
       solutionResult = await runImageToPrompt(keywords, genre);
+    }
+    else {
+      const text = getVal('generic-text');
+      if (!text) throw new Error("Input text is required.");
+      chatText = `Run ${mode.replace(/-/g, ' ')} with input: ${text}`;
+      solutionResult = await generateClientFallbackPrompt(`Act as an expert in ${mode.replace(/-/g, ' ')}. The user requests: "${text}". Provide a high quality professional output.`);
     }
   } catch (err) {
     solutionResult = "⚠️ An error occurred while contacting the AI API: " + err.message;
