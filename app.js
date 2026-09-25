@@ -528,14 +528,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Special: proj button opens history drawer
-  const projBtn = document.getElementById('sidebar-proj-btn');
-  if (projBtn) {
-    projBtn.addEventListener('click', () => {
-      if (DOM.historySidebar) DOM.historySidebar.classList.add('open');
-    });
-  }
-
   const calcBtn = document.getElementById('sidebar-calculator-btn');
   if (calcBtn) {
     calcBtn.addEventListener('click', () => switchWorkspaceMode('calculator'));
