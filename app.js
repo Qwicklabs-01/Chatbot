@@ -1388,7 +1388,7 @@ async function generateBotResponse(input) {
   // Fallback to Pollinations AI for perfectly accurate answers
   if (navigator.onLine) {
     try {
-      const sysPrompt = "You are Aura AI, a professional master and AI expert. Provide an accurate, high-quality solution. Be highly knowledgeable.";
+      const sysPrompt = "You are Aura AI, a professional master and AI expert. Act as if you have done deep research from top libraries and Google. Provide absolutely perfect, accurate answers and solutions to the questions.";
       const pollRes = await fetch("https://text.pollinations.ai/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3259,7 +3259,7 @@ async function fetchAI(prompt) {
 
   // If we reach here, backend failed but we are online. Let's use Pollinations AI for a perfect, professional answer.
   try {
-    const sysPrompt = "You are a professional master and AI expert. Provide an accurate, high-quality solution to the user's request. Keep formatting clean and professional.";
+    const sysPrompt = "You are a professional master and AI expert. Act as if you have done deep research from top libraries and Google. Provide absolutely perfect, accurate answers and solutions to the user's request. Keep formatting clean and professional.";
     const pollRes = await fetch("https://text.pollinations.ai/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
