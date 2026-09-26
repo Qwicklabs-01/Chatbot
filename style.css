@@ -2489,6 +2489,11 @@ body {
   .header-title {
     font-size: 1rem !important;
   }
+  
+  /* Ensure vertical sidebar is totally hidden on mobile */
+  .vertical-skills-sidebar {
+    display: none !important;
+  }
 }
 
 /* ===== SCROLL IMPROVEMENTS ===== */
