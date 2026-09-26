@@ -288,7 +288,7 @@ function formatMarkdown(text) {
 
 // --- DOM Elements ---
 const DOM = {
-  statusTime: document.getElementById('status-time'),
+  statusTime: document.getElementById('status-time'), // May be null if not in HTML
   statusAlert: document.getElementById('status-alert'),
   chatMessages: document.getElementById('chat-messages-container'),
   chatForm: document.getElementById('chat-input-form'),
@@ -461,10 +461,61 @@ function switchWorkspaceMode(mode) {
     
     switchTab('prompt');
     
-    // Set Writing Mode Select dropdown value
+    // BUG FIX: Map sidebar mode IDs to their writing hub values and omniMode values.
+    // Sidebar uses 'link-expert', 'nextjs-api' but AI engine checks 'link', 'cmo' etc.
+    const modeToWritingMap = {
+      'link-expert': 'link-expert',
+      'nextjs-api': 'nextjs-api',
+      'youtube-automation': 'youtube-automation',
+      'ai-job-search': 'ai-job-search',
+      'roll-d20': 'roll-d20',
+      'help-menu': 'help-menu'
+    };
+    // Map sidebar mode to the omniMode key used by generateClientFallbackResponse
+    const modeToOmniMode = {
+      'engineer': 'engineer',
+      'designer': 'designer',
+      'link-expert': 'link',
+      'strategist': 'strategist',
+      'superpowers': 'auto',
+      'nextjs-api': 'engineer',
+      'seo': 'cmo',
+      'auto': 'auto'
+    };
+    
+    // Update omniMode so the AI chat uses the correct persona when user sends messages
+    if (modeToOmniMode.hasOwnProperty(mode)) {
+      state.omniMode = modeToOmniMode[mode];
+      // Sync the omnibrain mode bar pills if present
+      document.querySelectorAll('#omnibrain-mode-bar .omnibrain-mode-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-mode') === state.omniMode);
+      });
+    }
+    
+    // Writing hub tool modes that have a matching writing panel sub-tool
+    const writingHubModes = [
+      'paraphraser', 'grammar-checker', 'ai-detector', 'plagiarism-checker',
+      'ai-humanizer', 'translator', 'summarizer', 'citation-generator',
+      'youtube-automation', 'ai-job-search', 'banner-design', 'brand', 'design',
+      'design-system', 'slides', 'ui-styling', 'translate', 'prompt-builder',
+      'image-to-prompt', 'ui-ux-pro-max', 'link-expert', 'nextjs-api', 'seo',
+      'roll-d20', 'help-menu', 'auto', 'engineer', 'designer', 'strategist', 'superpowers'
+    ];
+    
+    // Set Writing Mode Select dropdown value so the correct tool UI is shown
     if (DOM.writingModeSelect) {
-      DOM.writingModeSelect.value = mode;
-      renderWritingHubInputs(mode);
+      // BUG FIX: Only set the writing mode select if the mode exists as an option
+      const optionExists = Array.from(DOM.writingModeSelect.options).some(o => o.value === mode);
+      if (optionExists) {
+        DOM.writingModeSelect.value = mode;
+        state.writingMode = mode; // BUG FIX: Keep state in sync
+        renderWritingHubInputs(mode);
+      } else {
+        // For modes like 'link-expert', 'engineer' etc. that use a generic text input,
+        // fall back to a generic Writing Hub view
+        state.writingMode = mode;
+        renderWritingHubInputs(mode);
+      }
     }
     
     const activeBtn = document.getElementById(`sidebar-${mode}-btn`);
@@ -684,9 +735,13 @@ function updateClock() {
   hours = hours % 12;
   hours = hours ? hours : 12; 
   minutes = minutes < 10 ? '0' + minutes : minutes;
+  // BUG FIX: Guard against statusTime being null (element may not exist in all HTML versions)
   if (DOM.statusTime) {
     DOM.statusTime.textContent = `${hours}:${minutes} ${ampm}`;
   }
+  // Also update any bot-status-time element if present
+  const statusTimeEl = document.getElementById('bot-status-time');
+  if (statusTimeEl) statusTimeEl.textContent = `${hours}:${minutes} ${ampm}`;
 }
 
 function showAlert(text) {
@@ -1312,7 +1367,7 @@ async function generateBotResponse(input) {
     }
     
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 25000);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     const response = await fetch(apiEndpoint, {
       method: 'POST',
@@ -1327,7 +1382,26 @@ async function generateBotResponse(input) {
       if (data.reply) return data.reply;
     }
   } catch (err) {
-    console.warn("Backend API not reachable, falling back to OmniBrain Client Engine:", err.message);
+    console.warn("Backend API not reachable, falling back to Pollinations AI:", err.message);
+  }
+
+  // Fallback to Pollinations AI for perfectly accurate answers
+  if (navigator.onLine) {
+    try {
+      const sysPrompt = "You are Aura AI, a professional master and AI expert. Provide an accurate, high-quality solution. Be highly knowledgeable.";
+      const pCombined = systemPrompt ? (systemPrompt + "\n\nUser Question: " + input) : input;
+      const pollRes = await fetch("https://text.pollinations.ai/", {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: sysPrompt + "\n\n" + pCombined
+      });
+      
+      if (pollRes.ok) {
+        return await pollRes.text();
+      }
+    } catch(e) {
+      console.warn("Pollinations AI also failed.", e.message);
+    }
   }
 
   // Autonomous Client-Side Fallback (Always functional, online or offline)
@@ -2872,36 +2946,42 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
   let solutionResult = '';
   let isMedia = false;
 
-  const getVal = (id) => document.getElementById(id).value;
+  // BUG FIX: Was document.getElementById(id).value — crashes if element doesn't exist
+  const getVal = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
   
   DOM.writingResultTitle.textContent = "Processing...";
-  DOM.writingResultContent.innerHTML = "Generating AI response, please wait...";
+  DOM.writingResultContent.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--text-muted);padding:12px 0"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div><span style="margin-left:4px;font-size:13px">Generating response…</span></div>`;
   DOM.writingResultMedia.style.display = 'none';
   DOM.writingResultCard.style.display = 'block';
 
   try {
     if (mode === 'paraphraser') {
       const text = getVal('p-text'), style = getVal('p-style');
+      if (!text) throw new Error('Please enter text to paraphrase.');
       chatText = `Paraphrase (${style}): "${text.substring(0, 20)}..."`;
       solutionResult = await runParaphrase(text, style);
     }
     else if (mode === 'grammar-checker') {
       const text = getVal('g-text');
+      if (!text) throw new Error('Please enter text to check.');
       chatText = `Grammar Check: "${text.substring(0, 20)}..."`;
       solutionResult = await runGrammarCheck(text);
     }
     else if (mode === 'ai-detector') {
       const text = getVal('ai-text');
+      if (!text) throw new Error('Please enter text to analyze.');
       chatText = `Detect AI Probability.`;
       solutionResult = await runAIDetector(text);
     }
     else if (mode === 'plagiarism-checker') {
       const text = getVal('pl-text');
+      if (!text) throw new Error('Please enter text to scan.');
       chatText = `Plagiarism Scan.`;
       solutionResult = await runPlagiarismChecker(text);
     }
     else if (mode === 'ai-humanizer') {
       const text = getVal('h-text');
+      if (!text) throw new Error('Please enter AI text to humanize.');
       chatText = `Humanize AI Text.`;
       solutionResult = await runHumanizer(text);
     }
@@ -2914,11 +2994,14 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
     }
     else if (mode === 'translator') {
       const text = getVal('t-text'), target = getVal('t-lang');
+      if (!text) throw new Error('Please enter text to translate.');
       chatText = `Translate to ${target}: "${text.substring(0, 20)}..."`;
       solutionResult = await runTranslation(text, target);
     }
     else if (mode === 'summarizer') {
-      const text = getVal('s-text'), len = parseInt(document.getElementById('s-length-slider').value);
+      const text = getVal('s-text');
+      if (!text) throw new Error('Please enter text to summarize.');
+      const len = parseInt(document.getElementById('s-length-slider')?.value || '2');
       chatText = `Summarize paragraphs.`;
       solutionResult = await runTFIDFSummarize(text, len);
     }
@@ -2929,6 +3012,7 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
     }
     else if (mode === 'prompt-builder') {
       const idea = getVal('pr-idea'), type = getVal('pr-type');
+      if (!idea) throw new Error('Please enter an idea to build a prompt from.');
       chatText = `Prompt Generator: "${idea}"`;
       solutionResult = await runPromptBuilder(idea, type);
     }
@@ -2937,26 +3021,115 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
       chatText = `Image Analysis and Prompt Generation.`;
       solutionResult = await runImageToPrompt(keywords, genre);
     }
+    // ✅ FIXED: YouTube Automation — was missing, crashed because getVal('generic-text') was null
+    else if (mode === 'youtube-automation') {
+      const task = getVal('yt-task'), topic = getVal('yt-topic'), details = getVal('yt-text');
+      if (!topic) throw new Error('Please enter a video topic or niche.');
+      chatText = `YouTube ${task}: "${topic}"`;
+      const ytLabels = { 'script': 'Video Script', 'title-desc': 'Title & Description', 'tags': 'Tags & Keywords', 'thumbnail': 'Thumbnail Concept', 'hook': 'Hook & Intro', 'channel-strategy': 'Channel Growth Strategy', 'shorts': 'Shorts Script' };
+      const taskLabel = ytLabels[task] || task;
+      const prompt = `You are a top-tier YouTube content strategist. Create a professional ${taskLabel} for a YouTube video about: "${topic}".${details ? '\nExtra context: ' + details : ''}\n\nOptimize for:\n- High click-through rate (CTR)\n- YouTube SEO (keywords, search intent)\n- Viewer retention\n- Monetization potential\n\nFormat with clear sections, emojis, and ready-to-use content.`;
+      solutionResult = `📺 **YouTube ${taskLabel}**\n\nTopic: **${topic}**\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: AI Job Search — was missing, crashed because getVal('generic-text') was null
+    else if (mode === 'ai-job-search') {
+      const task = getVal('job-task'), title = getVal('job-title'), text = getVal('job-text');
+      if (!title && !text) throw new Error('Please enter a job title or paste a job description / CV.');
+      chatText = `Job Search: ${task} for "${title}"`;
+      const jobLabels = { 'cv-tailor': 'CV Tailor', 'cover-letter': 'Cover Letter', 'linkedin': 'LinkedIn Optimizer', 'interview-prep': 'Interview Prep', 'job-evaluate': 'Job Offer Evaluator', 'salary-negotiation': 'Salary Negotiation Script', 'job-search': 'Job Search Strategy' };
+      const taskLabel = jobLabels[task] || task;
+      const prompt = `You are a senior career coach, recruiter, and HR expert. Task: ${taskLabel}.\nJob Title / Role: ${title || 'Not specified'}\n${text ? 'Job Description / CV:\n' + text : ''}\n\nProvide professional, actionable output with clear sections, bullet points, and specific advice.`;
+      solutionResult = `💼 **${taskLabel}**\n\nRole: **${title || 'As specified'}**\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Engineer Mode — was missing
+    else if (mode === 'engineer') {
+      const lang = getVal('eng-lang'), task = getVal('eng-task'), text = getVal('eng-text');
+      if (!text) throw new Error('Please describe what you need.');
+      chatText = `Engineer: ${task} in ${lang}`;
+      const prompt = `You are a senior software engineer. Stack: ${lang}. Task: ${task}.\nRequirements: "${text}"\n\nProvide production-ready, well-commented code with:\n- Clear explanation\n- Error handling and edge cases\n- Best practices for ${lang}\n- Usage examples`;
+      solutionResult = `💻 **Engineer Output** · ${lang} · ${task}\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Designer Mode — was missing
+    else if (mode === 'designer') {
+      const desTask = getVal('des-task'), platform = getVal('des-platform'), style = getVal('des-style'), text = getVal('des-text');
+      if (!text) throw new Error('Please describe what you want to create.');
+      chatText = `Designer: ${desTask} for ${platform}`;
+      const prompt = `You are a world-class UI/UX designer and creative director. Task: ${desTask}. Platform: ${platform}. Visual Style: ${style}.\nRequest: "${text}"\n\nProvide detailed design specs including:\n- Color palette (hex codes)\n- Typography recommendations\n- Layout structure\n- Component breakdown\n- If AI art: a detailed Midjourney/DALL-E prompt`;
+      solutionResult = `🎨 **Designer Output** · ${desTask} · ${style}\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Strategist Mode — was missing
+    else if (mode === 'strategist') {
+      const strType = getVal('str-type'), text = getVal('str-text');
+      if (!text) throw new Error('Please describe your goal or business context.');
+      chatText = `Strategist: ${strType}`;
+      const prompt = `You are a McKinsey-level business strategist. Strategy: ${strType}.\nContext: "${text}"\n\nProvide a comprehensive strategy with:\n- Phased milestones\n- KPIs and success metrics\n- Risk analysis\n- Resource requirements\n- Actionable next steps`;
+      solutionResult = `🔬 **Strategy: ${strType}**\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Link Expert — was missing
+    else if (mode === 'link-expert') {
+      const url = getVal('link-url'), linkType = getVal('link-type'), text = getVal('link-text');
+      if (!url) throw new Error('Please enter a URL to analyze.');
+      chatText = `Link Expert: ${linkType} for ${url}`;
+      const prompt = `You are an elite SEO and link building expert. Analysis type: ${linkType}.\nURL: ${url}\n${text ? 'Context: ' + text : ''}\n\nProvide a detailed link strategy report with recommendations, target sites, anchor text strategy, and outreach templates.`;
+      solutionResult = `🔗 **Link Expert: ${linkType}**\n\nURL: \`${url}\`\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: SEO / GEO Mode — was missing
+    else if (mode === 'seo') {
+      const seoTask = getVal('seo-task'), url = getVal('seo-url'), text = getVal('seo-text');
+      if (!text && !url) throw new Error('Please enter a URL or target keywords.');
+      chatText = `SEO: ${seoTask}`;
+      const prompt = `You are a senior SEO & GEO (Generative Engine Optimization) expert. Task: ${seoTask}.\nURL: ${url || 'N/A'}\nKeywords/Topic: "${text}"\n\nProvide a detailed professional SEO/GEO report with concrete recommendations, code snippets (JSON-LD if needed), and priority rankings.`;
+      solutionResult = `🌍 **SEO/GEO: ${seoTask}**\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Superpowers — was missing
+    else if (mode === 'superpowers') {
+      const spType = getVal('sp-type'), text = getVal('sp-text');
+      if (!text) throw new Error('Please describe what you want to solve or explore.');
+      chatText = `Superpowers: ${spType}`;
+      const prompt = `You are a creative genius and innovation coach. Apply the "${spType}" framework deeply to: "${text}". Go unconventional, challenge assumptions, and provide breakthrough insights formatted with 🧠 emoji-enriched sections.`;
+      solutionResult = `⭐ **Superpowers: ${spType}**\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Next.js API Mode — was missing
+    else if (mode === 'nextjs-api') {
+      const nxtType = getVal('nxt-type'), method = getVal('nxt-method'), text = getVal('nxt-text');
+      if (!text) throw new Error('Please describe the API endpoint.');
+      chatText = `Next.js API: ${nxtType} (${method})`;
+      const prompt = `You are a senior Next.js 14+ TypeScript engineer. Generate production-ready ${nxtType} code.\nHTTP Method: ${method}\nRequirements: "${text}"\n\nInclude: TypeScript types, Zod validation, error handling, proper HTTP status codes, JSDoc comments, example request/response. Follow App Router conventions.`;
+      solutionResult = `▲ **Next.js API: ${nxtType}** · \`${method}\`\n\n` + await fetchAI(prompt);
+    }
+    // ✅ FIXED: Auto Mode — was missing
+    else if (mode === 'auto') {
+      const text = getVal('auto-text');
+      if (!text) throw new Error('Please enter your question or task.');
+      chatText = `Auto Mode: "${text.substring(0, 30)}..."`;
+      const prompt = `You are Aura AI, an intelligent multi-mode assistant. Detect the best response format (code, analysis, creative writing, strategy, or Q&A) and respond comprehensively.\n\nRequest: "${text}"`;
+      solutionResult = `⚡ **Auto Mode**\n\n` + await fetchAI(prompt);
+    }
     else {
-      const text = getVal('generic-text');
-      if (!text) throw new Error("Input text is required.");
-      chatText = `Run ${mode.replace(/-/g, ' ')} with input: ${text}`;
-      solutionResult = await generateClientFallbackPrompt(`Act as an expert in ${mode.replace(/-/g, ' ')}. The user requests: "${text}". Provide a high quality professional output.`);
+      // Generic fallback
+      const genericEl = document.getElementById('generic-text');
+      const text = genericEl ? genericEl.value.trim() : '';
+      if (!text) throw new Error('Please fill in the required fields above.');
+      chatText = `Run ${mode.replace(/-/g, ' ')}: "${text.substring(0, 30)}..."`;
+      solutionResult = await fetchAI(`Act as an expert in ${mode.replace(/-/g, ' ')}. User request: "${text}". Provide a high quality, professional, well-formatted output.`);
     }
   } catch (err) {
-    solutionResult = "⚠️ An error occurred while contacting the AI API: " + err.message;
+    solutionResult = `⚠️ **Error**: ${err.message}`;
   }
 
   // Update State & UI Results Panel
   state.latestWritingResult = solutionResult;
   state.latestWritingChatText = chatText;
   
-  DOM.writingResultTitle.textContent = `${mode.charAt(0).toUpperCase() + mode.slice(1)} Output`;
+  const modeTitle = mode.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  DOM.writingResultTitle.textContent = `${modeTitle} Output`;
   DOM.writingResultContent.innerHTML = formatMarkdown(solutionResult);
   
   DOM.writingResultMedia.style.display = isMedia ? 'flex' : 'none';
-  showAlert('Tool executed!');
+  showAlert('✅ Tool executed!');
 });
+
+
 
 // Copy Output Helper
 DOM.writingCopyBtn.addEventListener('click', () => {
@@ -3062,7 +3235,7 @@ async function fetchAI(prompt) {
   
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 18000);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     const res = await fetch(apiEndpoint, {
       method: 'POST',
@@ -3077,7 +3250,23 @@ async function fetchAI(prompt) {
       if (data.reply) return data.reply;
     }
   } catch (err) {
-    console.warn("Backend unavailable for writing tool, utilizing client NLP:", err.message);
+    console.warn("Backend unavailable for writing tool, utilizing Pollinations AI fallback:", err.message);
+  }
+
+  // If we reach here, backend failed but we are online. Let's use Pollinations AI for a perfect, professional answer.
+  try {
+    const sysPrompt = "You are a professional master and AI expert. Provide an accurate, high-quality solution to the user's request. Keep formatting clean and professional.";
+    const pollRes = await fetch("https://text.pollinations.ai/", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: sysPrompt + "\n\nUser Request:\n" + prompt
+    });
+    
+    if (pollRes.ok) {
+      return await pollRes.text();
+    }
+  } catch(e) {
+    console.warn("Pollinations AI also failed.", e.message);
   }
 
   return generateClientFallbackPrompt(prompt);
@@ -3341,11 +3530,24 @@ DOM.toggleVoiceBtn.addEventListener('click', () => {
 });
 
 DOM.clearChatBtn.addEventListener('click', () => {
-  if (confirm("Clear history?")) {
+  if (confirm("Clear this chat session's history?")) {
     state.chatHistory = [];
-    localStorage.removeItem('aura_chat_history');
     DOM.chatMessages.innerHTML = '';
-    appendMessageMarkup('bot', 'Chat cleared. Open Manage Skills to use tools.', new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+    
+    // BUG FIX: Was incorrectly removing 'aura_chat_history' (legacy key).
+    // Now correctly resets the active session messages in 'aura_chat_sessions'.
+    const activeSession = state.sessions.find(s => s.id === state.activeSessionId);
+    if (activeSession) {
+      const welcomeMsg = "Chat cleared. Use the sidebar to access tools, or start typing!";
+      const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      activeSession.messages = [{ sender: 'bot', text: welcomeMsg, timestamp: ts }];
+      state.chatHistory = activeSession.messages;
+      appendMessageMarkup('bot', welcomeMsg, ts, false);
+      localStorage.setItem('aura_chat_sessions', JSON.stringify(state.sessions));
+    } else {
+      appendMessageMarkup('bot', 'Chat cleared. Open Manage Skills to use tools.', new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+    }
+    showAlert('Chat cleared.');
   }
 });
 
@@ -3353,6 +3555,76 @@ window.handleChipClick = function(text) {
   DOM.chatInput.value = text;
   handleUserMessageSubmit(text);
 };
+
+// BUG FIX: Missing event binding for the chat image upload button.
+// The #image-upload-btn and #image-upload-input elements existed in HTML but had NO handlers.
+const imageUploadBtn = document.getElementById('image-upload-btn');
+const imageUploadInput = document.getElementById('image-upload-input');
+const imagePreviewContainer = document.getElementById('image-preview-container');
+const imagePreview = document.getElementById('image-preview');
+const clearImageBtn = document.getElementById('clear-image-btn');
+
+if (imageUploadBtn && imageUploadInput) {
+  imageUploadBtn.addEventListener('click', () => {
+    imageUploadInput.click();
+  });
+  
+  imageUploadInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    if (!file.type.startsWith('image/')) {
+      showAlert('Please select an image file.');
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      // Show preview in footer
+      if (imagePreview) imagePreview.src = evt.target.result;
+      if (imagePreviewContainer) imagePreviewContainer.style.display = 'flex';
+      
+      // Store image context for AI
+      state.loadedFile = { name: file.name, type: 'IMAGE', size: file.size, content: `Image uploaded: ${file.name}` };
+      
+      // Extract dominant colors for AI context
+      const tempImg = new Image();
+      tempImg.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 15; canvas.height = 15;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(tempImg, 0, 0, 15, 15);
+        const data = ctx.getImageData(0, 0, 15, 15).data;
+        const counts = {};
+        for (let i = 0; i < data.length; i += 4) {
+          if (data[i+3] < 120) continue;
+          const f = 32;
+          const k = `${Math.round(data[i]/f)*f},${Math.round(data[i+1]/f)*f},${Math.round(data[i+2]/f)*f}`;
+          counts[k] = (counts[k]||0) + 1;
+        }
+        const top = Object.keys(counts).sort((a,b) => counts[b]-counts[a]).slice(0,4);
+        state.analysedImagePalette = top.map(k => {
+          const [r,g,b] = k.split(',').map(Number);
+          return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+        });
+        showAlert(`Image loaded: ${file.name}`);
+      };
+      tempImg.src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+if (clearImageBtn) {
+  clearImageBtn.addEventListener('click', () => {
+    if (imagePreviewContainer) imagePreviewContainer.style.display = 'none';
+    if (imagePreview) imagePreview.src = '';
+    if (imageUploadInput) imageUploadInput.value = '';
+    state.loadedFile = { name: '', type: '', size: 0, content: '' };
+    state.analysedImagePalette = [];
+    showAlert('Image removed.');
+  });
+}
 
 if (DOM.toggleDrawerBtn) {
   DOM.toggleDrawerBtn.addEventListener('click', () => {
@@ -3582,6 +3854,33 @@ if (DOM.removeFileBtn) {
     DOM.fileStatus.textContent = 'No File Loaded';
     DOM.fileStatus.classList.remove('active');
     showAlert('Context cleared.');
+  });
+}
+
+// --- Settings Dropdown Logic ---
+const settingsMenuBtn = document.getElementById('settings-menu-btn');
+const settingsDropdown = document.getElementById('settings-dropdown');
+
+if (settingsMenuBtn && settingsDropdown) {
+  settingsMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent document click from firing
+    settingsDropdown.classList.toggle('active');
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!settingsMenuBtn.contains(e.target) && !settingsDropdown.contains(e.target)) {
+      settingsDropdown.classList.remove('active');
+    }
+  });
+  
+  // Close when an option is clicked
+  const settingsItems = settingsDropdown.querySelectorAll('.settings-menu-item');
+  settingsItems.forEach(item => {
+    item.addEventListener('click', () => {
+      settingsDropdown.classList.remove('active');
+      showAlert('Setting selected: ' + item.textContent.trim());
+    });
   });
 }
 
