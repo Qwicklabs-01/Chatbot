@@ -1,4 +1,4 @@
-/**
+its /**
  * Aura AI - Mobile Chatbot Client Application
  * Pure Client-Side JavaScript Chat Engine & Skills (Universal Edition)
  */
@@ -154,7 +154,7 @@ let state = {
   },
   voices: [],
   activeTab: 'voice',
-  
+
   // OmniBrain Pro Active Mode State ('auto', 'engineer', 'cmo', 'designer', 'link', 'strategist')
   omniMode: 'auto',
 
@@ -193,12 +193,12 @@ const faqDatabase = [
   {
     keywords: ["help", "menu", "skills", "capabilities", "what can you do"],
     response: "❓ **Aura AI Capabilities Menu**:\n\n" +
-              "• **Conversational Chat**: Talk to me offline. I will check my local FAQ database, parsed files, or Wikipedia!\n" +
-              "• **Math Sandbox**: Type `=` followed by any JS Math expression (e.g., `= Math.sin(Math.PI/2) * 10`) to evaluate it live!\n" +
-              "• **Local Tools**: Use the sidebar options or tab settings to access:\n" +
-              "  1. *Writing Hub / Prompting*: Paraphraser, Grammar Checker, AI Humanizer, Image Generator, Summarizer, and Citation tools.\n" +
-              "  2. *PDF Toolkit*: Merge PDFs, extract text, or add opacity-controlled watermarks.\n" +
-              "  3. *Calculators*: Financial, Health, Math, and Utility calculators."
+      "• **Conversational Chat**: Talk to me offline. I will check my local FAQ database, parsed files, or Wikipedia!\n" +
+      "• **Math Sandbox**: Type `=` followed by any JS Math expression (e.g., `= Math.sin(Math.PI/2) * 10`) to evaluate it live!\n" +
+      "• **Local Tools**: Use the sidebar options or tab settings to access:\n" +
+      "  1. *Writing Hub / Prompting*: Paraphraser, Grammar Checker, AI Humanizer, Image Generator, Summarizer, and Citation tools.\n" +
+      "  2. *PDF Toolkit*: Merge PDFs, extract text, or add opacity-controlled watermarks.\n" +
+      "  3. *Calculators*: Financial, Health, Math, and Utility calculators."
   },
   {
     keywords: ["aura", "who are you", "your name"],
@@ -207,21 +207,21 @@ const faqDatabase = [
   {
     keywords: ["pdf", "watermark", "merge", "extract", "document"],
     response: "📕 **PDF Toolkit Knowledge**:\nSelect the **PDF & Files** tab under Settings or click on the Sidebar to upload PDFs.\n\n" +
-              "**1. Extract Text**: Select a PDF in Slot 1 and click 'Extract Text' to parse the document contents into the chat so you can query it.\n" +
-              "**2. Watermark PDF**: Select a PDF in Slot 1, enter text in the watermark field, adjust the opacity slider, and click 'Watermark PDF 1'. It will generate a downloadable watermarked file.\n" +
-              "**3. Merge PDFs**: Select PDFs in Slot 1 and Slot 2, then click 'Merge PDFs' to combine them into a single downloadable document."
+      "**1. Extract Text**: Select a PDF in Slot 1 and click 'Extract Text' to parse the document contents into the chat so you can query it.\n" +
+      "**2. Watermark PDF**: Select a PDF in Slot 1, enter text in the watermark field, adjust the opacity slider, and click 'Watermark PDF 1'. It will generate a downloadable watermarked file.\n" +
+      "**3. Merge PDFs**: Select PDFs in Slot 1 and Slot 2, then click 'Merge PDFs' to combine them into a single downloadable document."
   },
   {
     keywords: ["prompt", "prompting", "paraphrase", "grammar", "plagiarism", "humanizer", "summarizer", "citation", "translate", "writing"],
     response: "📝 **Prompting & Writing Hub Knowledge**:\nSwitch to the **Writing Hub** from the Sidebar to access these tools:\n\n" +
-              "• **Paraphraser**: Rephrase your sentences in standard, professional, creative, or simple styles.\n" +
-              "• **Grammar Checker**: Identifies and corrects typos, punctuation errors, and structural issues.\n" +
-              "• **AI Detector & Humanizer**: Analyzes text for AI probability and rewrites it to sound more natural and human.\n" +
-              "• **Plagiarism Checker**: Scans your text against loaded documents to find overlapping phrasing.\n" +
-              "• **Summarizer**: Condenses long articles or text into key bullet points.\n" +
-              "• **Translator**: Translates input text into various target languages.\n" +
-              "• **Citation Generator**: Creates APA/MLA citations from raw source data.\n" +
-              "• **Prompt Builder & Image-to-Prompt**: Helps you construct the perfect prompts for AI models (or reverse engineer prompts from images)."
+      "• **Paraphraser**: Rephrase your sentences in standard, professional, creative, or simple styles.\n" +
+      "• **Grammar Checker**: Identifies and corrects typos, punctuation errors, and structural issues.\n" +
+      "• **AI Detector & Humanizer**: Analyzes text for AI probability and rewrites it to sound more natural and human.\n" +
+      "• **Plagiarism Checker**: Scans your text against loaded documents to find overlapping phrasing.\n" +
+      "• **Summarizer**: Condenses long articles or text into key bullet points.\n" +
+      "• **Translator**: Translates input text into various target languages.\n" +
+      "• **Citation Generator**: Creates APA/MLA citations from raw source data.\n" +
+      "• **Prompt Builder & Image-to-Prompt**: Helps you construct the perfect prompts for AI models (or reverse engineer prompts from images)."
   },
   {
     keywords: ["image", "generator", "cyberpunk", "watercolor", "retro"],
@@ -230,10 +230,10 @@ const faqDatabase = [
   {
     keywords: ["calculator", "math", "quadratic", "mortgage", "loan", "bmi", "gpa", "tip", "finance", "health"],
     response: "🧮 **Calculators & Math Knowledge**:\nI have built-in solvers organized by category in the **Calculators** tab:\n\n" +
-              "• **Financial**: Mortgage repayment, loan amortization, compound interest, and discount tools.\n" +
-              "• **Health**: BMI, BMR, calorie intake, and ideal weight estimators.\n" +
-              "• **Math**: Scientific keypad, quadratic formula solver, statistics, and unit converters.\n" +
-              "• **Utilities**: Age, date differences, GPA, tips, and Base64/URL encoding."
+      "• **Financial**: Mortgage repayment, loan amortization, compound interest, and discount tools.\n" +
+      "• **Health**: BMI, BMR, calorie intake, and ideal weight estimators.\n" +
+      "• **Math**: Scientific keypad, quadratic formula solver, statistics, and unit converters.\n" +
+      "• **Utilities**: Age, date differences, GPA, tips, and Base64/URL encoding."
   },
   {
     keywords: ["voice", "tts", "speech", "speak"],
@@ -242,9 +242,9 @@ const faqDatabase = [
   {
     keywords: ["work", "parts of work", "modules", "features", "how to use"],
     response: "⚙️ **Every Part of My Work**:\nI operate in three primary workspaces:\n\n" +
-              "1. **Chat Workspace**: The main conversational area where you can ask me questions, execute math (via `=`), or search through uploaded files.\n" +
-              "2. **Skills & Settings Drawer**: Contains the configuration for Voice Synthesis, PDF operations, file uploads, and Universal Calculators.\n" +
-              "3. **Left Sidebar Navigation**: Gives you instant access to specific Writing Hub capabilities (like Grammar, Paraphraser, Plagiarism Check) and your Chat Sessions history."
+      "1. **Chat Workspace**: The main conversational area where you can ask me questions, execute math (via `=`), or search through uploaded files.\n" +
+      "2. **Skills & Settings Drawer**: Contains the configuration for Voice Synthesis, PDF operations, file uploads, and Universal Calculators.\n" +
+      "3. **Left Sidebar Navigation**: Gives you instant access to specific Writing Hub capabilities (like Grammar, Paraphraser, Plagiarism Check) and your Chat Sessions history."
   }
 ];
 
@@ -252,37 +252,37 @@ const faqDatabase = [
 function formatMarkdown(text) {
   if (!text) return '';
   let html = text;
-  
+
   // Escape HTML entities to prevent rendering issues, except for our specific tags
   html = html
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
-    
+
   // Headers (### title, ## title, # title)
   html = html.replace(/^(?:###|##|#)\s+(.+)$/gm, '<h4>$1</h4>');
-  
+
   // Bold (**text**)
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
+
   // Italic (*text*)
   html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  
+
   // Inline Code (`code`)
   html = html.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
-  
+
   // Lists (lines starting with • or * followed by text)
   html = html.replace(/^[•*]\s+(.+)$/gm, '<li class="list-item">$1</li>');
-  
+
   // Wrap lists in <ul> tags
   html = html.replace(/((?:<li class="list-item">.*?<\/li>\s*)+)/gs, '<ul>$1</ul>');
-  
+
   // Convert newlines to line breaks
   html = html.replace(/\n/g, '<br>');
-  
+
   // Clean up breaks inside list tags
   html = html.replace(/<ul><br>/g, '<ul>').replace(/<\/li><br>/g, '</li>').replace(/<\/ul><br>/g, '</ul>');
-  
+
   return html;
 }
 
@@ -299,7 +299,7 @@ const DOM = {
   toggleDrawerBtn: document.getElementById('toggle-drawer-btn'),
   closeDrawerBtn: document.getElementById('close-drawer-btn'),
   skillsDrawer: document.getElementById('skills-drawer'),
-  
+
   // Tab buttons / Panels
   tabVoice: document.getElementById('tab-btn-voice'),
   tabPdf: document.getElementById('tab-btn-pdf'),
@@ -313,7 +313,7 @@ const DOM = {
   // Speech
   ttsStatus: document.getElementById('tts-status'),
   voiceSelect: document.getElementById('voice-select-dropdown'),
-  
+
   // Text Parser
   fileStatus: document.getElementById('file-status'),
   dragDropZone: document.getElementById('drag-drop-zone'),
@@ -321,7 +321,7 @@ const DOM = {
   fileInfoContainer: document.getElementById('file-info-container'),
   loadedFileName: document.getElementById('loaded-file-name'),
   removeFileBtn: document.getElementById('remove-file-btn'),
-  
+
   // PDF Toolkit
   pdfStatus: document.getElementById('pdf-status'),
   pdfUploader1: document.getElementById('pdf-uploader-1'),
@@ -354,7 +354,7 @@ const DOM = {
   genImageCanvas: document.getElementById('gen-image-canvas'),
   writingCopyBtn: document.getElementById('writing-copy-btn'),
   writingSendChatBtn: document.getElementById('writing-send-chat-btn'),
-  
+
   // Sliders and highlights
   tabIndicator: document.getElementById('drawer-tab-indicator'),
   voiceRateSlider: document.getElementById('voice-rate-slider'),
@@ -372,9 +372,9 @@ const DOM = {
   historySessionsList: document.getElementById('history-sessions-list'),
   exportJsonBtn: document.getElementById('export-json-btn'),
   exportTxtBtn: document.getElementById('export-txt-btn'),
-  
+
   suggestions: document.getElementById('suggestions-container'),
-  
+
   // Workspace views
   chatViewContainer: document.getElementById('chat-view-container'),
   toolViewContainer: document.getElementById('tool-view-container'),
@@ -390,38 +390,38 @@ function switchWorkspaceMode(mode) {
   // Update sidebar active highlights
   const sidebarButtons = document.querySelectorAll('.vertical-skills-sidebar button');
   sidebarButtons.forEach(btn => btn.classList.remove('active'));
-  
+
   // Update mobile nav buttons active highlights
   const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
   mobileNavButtons.forEach(btn => btn.classList.remove('active'));
-  
+
   const appContainer = document.querySelector('.app-container');
-  
+
   if (mode === 'chat') {
     DOM.chatViewContainer.style.display = 'flex';
     DOM.toolViewContainer.style.display = 'none';
     if (appContainer) appContainer.classList.add('chat-only-mode');
-    
+
     const activeBtn = document.getElementById('sidebar-chat-btn');
     if (activeBtn) activeBtn.classList.add('active');
-    
+
     const activeMobileBtn = document.querySelector('.mobile-nav-btn[data-target="chat"]');
     if (activeMobileBtn) activeMobileBtn.classList.add('active');
-  } 
+  }
   else if (mode === 'calculator') {
     DOM.chatViewContainer.style.display = 'none';
     DOM.toolViewContainer.style.display = 'flex';
     DOM.toolPanelTabs.style.display = 'flex'; // show sub-tabs
     if (appContainer) appContainer.classList.remove('chat-only-mode');
-    
+
     switchTab('math');
-    
+
     const activeBtn = document.getElementById('sidebar-calculator-btn');
     if (activeBtn) activeBtn.classList.add('active');
-    
+
     const activeMobileBtn = document.querySelector('.mobile-nav-btn[data-target="calculator"]');
     if (activeMobileBtn) activeMobileBtn.classList.add('active');
-    
+
     showAlert('Opened Settings & Calculators');
   }
   else if (mode === 'pdf') {
@@ -429,15 +429,15 @@ function switchWorkspaceMode(mode) {
     DOM.toolViewContainer.style.display = 'flex';
     DOM.toolPanelTabs.style.display = 'flex'; // show sub-tabs
     if (appContainer) appContainer.classList.remove('chat-only-mode');
-    
+
     switchTab('pdf');
-    
+
     const activeBtn = document.getElementById('sidebar-pdf-btn');
     if (activeBtn) activeBtn.classList.add('active');
-    
+
     const activeMobileBtn = document.querySelector('.mobile-nav-btn[data-target="pdf"]');
     if (activeMobileBtn) activeMobileBtn.classList.add('active');
-    
+
     showAlert('Opened PDF Toolkit');
   }
   else if (mode === 'voice') {
@@ -445,12 +445,12 @@ function switchWorkspaceMode(mode) {
     DOM.toolViewContainer.style.display = 'flex';
     DOM.toolPanelTabs.style.display = 'flex'; // show sub-tabs
     if (appContainer) appContainer.classList.remove('chat-only-mode');
-    
+
     switchTab('voice');
-    
+
     const activeBtn = document.getElementById('sidebar-voice-btn');
     if (activeBtn) activeBtn.classList.add('active');
-    
+
     showAlert('Opened Voice Settings');
   }
   else {
@@ -458,9 +458,9 @@ function switchWorkspaceMode(mode) {
     DOM.toolViewContainer.style.display = 'flex';
     DOM.toolPanelTabs.style.display = 'none'; // hide sub-tabs since sidebar controls this
     if (appContainer) appContainer.classList.remove('chat-only-mode');
-    
+
     switchTab('prompt');
-    
+
     // BUG FIX: Map sidebar mode IDs to their writing hub values and omniMode values.
     // Sidebar uses 'link-expert', 'nextjs-api' but AI engine checks 'link', 'cmo' etc.
     const modeToWritingMap = {
@@ -482,7 +482,7 @@ function switchWorkspaceMode(mode) {
       'seo': 'cmo',
       'auto': 'auto'
     };
-    
+
     // Update omniMode so the AI chat uses the correct persona when user sends messages
     if (modeToOmniMode.hasOwnProperty(mode)) {
       state.omniMode = modeToOmniMode[mode];
@@ -491,7 +491,7 @@ function switchWorkspaceMode(mode) {
         btn.classList.toggle('active', btn.getAttribute('data-mode') === state.omniMode);
       });
     }
-    
+
     // Writing hub tool modes that have a matching writing panel sub-tool
     const writingHubModes = [
       'paraphraser', 'grammar-checker', 'ai-detector', 'plagiarism-checker',
@@ -501,7 +501,7 @@ function switchWorkspaceMode(mode) {
       'image-to-prompt', 'ui-ux-pro-max', 'link-expert', 'nextjs-api', 'seo',
       'roll-d20', 'help-menu', 'auto', 'engineer', 'designer', 'strategist', 'superpowers'
     ];
-    
+
     // Set Writing Mode Select dropdown value so the correct tool UI is shown
     if (DOM.writingModeSelect) {
       // BUG FIX: Only set the writing mode select if the mode exists as an option
@@ -517,13 +517,13 @@ function switchWorkspaceMode(mode) {
         renderWritingHubInputs(mode);
       }
     }
-    
+
     const activeBtn = document.getElementById(`sidebar-${mode}-btn`);
     if (activeBtn) activeBtn.classList.add('active');
-    
+
     const activeMobileBtn = document.querySelector('.mobile-nav-btn[data-target="writing"]');
     if (activeMobileBtn) activeMobileBtn.classList.add('active');
-    
+
     showAlert(`Opened ${mode.replace(/-/g, ' ')} tool`);
   }
 }
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatBtn.addEventListener('click', () => switchWorkspaceMode('chat'));
   }
 
-    const modes = [
+  const modes = [
     'paraphraser',
     'grammar-checker',
     'ai-detector',
@@ -631,7 +631,7 @@ function switchTab(tabId, silent = false) {
   DOM.tabPdf.classList.toggle('active', tabId === 'pdf');
   DOM.tabMath.classList.toggle('active', tabId === 'math');
   DOM.tabPrompt.classList.toggle('active', tabId === 'prompt');
-  
+
   DOM.panelVoice.classList.toggle('active', tabId === 'voice');
   DOM.panelPdf.classList.toggle('active', tabId === 'pdf');
   DOM.panelMath.classList.toggle('active', tabId === 'math');
@@ -648,7 +648,7 @@ function switchTab(tabId, silent = false) {
     DOM.tabIndicator.style.width = `${activeBtn.offsetWidth}px`;
     DOM.tabIndicator.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
   }
-  
+
   if (!silent) {
     showAlert(`Switched to ${tabId}`);
     auraAnalytics.trackToolUsage(tabId, 'switch_tab');
@@ -668,7 +668,7 @@ if (SpeechRecognition) {
   recognition = new SpeechRecognition();
   recognition.continuous = false;
   recognition.lang = 'en-US';
-  
+
   recognition.onstart = () => {
     state.isRecording = true;
     DOM.voiceInputBtn.classList.add('recording');
@@ -718,11 +718,11 @@ function speakText(text) {
   const utterance = new SpeechSynthesisUtterance(text.replace(/[*#_`[\]]/g, ''));
   const voice = state.voices.find(v => v.name === state.selectedVoiceName);
   if (voice) utterance.voice = voice;
-  
+
   // Set speed and pitch from sliders state
   utterance.rate = state.ttsRate;
   utterance.pitch = state.ttsPitch;
-  
+
   speechSynthesis.speak(utterance);
 }
 
@@ -733,7 +733,7 @@ function updateClock() {
   let minutes = now.getMinutes();
   const ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
-  hours = hours ? hours : 12; 
+  hours = hours ? hours : 12;
   minutes = minutes < 10 ? '0' + minutes : minutes;
   // BUG FIX: Guard against statusTime being null (element may not exist in all HTML versions)
   if (DOM.statusTime) {
@@ -762,13 +762,13 @@ function scrollToBottom() {
 function loadHistory() {
   const sessionsCached = localStorage.getItem('aura_chat_sessions');
   const activeCachedId = localStorage.getItem('aura_active_session_id');
-  
+
   if (sessionsCached) {
     state.sessions = JSON.parse(sessionsCached);
   } else {
     state.sessions = [];
   }
-  
+
   if (activeCachedId && state.sessions.some(s => s.id === activeCachedId)) {
     state.activeSessionId = activeCachedId;
   } else if (state.sessions.length > 0) {
@@ -786,7 +786,7 @@ function loadHistory() {
     state.chatHistory.forEach(msg => appendMessageMarkup(msg.sender, msg.text, msg.timestamp, false));
     scrollToBottom();
   }
-  
+
   renderSessionsList();
 
   const voiceConfig = localStorage.getItem('aura_tts_enabled');
@@ -808,7 +808,7 @@ function saveHistory() {
   const activeSession = state.sessions.find(s => s.id === state.activeSessionId);
   if (activeSession) {
     activeSession.messages = state.chatHistory;
-    
+
     // Auto-update title from first user message if still default
     if (activeSession.title === 'New Conversation' && state.chatHistory.length > 1) {
       const firstUserMsg = state.chatHistory.find(m => m.sender === 'user');
@@ -817,9 +817,9 @@ function saveHistory() {
         activeSession.title = textClean.substring(0, 22) + (textClean.length > 22 ? '...' : '');
       }
     }
-    activeSession.timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    activeSession.timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
-  
+
   localStorage.setItem('aura_chat_sessions', JSON.stringify(state.sessions));
   localStorage.setItem('aura_active_session_id', state.activeSessionId);
   renderSessionsList();
@@ -828,27 +828,27 @@ function saveHistory() {
 function startNewChat(userTriggered = true) {
   const newId = 'session_' + Date.now();
   const welcomeMsg = "Hi! I'm Aura. Tap **Manage Skills** below to access Voice settings, PDF tools, Scientific Calculators, or Prompt templates!";
-  const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   const newSession = {
     id: newId,
     title: 'New Conversation',
     messages: [{ sender: 'bot', text: welcomeMsg, timestamp: ts }],
     timestamp: ts
   };
-  
+
   state.sessions.unshift(newSession);
   state.activeSessionId = newId;
   state.chatHistory = newSession.messages;
-  
+
   DOM.chatMessages.innerHTML = '';
   appendMessageMarkup('bot', welcomeMsg, ts, false);
-  
+
   localStorage.setItem('aura_chat_sessions', JSON.stringify(state.sessions));
   localStorage.setItem('aura_active_session_id', state.activeSessionId);
-  
+
   renderSessionsList();
-  
+
   if (userTriggered) {
     DOM.historySidebar.classList.remove('open');
     switchWorkspaceMode('chat');
@@ -859,17 +859,17 @@ function startNewChat(userTriggered = true) {
 function selectSession(id) {
   const activeSession = state.sessions.find(s => s.id === id);
   if (!activeSession) return;
-  
+
   state.activeSessionId = id;
   state.chatHistory = activeSession.messages;
-  
+
   DOM.chatMessages.innerHTML = '';
   state.chatHistory.forEach(msg => appendMessageMarkup(msg.sender, msg.text, msg.timestamp, false));
   scrollToBottom();
-  
+
   localStorage.setItem('aura_active_session_id', state.activeSessionId);
   renderSessionsList();
-  
+
   DOM.historySidebar.classList.remove('open');
   switchWorkspaceMode('chat');
   showAlert('Switched session.');
@@ -878,9 +878,9 @@ function selectSession(id) {
 function deleteSession(id) {
   const idx = state.sessions.findIndex(s => s.id === id);
   if (idx === -1) return;
-  
+
   state.sessions.splice(idx, 1);
-  
+
   if (state.activeSessionId === id) {
     if (state.sessions.length > 0) {
       selectSession(state.sessions[0].id);
@@ -898,12 +898,12 @@ function renderSessionsList() {
   const list = DOM.historySessionsList;
   if (!list) return;
   list.innerHTML = '';
-  
+
   state.sessions.forEach(s => {
     const wrapper = document.createElement('div');
     wrapper.className = 'session-item-wrapper';
     const activeClass = s.id === state.activeSessionId ? ' active' : '';
-    
+
     wrapper.innerHTML = `
       <button class="session-item-btn${activeClass}" onclick="selectSession('${s.id}')">
         <div class="session-info">
@@ -929,10 +929,10 @@ function appendMessageMarkup(sender, text, timestamp, speak = false) {
 
   const contentDiv = document.createElement('div');
   contentDiv.classList.add('message-content');
-  
+
   const formattedText = formatMarkdown(text);
   contentDiv.innerHTML = formattedText;
-  
+
   messageDiv.appendChild(contentDiv);
 
   const metaDiv = document.createElement('div');
@@ -998,8 +998,8 @@ function handleUserMessageSubmit(inputText) {
   if (!trimmed) return;
 
   DOM.chatInput.value = '';
-  const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  
+  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   appendMessageMarkup('user', trimmed, timestamp);
   state.chatHistory.push({ sender: 'user', text: trimmed, timestamp });
   saveHistory();
@@ -1013,20 +1013,20 @@ function handleUserMessageSubmit(inputText) {
     try {
       const botResponse = await generateBotResponse(trimmed);
       removeTypingIndicator();
-      const botTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-      
+      const botTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
       appendMessageMarkup('bot', botResponse, botTimestamp, true);
       state.chatHistory.push({ sender: 'bot', text: botResponse, timestamp: botTimestamp });
       saveHistory();
 
       // Telemetry: Track Bot Delivery
-      auraAnalytics.logEvent('bot_response_delivered', { 
+      auraAnalytics.logEvent('bot_response_delivered', {
         response_length: (botResponse || '').length,
         mode: 'OmniBrain-Pro'
       });
     } catch (err) {
       removeTypingIndicator();
-      const botTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const botTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const fallbackMsg = `⚠️ Sorry, unable to process message: ${err.message || 'Please check your connection.'}`;
       appendMessageMarkup('bot', fallbackMsg, botTimestamp);
     }
@@ -1058,113 +1058,113 @@ async function generateClientFallbackResponse(input) {
   // --- 1. Mode Specific Overrides ---
   if (mode === 'engineer') {
     return `⚡ **OmniBrain-Pro — The Engineer Mode (Activated)**\n\n` +
-           `### Production Next.js App Router Architecture & Standards\n` +
-           `Adhering to TestMu AI & OmniBrain-Pro enterprise production standards:\n\n` +
-           `\`\`\`typescript\n` +
-           `// Standardized Envelope: { success: boolean, data?: any, message?: string, error?: string, code?: string }\n` +
-           `import { NextResponse } from "next/server";\n` +
-           `import { z } from "zod";\n\n` +
-           `const RequestSchema = z.object({\n` +
-           `  query: z.string().min(1, "Query is required"),\n` +
-           `  limit: z.number().int().positive().max(100).default(20)\n` +
-           `});\n\n` +
-           `export async function POST(req: Request) {\n` +
-           `  try {\n` +
-           `    const body = await req.json();\n` +
-           `    const validated = RequestSchema.parse(body);\n` +
-           `    \n` +
-           `    // Execute core domain business logic\n` +
-           `    const data = { processedQuery: validated.query, timestamp: Date.now() };\n` +
-           `    \n` +
-           `    return NextResponse.json({\n` +
-           `      success: true,\n` +
-           `      data,\n` +
-           `      code: "SUCCESS_200"\n` +
-           `    }, { status: 200 });\n` +
-           `  } catch (err: any) {\n` +
-           `    return NextResponse.json({\n` +
-           `      success: false,\n` +
-           `      error: err.errors ? err.errors.map((e: any) => e.message).join(", ") : err.message,\n` +
-           `      code: "VALIDATION_ERROR_400"\n` +
-           `    }, { status: 400 });\n` +
-           `  }\n` +
-           `}\n` +
-           `\`\`\`\n\n` +
-           `### Security & Enterprise Hardening (OWASP Top 10)\n` +
-           `• **Zero-Trust Input**: Schema-validated via Zod before any computation.\n` +
-           `• **SQL/NoSQL Injection Immunity**: Parameterized statements only.\n` +
-           `• **Edge Rate Limiting**: Enforce IP-based leaky bucket token limiter.\n` +
-           `• **Status Codes**: 200 (OK), 201 (Created), 400 (Bad Input), 401 (Auth), 403 (Forbidden), 500 (Internal).`;
+      `### Production Next.js App Router Architecture & Standards\n` +
+      `Adhering to TestMu AI & OmniBrain-Pro enterprise production standards:\n\n` +
+      `\`\`\`typescript\n` +
+      `// Standardized Envelope: { success: boolean, data?: any, message?: string, error?: string, code?: string }\n` +
+      `import { NextResponse } from "next/server";\n` +
+      `import { z } from "zod";\n\n` +
+      `const RequestSchema = z.object({\n` +
+      `  query: z.string().min(1, "Query is required"),\n` +
+      `  limit: z.number().int().positive().max(100).default(20)\n` +
+      `});\n\n` +
+      `export async function POST(req: Request) {\n` +
+      `  try {\n` +
+      `    const body = await req.json();\n` +
+      `    const validated = RequestSchema.parse(body);\n` +
+      `    \n` +
+      `    // Execute core domain business logic\n` +
+      `    const data = { processedQuery: validated.query, timestamp: Date.now() };\n` +
+      `    \n` +
+      `    return NextResponse.json({\n` +
+      `      success: true,\n` +
+      `      data,\n` +
+      `      code: "SUCCESS_200"\n` +
+      `    }, { status: 200 });\n` +
+      `  } catch (err: any) {\n` +
+      `    return NextResponse.json({\n` +
+      `      success: false,\n` +
+      `      error: err.errors ? err.errors.map((e: any) => e.message).join(", ") : err.message,\n` +
+      `      code: "VALIDATION_ERROR_400"\n` +
+      `    }, { status: 400 });\n` +
+      `  }\n` +
+      `}\n` +
+      `\`\`\`\n\n` +
+      `### Security & Enterprise Hardening (OWASP Top 10)\n` +
+      `• **Zero-Trust Input**: Schema-validated via Zod before any computation.\n` +
+      `• **SQL/NoSQL Injection Immunity**: Parameterized statements only.\n` +
+      `• **Edge Rate Limiting**: Enforce IP-based leaky bucket token limiter.\n` +
+      `• **Status Codes**: 200 (OK), 201 (Created), 400 (Bad Input), 401 (Auth), 403 (Forbidden), 500 (Internal).`;
   }
 
   if (mode === 'creative') {
     return `🎨 **OmniBrain-Pro — The Creative Director (TrendCanvas Activated)**\n\n` +
-           `### Creative Direction Summary\n` +
-           `Cinematic high-fidelity visualization prompt engineered for FLUX.1 & Midjourney v6:\n\n` +
-           `**MASTER ENHANCED PROMPT:**\n` +
-           `> Cinematic film still of ${q}, shot on 35mm Arri Alexa LF, Panavision Ultra Vista anamorphic lens, volumetric atmospheric dust motes, rim lighting, moody neo-noir cyan and amber color grade, photorealistic, intricate micro-textures, 8k resolution, award-winning cinematography --ar 16:9 --style raw --v 6.0\n\n` +
-           `**STYLE TAGS:**\n` +
-           `\`anamorphic\`, \`35mm film stock\`, \`volumetric lighting\`, \`cinematic grading\`, \`photorealistic\`\n\n` +
-           `**NEGATIVE PROMPT:**\n` +
-           `\`low quality, blurry, oversaturated, deformed hands, cartoon, CGI plastic artifacts, cropped frame\``;
+      `### Creative Direction Summary\n` +
+      `Cinematic high-fidelity visualization prompt engineered for FLUX.1 & Midjourney v6:\n\n` +
+      `**MASTER ENHANCED PROMPT:**\n` +
+      `> Cinematic film still of ${q}, shot on 35mm Arri Alexa LF, Panavision Ultra Vista anamorphic lens, volumetric atmospheric dust motes, rim lighting, moody neo-noir cyan and amber color grade, photorealistic, intricate micro-textures, 8k resolution, award-winning cinematography --ar 16:9 --style raw --v 6.0\n\n` +
+      `**STYLE TAGS:**\n` +
+      `\`anamorphic\`, \`35mm film stock\`, \`volumetric lighting\`, \`cinematic grading\`, \`photorealistic\`\n\n` +
+      `**NEGATIVE PROMPT:**\n` +
+      `\`low quality, blurry, oversaturated, deformed hands, cartoon, CGI plastic artifacts, cropped frame\``;
   }
 
   if (mode === 'cmo') {
     return `📈 **OmniBrain-Pro — Chief Marketing Officer (BeyondSEO 2.0 Activated)**\n\n` +
-           `### 1. Generative Engine Optimization (GEO) Blueprint\n` +
-           `Engineered to dominate AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
-           `• **Primary Source Citations**: Boosts AI engine citation rate by **+40%**.\n` +
-           `• **Concrete Metrics & Verified Figures**: Increases inclusion rate by **+37%**.\n` +
-           `• **Expert Named Quotes**: Enhances authority attribution by **+30%**.\n` +
-           `• **Answer-First Structure**: Immediate conclusion in Sentence 1, followed by structured tables.\n\n` +
-           `### 2. JSON-LD Schema Architecture (FAQPage & TechArticle)\n` +
-           `\`\`\`json\n` +
-           `{\n` +
-           `  "@context": "https://schema.org",\n` +
-           `  "@type": "TechArticle",\n` +
-           `  "headline": "${q}",\n` +
-           `  "author": { "@type": "Person", "name": "Sakshi" },\n` +
-           `  "publisher": { "@type": "Organization", "name": "Aura AI" }\n` +
-           `}\n` +
-           `\`\`\`\n\n` +
-           `### 3. Content Engineering (LinkedIn 21 Hooks Formula)\n` +
-           `• **Hook (≤210 chars)**: "95% of teams handle ${q} wrong. Here is how top 1% achieve 10x ROI."\n` +
-           `• **Payoff**: Immediate value payoff before the "see more" cutoff.`;
+      `### 1. Generative Engine Optimization (GEO) Blueprint\n` +
+      `Engineered to dominate AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
+      `• **Primary Source Citations**: Boosts AI engine citation rate by **+40%**.\n` +
+      `• **Concrete Metrics & Verified Figures**: Increases inclusion rate by **+37%**.\n` +
+      `• **Expert Named Quotes**: Enhances authority attribution by **+30%**.\n` +
+      `• **Answer-First Structure**: Immediate conclusion in Sentence 1, followed by structured tables.\n\n` +
+      `### 2. JSON-LD Schema Architecture (FAQPage & TechArticle)\n` +
+      `\`\`\`json\n` +
+      `{\n` +
+      `  "@context": "https://schema.org",\n` +
+      `  "@type": "TechArticle",\n` +
+      `  "headline": "${q}",\n` +
+      `  "author": { "@type": "Person", "name": "Sakshi" },\n` +
+      `  "publisher": { "@type": "Organization", "name": "Aura AI" }\n` +
+      `}\n` +
+      `\`\`\`\n\n` +
+      `### 3. Content Engineering (LinkedIn 21 Hooks Formula)\n` +
+      `• **Hook (≤210 chars)**: "95% of teams handle ${q} wrong. Here is how top 1% achieve 10x ROI."\n` +
+      `• **Payoff**: Immediate value payoff before the "see more" cutoff.`;
   }
 
   if (mode === 'designer') {
     return `📐 **OmniBrain-Pro — Designer & Artist Mode (Activated)**\n\n` +
-           `### UI/UX Design System Specifications\n` +
-           `• **Grid System**: 8pt cohesive spacing rhythm (8px, 16px, 24px, 32px, 48px, 64px).\n` +
-           `• **Accessibility Compliance**: Strict **WCAG 2.2 AA** contrast ratios (minimum 4.5:1 text, 3:1 graphical UI).\n` +
-           `• **Curated HSL Color Tokens**:\n` +
-           `  - Background: \`hsl(222, 47%, 7%)\` (#0B0F19)\n` +
-           `  - Primary Accent: \`hsl(271, 91%, 65%)\` (#A855F7)\n` +
-           `  - Secondary Cyan: \`hsl(187, 92%, 43%)\` (#06B6D4)\n` +
-           `  - Text High-Contrast: \`hsl(210, 40%, 98%)\` (#F8FAFC)\n` +
-           `• **Typography Hierarchy**: Segoe UI / Inter, with 1.250 Major Third scale.`;
+      `### UI/UX Design System Specifications\n` +
+      `• **Grid System**: 8pt cohesive spacing rhythm (8px, 16px, 24px, 32px, 48px, 64px).\n` +
+      `• **Accessibility Compliance**: Strict **WCAG 2.2 AA** contrast ratios (minimum 4.5:1 text, 3:1 graphical UI).\n` +
+      `• **Curated HSL Color Tokens**:\n` +
+      `  - Background: \`hsl(222, 47%, 7%)\` (#0B0F19)\n` +
+      `  - Primary Accent: \`hsl(271, 91%, 65%)\` (#A855F7)\n` +
+      `  - Secondary Cyan: \`hsl(187, 92%, 43%)\` (#06B6D4)\n` +
+      `  - Text High-Contrast: \`hsl(210, 40%, 98%)\` (#F8FAFC)\n` +
+      `• **Typography Hierarchy**: Segoe UI / Inter, with 1.250 Major Third scale.`;
   }
 
   if (mode === 'link') {
     return `🔗 **OmniBrain-Pro — The Link Expert (Activated)**\n\n` +
-           `### Link & Source Analysis Framework\n` +
-           `• **Entity Analyzed**: "${q}"\n` +
-           `• **Domain Role Adopted**: Principal Systems Analyst & Senior Domain Specialist\n` +
-           `• **Key Observations**: Structural architecture, responsive performance, semantic markup, and metadata.\n` +
-           `• **Identified Risks**: Check CORS headers, CDN cache invalidation, and mobile layout constraints.\n` +
-           `• **Recommended Action**: Implement automated synthetic monitoring and structured schema verification.`;
+      `### Link & Source Analysis Framework\n` +
+      `• **Entity Analyzed**: "${q}"\n` +
+      `• **Domain Role Adopted**: Principal Systems Analyst & Senior Domain Specialist\n` +
+      `• **Key Observations**: Structural architecture, responsive performance, semantic markup, and metadata.\n` +
+      `• **Identified Risks**: Check CORS headers, CDN cache invalidation, and mobile layout constraints.\n` +
+      `• **Recommended Action**: Implement automated synthetic monitoring and structured schema verification.`;
   }
 
   if (mode === 'strategist') {
     return `🔬 **OmniBrain-Pro — Strategist & Scientist Mode (Activated)**\n\n` +
-           `### Phased Execution Roadmap (30 / 60 / 90 Days)\n` +
-           `**Phase 1 (Days 1–30): Foundation & Discovery**\n` +
-           `• Establish baseline metrics, identify technical bottlenecks, audit data fidelity.\n\n` +
-           `**Phase 2 (Days 31–60): Implementation & Scaling**\n` +
-           `• Deploy core architectural improvements and automated test suites.\n\n` +
-           `**Phase 3 (Days 61–90): Optimization & Market Dominance**\n` +
-           `• Measure conversion deltas, execute A/B split experiments, and scale.\n\n` +
-           `*Trade-off analysis: Fast time-to-market prioritized over exhaustive premature abstraction.*`;
+      `### Phased Execution Roadmap (30 / 60 / 90 Days)\n` +
+      `**Phase 1 (Days 1–30): Foundation & Discovery**\n` +
+      `• Establish baseline metrics, identify technical bottlenecks, audit data fidelity.\n\n` +
+      `**Phase 2 (Days 31–60): Implementation & Scaling**\n` +
+      `• Deploy core architectural improvements and automated test suites.\n\n` +
+      `**Phase 3 (Days 61–90): Optimization & Market Dominance**\n` +
+      `• Measure conversion deltas, execute A/B split experiments, and scale.\n\n` +
+      `*Trade-off analysis: Fast time-to-market prioritized over exhaustive premature abstraction.*`;
   }
 
   // --- 2. Auto-Adaptive Mode Logic ---
@@ -1189,93 +1189,93 @@ async function generateClientFallbackResponse(input) {
 
     const rolled = Math.floor(Math.random() * sides) + 1;
     return `🎲 **OmniBrain Randomization Engine**\n\n` +
-           `• **Sides**: D${sides}\n` +
-           `• **Result**: **${rolled}**\n\n` +
-           `*Scripting Equivalents:*\n` +
-           `• **PowerShell**: \`Get-Random -Minimum 1 -Maximum ${sides + 1}\`\n` +
-           `• **Bash**: \`echo $((RANDOM % ${sides} + 1))\``;
+      `• **Sides**: D${sides}\n` +
+      `• **Result**: **${rolled}**\n\n` +
+      `*Scripting Equivalents:*\n` +
+      `• **PowerShell**: \`Get-Random -Minimum 1 -Maximum ${sides + 1}\`\n` +
+      `• **Bash**: \`echo $((RANDOM % ${sides} + 1))\``;
   }
 
   // Developer Identity & Support
   if (lower.includes('who are you') || lower.includes('who made you') || lower.includes('who created you') || lower.includes('developer') || lower.includes('sakshi') || lower.includes('creator') || lower.includes('your name')) {
     return `✨ **I am OmniBrain Pro Master Model (Aura AI)**, an elite AI assistant proudly created by **Developer Sakshi**.\n\n` +
-           `• **Developer**: Sakshi\n` +
-           `• **Customer Care / Support**: [+91 6290873841](tel:6290873841)\n` +
-           `• **Email**: [qwicklabs2@gmail.com](mailto:qwicklabs2@gmail.com)\n` +
-           `• **Active Modes**: The Engineer, The Creative Director, The Link Expert, The Designer & Artist, The Strategist & Scientist, and The Chief Marketing Officer (Growth & BeyondSEO 2.0).\n` +
-           `• **Quality Bar**: Studio-grade deliverables with real code, exact citations, and zero fluff.`;
+      `• **Developer**: Sakshi\n` +
+      `• **Customer Care / Support**: [+91 6290873841](tel:6290873841)\n` +
+      `• **Email**: [qwicklabs2@gmail.com](mailto:qwicklabs2@gmail.com)\n` +
+      `• **Active Modes**: The Engineer, The Creative Director, The Link Expert, The Designer & Artist, The Strategist & Scientist, and The Chief Marketing Officer (Growth & BeyondSEO 2.0).\n` +
+      `• **Quality Bar**: Studio-grade deliverables with real code, exact citations, and zero fluff.`;
   }
 
   // Greetings
   if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hello ') || lower.startsWith('hi ') || lower.startsWith('hey ') || lower.includes('good morning') || lower.includes('good evening')) {
     return `👋 **Hello! Welcome to OmniBrain Pro Master Model (Aura AI).**\n\n` +
-           `I operate at professional studio and engineering standards. Here is how we can collaborate today:\n\n` +
-           `• 📈 **SEO, GEO & Growth Marketing** (Answer-first architecture, citations, schema)\n` +
-           `• ⚡ **Software & API Engineering** (Next.js, Zod, React, Node.js, algorithms)\n` +
-           `• 🔥 **Content Engineering** (LinkedIn 21 Hook formulas, YouTube scripts, Reels)\n` +
-           `• 🧮 **150+ Interactive Calculators** (Windows 11 Fluent Standard & Scientific)\n` +
-           `• 📄 **PDF Toolkit & Document Analysis**\n\n` +
-           `*What would you like to build or optimize today?*`;
+      `I operate at professional studio and engineering standards. Here is how we can collaborate today:\n\n` +
+      `• 📈 **SEO, GEO & Growth Marketing** (Answer-first architecture, citations, schema)\n` +
+      `• ⚡ **Software & API Engineering** (Next.js, Zod, React, Node.js, algorithms)\n` +
+      `• 🔥 **Content Engineering** (LinkedIn 21 Hook formulas, YouTube scripts, Reels)\n` +
+      `• 🧮 **150+ Interactive Calculators** (Windows 11 Fluent Standard & Scientific)\n` +
+      `• 📄 **PDF Toolkit & Document Analysis**\n\n` +
+      `*What would you like to build or optimize today?*`;
   }
 
   // SEO & GEO Queries
   if (lower.includes('seo') || lower.includes('geo') || lower.includes('search engine') || lower.includes('ranking') || lower.includes('aeo')) {
     return `📈 **OmniBrain-Pro Master Model — SEO & GEO Optimization Blueprint**\n\n` +
-           `### 1. Generative Engine Optimization (GEO)\n` +
-           `Engineered for AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
-           `• **Authoritative Citations**: Boost visibility by **+40%** by citing primary source documentation.\n` +
-           `• **Concrete Metrics & Statistics**: Boost visibility by **+37%** with verified benchmark figures.\n` +
-           `• **Expert Quotations**: Boost authority by **+30%** with named practitioner references.\n` +
-           `• **Answer-First Structure**: Deliver conclusions immediately in sentence 1, followed by structured tables and bullet lists.\n\n` +
-           `### 2. Technical & Semantic SEO Architecture\n` +
-           `• **Core Web Vitals**: Target LCP ≤ 2.5s, INP ≤ 200ms, and CLS ≤ 0.1.\n` +
-           `• **Topic Clusters**: Link pillar pages to sub-topic spokes via semantic, descriptive anchor text.\n` +
-           `• **JSON-LD Schema**: Production-ready structured schema markup for rich snippets.`;
+      `### 1. Generative Engine Optimization (GEO)\n` +
+      `Engineered for AI answer engines (ChatGPT Search, Perplexity, Claude, Gemini):\n` +
+      `• **Authoritative Citations**: Boost visibility by **+40%** by citing primary source documentation.\n` +
+      `• **Concrete Metrics & Statistics**: Boost visibility by **+37%** with verified benchmark figures.\n` +
+      `• **Expert Quotations**: Boost authority by **+30%** with named practitioner references.\n` +
+      `• **Answer-First Structure**: Deliver conclusions immediately in sentence 1, followed by structured tables and bullet lists.\n\n` +
+      `### 2. Technical & Semantic SEO Architecture\n` +
+      `• **Core Web Vitals**: Target LCP ≤ 2.5s, INP ≤ 200ms, and CLS ≤ 0.1.\n` +
+      `• **Topic Clusters**: Link pillar pages to sub-topic spokes via semantic, descriptive anchor text.\n` +
+      `• **JSON-LD Schema**: Production-ready structured schema markup for rich snippets.`;
   }
 
   // API, Backend & Code
   if (lower.includes('api') || lower.includes('next.js') || lower.includes('backend') || lower.includes('code') || lower.includes('zod') || lower.includes('architecture')) {
     return `⚡ **OmniBrain-Pro Master Model — Engineering Standards**\n\n` +
-           `### 1. Next.js App Router API Envelope Standard\n` +
-           `In production backend endpoints, ALWAYS enforce standardized schema response envelopes:\n\n` +
-           `\`\`\`typescript\n` +
-           `// Standard Envelope: { success, data, message, error, code }\n` +
-           `import { NextResponse } from "next/server";\n` +
-           `import { z } from "zod";\n\n` +
-           `const RequestSchema = z.object({\n` +
-           `  query: z.string().min(1),\n` +
-           `  limit: z.number().default(10)\n` +
-           `});\n\n` +
-           `export async function POST(req: Request) {\n` +
-           `  try {\n` +
-           `    const body = await req.json();\n` +
-           `    const validated = RequestSchema.parse(body);\n` +
-           `    return NextResponse.json({ success: true, data: validated, code: "SUCCESS_200" });\n` +
-           `  } catch (err: any) {\n` +
-           `    return NextResponse.json({ success: false, error: err.message, code: "VALIDATION_ERROR_400" }, { status: 400 });\n` +
-           `  }\n` +
-           `}\n` +
-           `\`\`\`\n\n` +
-           `*Adhering to TestMu AI & OmniBrain-Pro Production Engineering Standards.*`;
+      `### 1. Next.js App Router API Envelope Standard\n` +
+      `In production backend endpoints, ALWAYS enforce standardized schema response envelopes:\n\n` +
+      `\`\`\`typescript\n` +
+      `// Standard Envelope: { success, data, message, error, code }\n` +
+      `import { NextResponse } from "next/server";\n` +
+      `import { z } from "zod";\n\n` +
+      `const RequestSchema = z.object({\n` +
+      `  query: z.string().min(1),\n` +
+      `  limit: z.number().default(10)\n` +
+      `});\n\n` +
+      `export async function POST(req: Request) {\n` +
+      `  try {\n` +
+      `    const body = await req.json();\n` +
+      `    const validated = RequestSchema.parse(body);\n` +
+      `    return NextResponse.json({ success: true, data: validated, code: "SUCCESS_200" });\n` +
+      `  } catch (err: any) {\n` +
+      `    return NextResponse.json({ success: false, error: err.message, code: "VALIDATION_ERROR_400" }, { status: 400 });\n` +
+      `  }\n` +
+      `}\n` +
+      `\`\`\`\n\n` +
+      `*Adhering to TestMu AI & OmniBrain-Pro Production Engineering Standards.*`;
   }
 
   // Programming Languages
   if (lower.includes('what is javascript') || lower.includes('javascript') || lower.includes('what is js')) {
     return `💻 **JavaScript (JS) — OmniBrain Technical Briefing**\n\n` +
-           `JavaScript is a high-level, dynamic, multi-paradigm programming language that powers modern web architecture.\n\n` +
-           `### Core Engineering Strengths:\n` +
-           `• **Single-Threaded Non-Blocking I/O**: Driven by the V8 event loop and microtask queue.\n` +
-           `• **Universal Execution**: Native in browsers and on backends via Node.js, Deno, and Bun.\n` +
-           `• **Modern Paradigms**: First-class functions, closures, prototypal inheritance, and async/await syntax.`;
+      `JavaScript is a high-level, dynamic, multi-paradigm programming language that powers modern web architecture.\n\n` +
+      `### Core Engineering Strengths:\n` +
+      `• **Single-Threaded Non-Blocking I/O**: Driven by the V8 event loop and microtask queue.\n` +
+      `• **Universal Execution**: Native in browsers and on backends via Node.js, Deno, and Bun.\n` +
+      `• **Modern Paradigms**: First-class functions, closures, prototypal inheritance, and async/await syntax.`;
   }
 
   if (lower.includes('what is python') || lower.includes('python')) {
     return `🐍 **Python — OmniBrain Technical Briefing**\n\n` +
-           `Python is an interpreted, high-level programming language emphasizing readability and developer productivity.\n\n` +
-           `### Core Strengths:\n` +
-           `• **Standard for AI & ML**: Native runtime for PyTorch, TensorFlow, Hugging Face, and Ollama.\n` +
-           `• **Data Science Ecosystem**: NumPy, Pandas, Scipy, and Polars for high-throughput computation.\n` +
-           `• **Expressive Syntax**: Minimal boilerplate with powerful list comprehensions and generators.`;
+      `Python is an interpreted, high-level programming language emphasizing readability and developer productivity.\n\n` +
+      `### Core Strengths:\n` +
+      `• **Standard for AI & ML**: Native runtime for PyTorch, TensorFlow, Hugging Face, and Ollama.\n` +
+      `• **Data Science Ecosystem**: NumPy, Pandas, Scipy, and Polars for high-throughput computation.\n` +
+      `• **Expressive Syntax**: Minimal boilerplate with powerful list comprehensions and generators.`;
   }
 
   // Arithmetic / Math evaluation in chat
@@ -1288,7 +1288,7 @@ async function generateClientFallbackResponse(input) {
         return `🧮 **OmniBrain Math Solver**:\n\`${cleanExpr} = ${res}\``;
       }
     }
-  } catch (e) {}
+  } catch (e) { }
 
   // --- 3. Dynamic Cloud AI Synthesis (Free, Fast, Zero Backend Needed) ---
   if (navigator.onLine) {
@@ -1320,7 +1320,7 @@ async function generateClientFallbackResponse(input) {
 
   // Master Studio Answer
   return `🧠 **OmniBrain-Pro Master Model**:\n\nRegarding "${q}":\n\n` +
-         `Processed under OmniBrain Pro studio standards by Developer Sakshi. We can engineer technical solutions, construct viral content frameworks, optimize SEO & GEO visibility, or solve mathematical and business problems. How would you like to proceed?`;
+    `Processed under OmniBrain Pro studio standards by Developer Sakshi. We can engineer technical solutions, construct viral content frameworks, optimize SEO & GEO visibility, or solve mathematical and business problems. How would you like to proceed?`;
 }
 
 // Bot Response Brain Engine
@@ -1348,11 +1348,11 @@ async function generateBotResponse(input) {
 
   // Construct context for the AI
   let systemPrompt = "";
-  
+
   if (state.loadedFile && state.loadedFile.content) {
     systemPrompt += `I have attached a document named '${state.loadedFile.name}'. Please answer my questions based on this document content if relevant. \n\nDocument Content:\n${state.loadedFile.content.substring(0, 15000)}`;
   }
-  
+
   if (state.analysedImagePalette && state.analysedImagePalette.length > 0) {
     systemPrompt += `\n\nI have uploaded an image. Its dominant colors are: ${state.analysedImagePalette.join(', ')}. Keep this in mind if I ask about an image.`;
   }
@@ -1365,7 +1365,7 @@ async function generateBotResponse(input) {
     if (systemPrompt) {
       combinedPrompt = systemPrompt + "\n\nUser Question: " + input;
     }
-    
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
@@ -1376,7 +1376,7 @@ async function generateBotResponse(input) {
       signal: controller.signal
     });
     clearTimeout(timeoutId);
-    
+
     if (response.ok) {
       const data = await response.json();
       if (data.reply) return data.reply;
@@ -1389,17 +1389,21 @@ async function generateBotResponse(input) {
   if (navigator.onLine) {
     try {
       const sysPrompt = "You are Aura AI, a professional master and AI expert. Provide an accurate, high-quality solution. Be highly knowledgeable.";
-      const pCombined = systemPrompt ? (systemPrompt + "\n\nUser Question: " + input) : input;
       const pollRes = await fetch("https://text.pollinations.ai/", {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: sysPrompt + "\n\n" + pCombined
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [
+            { role: "system", content: sysPrompt },
+            { role: "user", content: input }
+          ]
+        })
       });
-      
+
       if (pollRes.ok) {
         return await pollRes.text();
       }
-    } catch(e) {
+    } catch (e) {
       console.warn("Pollinations AI also failed.", e.message);
     }
   }
@@ -1412,18 +1416,18 @@ async function generateBotResponse(input) {
 function queryLoadedFile(userQuery) {
   const lowercaseQuery = userQuery.toLowerCase();
   const fileText = state.loadedFile.content;
-  
+
   if (lowercaseQuery.includes('summarize') || lowercaseQuery.includes('summary') || lowercaseQuery.includes('describe')) {
     const wordCount = fileText.split(/\s+/).filter(Boolean).length;
     const lines = fileText.split('\n');
     const firstLines = lines.slice(0, 5).join('\n');
     return `📁 **File Summary: ${state.loadedFile.name}**\n` +
-           `• Size: ${(state.loadedFile.size / 1024).toFixed(2)} KB\n` +
-           `• Words: ${wordCount}\n` +
-           `• Preview:\n"""\n${firstLines}\n"""`;
+      `• Size: ${(state.loadedFile.size / 1024).toFixed(2)} KB\n` +
+      `• Words: ${wordCount}\n` +
+      `• Preview:\n"""\n${firstLines}\n"""`;
   }
 
-  const searchTerms = userQuery.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").split(/\s+/).filter(w => w.length > 2);
+  const searchTerms = userQuery.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").split(/\s+/).filter(w => w.length > 2);
   if (searchTerms.length === 0) return `No search keywords extracted.`;
 
   const lines = fileText.split('\n');
@@ -1439,8 +1443,8 @@ function queryLoadedFile(userQuery) {
   }
 
   if (matchingLines.length > 0) {
-    return `🔍 Found matches in **${state.loadedFile.name}**:\n\n` + 
-           matchingLines.map(line => `• "... ${line} ..."`).join('\n');
+    return `🔍 Found matches in **${state.loadedFile.name}**:\n\n` +
+      matchingLines.map(line => `• "... ${line} ..."`).join('\n');
   }
   return `No matches found.`;
 }
@@ -1453,8 +1457,8 @@ function executeCodeExpression(expression) {
     const runner = new Function(`return (${expression});`);
     const result = runner();
     return `🧮 **Evaluation Result**:\n` +
-           `• Expression: \`${expression}\`\n` +
-           `• Output: **${result}**`;
+      `• Expression: \`${expression}\`\n` +
+      `• Output: **${result}**`;
   } catch (error) {
     return `⚠️ Error: ${error.message}`;
   }
@@ -1769,7 +1773,7 @@ function renderUniversalCalculatorInputs(mode) {
       break;
     case 'tip-calculator':
       createInput('Bill Amount ($)', 't-bill', 'number', 'e.g. 100', '100');
-      
+
       const tipBox = document.createElement('div');
       tipBox.className = 'calc-field-group';
       tipBox.innerHTML = `
@@ -1780,7 +1784,7 @@ function renderUniversalCalculatorInputs(mode) {
         <input type="range" id="t-percent-slider" min="5" max="35" step="1" value="15" class="premium-slider" style="margin-top: 8px;">
       `;
       grid.appendChild(tipBox);
-      
+
       setTimeout(() => {
         const slider = document.getElementById('t-percent-slider');
         if (slider) {
@@ -1820,40 +1824,40 @@ DOM.calcCalculateBtn.addEventListener('click', () => {
   const getVal = (id) => document.getElementById(id).value;
 
   if (mode === 'mortgage-calculator') {
-    const P = parseFloat(getVal('m-amt')), r = parseFloat(getVal('m-rate'))/1200, n = parseFloat(getVal('m-term'))*12;
-    const payment = (P * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1);
+    const P = parseFloat(getVal('m-amt')), r = parseFloat(getVal('m-rate')) / 1200, n = parseFloat(getVal('m-term')) * 12;
+    const payment = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
     chatText = `Calculate Mortgage: Principal=$${P}`;
-    result = `🏠 **Mortgage Output**:\n• Monthly: **$${payment.toFixed(2)}**\n• Total Payback: **$${(payment*n).toFixed(2)}**`;
+    result = `🏠 **Mortgage Output**:\n• Monthly: **$${payment.toFixed(2)}**\n• Total Payback: **$${(payment * n).toFixed(2)}**`;
   }
   else if (mode === 'loan-calculator') {
-    const P = parseFloat(getVal('l-amt')), r = parseFloat(getVal('l-rate'))/1200, n = parseFloat(getVal('l-term'));
-    const payment = (P * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1);
+    const P = parseFloat(getVal('l-amt')), r = parseFloat(getVal('l-rate')) / 1200, n = parseFloat(getVal('l-term'));
+    const payment = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
     chatText = `Calculate Loan: Principal=$${P}`;
-    result = `💵 **Loan Output**:\n• Monthly: **$${payment.toFixed(2)}**\n• Total Pay: **$${(payment*n).toFixed(2)}**`;
+    result = `💵 **Loan Output**:\n• Monthly: **$${payment.toFixed(2)}**\n• Total Pay: **$${(payment * n).toFixed(2)}**`;
   }
   else if (mode === 'compound-interest-calculator') {
-    const P = parseFloat(getVal('c-principal')), r = parseFloat(getVal('c-rate'))/100, t = parseFloat(getVal('c-term')), n = parseFloat(getVal('c-freq'));
-    const A = P * Math.pow(1 + r/n, n * t);
+    const P = parseFloat(getVal('c-principal')), r = parseFloat(getVal('c-rate')) / 100, t = parseFloat(getVal('c-term')), n = parseFloat(getVal('c-freq'));
+    const A = P * Math.pow(1 + r / n, n * t);
     chatText = `Compound Interest: Principal=$${P}`;
     result = `📈 **Compound Interest**:\n• Future Value: **$${A.toFixed(2)}**`;
   }
   else if (mode === 'discount-calculator') {
     const price = parseFloat(getVal('d-price')), pct = parseFloat(getVal('d-percent'));
-    const savings = price * (pct/100);
+    const savings = price * (pct / 100);
     chatText = `Discount calculation: Price=${price}`;
-    result = `🏷️ **Discount**:\n• Final Price: **$${(price-savings).toFixed(2)}**\n• Savings: **$${savings.toFixed(2)}**`;
+    result = `🏷️ **Discount**:\n• Final Price: **$${(price - savings).toFixed(2)}**\n• Savings: **$${savings.toFixed(2)}**`;
   }
   else if (mode === 'bmi-calculator') {
-    const w = parseFloat(getVal('bmi-weight')), h = parseFloat(getVal('bmi-height'))/100;
-    const bmi = w / (h*h);
+    const w = parseFloat(getVal('bmi-weight')), h = parseFloat(getVal('bmi-height')) / 100;
+    const bmi = w / (h * h);
     chatText = `BMI check: weight=${w}`;
     result = `💪 **BMI Output**:\n• Score: **${bmi.toFixed(2)}**`;
   }
   else if (mode === 'bmr-calculator') {
     const age = parseFloat(getVal('bmr-age')), gen = getVal('bmr-gender'), w = parseFloat(getVal('bmr-weight')), h = parseFloat(getVal('bmr-height')), act = parseFloat(getVal('bmr-activity'));
-    let bmr = gen === 'm' ? 88.362 + 13.397*w + 4.799*h - 5.677*age : 447.593 + 9.247*w + 3.098*h - 4.330*age;
+    let bmr = gen === 'm' ? 88.362 + 13.397 * w + 4.799 * h - 5.677 * age : 447.593 + 9.247 * w + 3.098 * h - 4.330 * age;
     chatText = `Calorie calculations: Weight=${w}`;
-    result = `🔥 **Calorie Output**:\n• BMR: **${bmr.toFixed(0)} kcal**\n• TDEE: **${(bmr*act).toFixed(0)} kcal**`;
+    result = `🔥 **Calorie Output**:\n• BMR: **${bmr.toFixed(0)} kcal**\n• TDEE: **${(bmr * act).toFixed(0)} kcal**`;
   }
   else if (mode === 'quadratic-formula-calculator') {
     const a = parseFloat(getVal('q-a')), b = parseFloat(getVal('q-b')), c = parseFloat(getVal('q-c'));
@@ -1867,13 +1871,13 @@ DOM.calcCalculateBtn.addEventListener('click', () => {
   }
   else if (mode === 'age-calculator') {
     const dob = new Date(getVal('a-dob')), target = new Date(getVal('a-target'));
-    const diff = Math.abs(target - dob), days = Math.ceil(diff / (86400000)), years = Math.floor(days/365.25);
+    const diff = Math.abs(target - dob), days = Math.ceil(diff / (86400000)), years = Math.floor(days / 365.25);
     chatText = `Calculate Age.`;
     result = `📅 **Age**: **${years} Years** (${days.toLocaleString()} Days)`;
   }
   else if (mode === 'date-calculator') {
     const s = new Date(getVal('d-start')), e = new Date(getVal('d-end'));
-    const days = Math.round((e-s)/86400000);
+    const days = Math.round((e - s) / 86400000);
     chatText = `Date duration check.`;
     result = `📅 **Duration**: **${days} Days**`;
   }
@@ -1883,10 +1887,10 @@ DOM.calcCalculateBtn.addEventListener('click', () => {
     result = solveGPA(grades, credits);
   }
   else if (mode === 'tip-calculator') {
-    const bill = parseFloat(getVal('t-bill')), pct = parseFloat(document.getElementById('t-percent-slider').value)/100, ppl = parseFloat(getVal('t-people')) || 1;
-    const tip = bill*pct, total = bill + tip;
+    const bill = parseFloat(getVal('t-bill')), pct = parseFloat(document.getElementById('t-percent-slider').value) / 100, ppl = parseFloat(getVal('t-people')) || 1;
+    const tip = bill * pct, total = bill + tip;
     chatText = `Calculate Tip: Bill=$${bill}`;
-    result = `🧾 **Tip**:\n• Tip Amount: **$${tip.toFixed(2)}**\n• Total: **$${total.toFixed(2)}**\n• Per Person: **$${(total/ppl).toFixed(2)}**`;
+    result = `🧾 **Tip**:\n• Tip Amount: **$${tip.toFixed(2)}**\n• Total: **$${total.toFixed(2)}**\n• Per Person: **$${(total / ppl).toFixed(2)}**`;
   }
   else if (mode === 'base64-encode-decode') {
     const txt = getVal('b64-content'), act = getVal('b64-action');
@@ -1918,7 +1922,7 @@ DOM.calcCalculateBtn.addEventListener('click', () => {
 DOM.calcSendChatBtn.addEventListener('click', () => {
   if (!state.latestResultText) return;
   switchWorkspaceMode('chat');
-  const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   appendMessageMarkup('user', state.latestResultChatText, ts);
   state.chatHistory.push({ sender: 'user', text: state.latestResultChatText, timestamp: ts });
   saveHistory();
@@ -1942,7 +1946,7 @@ function setupFluentStandardCalculator() {
   const histFlyout = document.getElementById('fluent-history-flyout');
   const histList = document.getElementById('fluent-history-list');
   const menuFlyout = document.getElementById('fluent-menu-flyout');
-  
+
   const mcBtn = document.getElementById('fluent-mc');
   const mrBtn = document.getElementById('fluent-mr');
   const mvBtn = document.getElementById('fluent-mv');
@@ -1972,7 +1976,7 @@ function setupFluentStandardCalculator() {
         formatted = parts.join('.');
       }
       mainDisplay.textContent = formatted || '0';
-      
+
       if (formatted.length > 13) {
         mainDisplay.style.fontSize = '1.8rem';
       } else if (formatted.length > 9) {
@@ -2073,7 +2077,7 @@ function setupFluentStandardCalculator() {
           const res = executeCalculation(storedOperand, val, pendingOp);
           const fullExpr = `${storedOperand} ${pendingOp} ${val} =`;
           lastExpr = fullExpr;
-          
+
           if (typeof res === 'number') {
             const cleanedRes = Math.round(res * 1e12) / 1e12;
             currentInput = String(cleanedRes);
@@ -2302,41 +2306,41 @@ function setupScientificKeypadListeners() {
 
 function solveQuadraticFormula(a, b, c) {
   if (a === 0) return 'a cannot be 0.';
-  const disc = b*b - 4*a*c;
+  const disc = b * b - 4 * a * c;
   let out = `📐 **Quadratic Solver**:\n`;
-  if (disc > 0) out += `Roots: x₁ = **${((-b + Math.sqrt(disc))/(2*a)).toFixed(4)}**, x₂ = **${((-b - Math.sqrt(disc))/(2*a)).toFixed(4)}**`;
-  else if (disc === 0) out += `Root: x = **${(-b/(2*a)).toFixed(4)}**`;
-  else out += `Complex: **${(-b/(2*a)).toFixed(4)} ± ${(Math.sqrt(-disc)/(2*a)).toFixed(4)}i**`;
+  if (disc > 0) out += `Roots: x₁ = **${((-b + Math.sqrt(disc)) / (2 * a)).toFixed(4)}**, x₂ = **${((-b - Math.sqrt(disc)) / (2 * a)).toFixed(4)}**`;
+  else if (disc === 0) out += `Root: x = **${(-b / (2 * a)).toFixed(4)}**`;
+  else out += `Complex: **${(-b / (2 * a)).toFixed(4)} ± ${(Math.sqrt(-disc) / (2 * a)).toFixed(4)}i**`;
   return out;
 }
 
 function solveStats(raw) {
   const nums = raw.split(',').map(Number).filter(n => !isNaN(n));
   if (nums.length === 0) return 'No numbers.';
-  const mean = nums.reduce((s,v)=>s+v, 0)/nums.length;
-  const sorted = [...nums].sort((a,b)=>a-b);
-  const mid = Math.floor(sorted.length/2);
-  const median = sorted.length%2!==0 ? sorted[mid] : (sorted[mid-1]+sorted[mid])/2;
-  const variance = nums.reduce((s,v)=>s+Math.pow(v-mean,2), 0)/nums.length;
+  const mean = nums.reduce((s, v) => s + v, 0) / nums.length;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const variance = nums.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / nums.length;
   return `📊 **Stats**:\n• Mean: **${mean.toFixed(4)}**\n• Median: **${median.toFixed(4)}**\n• StdDev: **${Math.sqrt(variance).toFixed(4)}**`;
 }
 
 function solveGPA(grades, credits) {
   const map = { 'A': 4, 'B': 3, 'C': 2, 'D': 1, 'F': 0 };
   let pts = 0, creds = 0;
-  for (let i=0; i<grades.length; i++) {
+  for (let i = 0; i < grades.length; i++) {
     const g = map[grades[i].trim().toUpperCase()] ?? 0, c = credits[i] || 0;
-    pts += g*c; creds += c;
+    pts += g * c; creds += c;
   }
-  return `🏫 **GPA**: **${creds > 0 ? (pts/creds).toFixed(2) : '0.00'}**`;
+  return `🏫 **GPA**: **${creds > 0 ? (pts / creds).toFixed(2) : '0.00'}**`;
 }
 
 function runConversion(val, type) {
   let r = 0, f = '', t = '';
-  if (type === 'c_to_f') { r = val*1.8 + 32; f = '°C'; t = '°F'; }
-  else if (type === 'f_to_c') { r = (val-32)/1.8; f = '°F'; t = '°C'; }
-  else if (type === 'm_to_ft') { r = val*3.28084; f = 'm'; t = 'ft'; }
-  else if (type === 'ft_to_m') { r = val/3.28084; f = 'ft'; t = 'm'; }
+  if (type === 'c_to_f') { r = val * 1.8 + 32; f = '°C'; t = '°F'; }
+  else if (type === 'f_to_c') { r = (val - 32) / 1.8; f = '°F'; t = '°C'; }
+  else if (type === 'm_to_ft') { r = val * 3.28084; f = 'm'; t = 'ft'; }
+  else if (type === 'ft_to_m') { r = val / 3.28084; f = 'ft'; t = 'm'; }
   return `⚖️ **Conversion**: **${val} ${f}** = **${r.toFixed(4)} ${t}**`;
 }
 
@@ -2438,7 +2442,7 @@ function renderWritingHubInputs(mode) {
       break;
     case 'summarizer':
       createTextarea('Enter Text to Summarize', 's-text', 'Paste long paragraphs here...', 'HTML defines structure. CSS defines styling. Javascript defines code execution and active skills. Combined, they create a responsive mobile chatbot emulator that runs entirely locally inside browser viewports. This makes offline testing fast and highly reliable.');
-      
+
       // Custom Summarizer Slider HTML
       const sumBox = document.createElement('div');
       sumBox.innerHTML = `
@@ -2449,7 +2453,7 @@ function renderWritingHubInputs(mode) {
         <input type="range" id="s-length-slider" min="1" max="5" step="1" value="2" class="premium-slider">
       `;
       container.appendChild(sumBox);
-      
+
       // Bind slider label update listener
       document.getElementById('s-length-slider').addEventListener('input', (e) => {
         document.getElementById('sum-len-label').textContent = e.target.value;
@@ -2487,7 +2491,7 @@ function renderWritingHubInputs(mode) {
     case 'prompt-builder':
       // Hide the global execute button since this card has its own integrated generate button
       DOM.writingExecuteBtn.style.display = 'none';
-      
+
       const promptHeader = document.createElement('div');
       promptHeader.style.textAlign = 'center';
       promptHeader.style.marginBottom = '12px';
@@ -2543,7 +2547,7 @@ function renderWritingHubInputs(mode) {
         </div>
       `;
       container.appendChild(uploadArea);
-      
+
       createInput('Subject Keywords (Optional)', 'an-keywords', 'text', 'e.g. sunset mountains, cybernetic car...', 'sunset mountains');
       createSelect('Art Genre', 'an-genre', [
         { val: 'landscape', name: '🏔️ Landscape' },
@@ -2556,12 +2560,12 @@ function renderWritingHubInputs(mode) {
       // Bind drag and drop events
       const fileInp = document.getElementById('analyzer-file-input');
       const dropZone = document.getElementById('analyzer-upload-zone');
-      
+
       dropZone.addEventListener('click', () => fileInp.click());
       fileInp.addEventListener('change', (e) => {
         if (e.target.files.length > 0) processAnalyzerImage(e.target.files[0]);
       });
-      
+
       dropZone.addEventListener('dragover', (e) => {
         e.preventDefault(); dropZone.style.borderColor = 'var(--color-secondary)';
       });
@@ -2581,7 +2585,7 @@ function renderWritingHubInputs(mode) {
         showAlert('Image removed.');
       });
       break;
-    
+
     case 'help-menu':
       const helpDiv = document.createElement('div');
       helpDiv.style.padding = '20px';
@@ -2600,7 +2604,7 @@ function renderWritingHubInputs(mode) {
       container.appendChild(helpDiv);
       DOM.writingExecuteBtn.style.display = 'none';
       break;
-    
+
     case 'auto':
       {
         const d = document.createElement('div');
@@ -2645,7 +2649,7 @@ function renderWritingHubInputs(mode) {
 
     case 'creative': switchWorkspaceMode('designer'); break;
 
-    // cmo-seo removed — merged into seo
+      // cmo-seo removed — merged into seo
       {
         const d = document.createElement('div');
         d.innerHTML = `<div style="text-align:center;padding:16px 10px;"><div style="font-size:36px;margin-bottom:8px;">📈</div><h3 style="color:var(--color-primary);margin-bottom:6px;">CMO & SEO Mode</h3><p style="color:var(--text-muted);font-size:12px;line-height:1.5;">BeyondSEO 2.0, GEO, growth strategy and marketing campaigns.</p></div>`;
@@ -2862,7 +2866,7 @@ function renderWritingHubInputs(mode) {
       createTextarea(`Enter details for ${mode.replace(/-/g, ' ')}`, 'generic-text', 'Type your requirements here...', '');
       break;
   }
-  
+
   // Show default execute button for all other tools
   if (mode !== 'prompt-builder') {
     DOM.writingExecuteBtn.style.display = 'block';
@@ -2879,10 +2883,10 @@ function processAnalyzerImage(file) {
   reader.onload = (e) => {
     const img = document.getElementById('analyzer-preview-img');
     img.src = e.target.result;
-    
+
     document.getElementById('analyzer-preview-box').style.display = 'block';
     document.getElementById('analyzer-upload-zone').style.display = 'none';
-    
+
     // Canvas analysis
     const imageObj = new Image();
     imageObj.onload = () => {
@@ -2892,14 +2896,14 @@ function processAnalyzerImage(file) {
       canvas.width = 15;
       canvas.height = 15;
       ctx.drawImage(imageObj, 0, 0, 15, 15);
-      
+
       const imgData = ctx.getImageData(0, 0, 15, 15).data;
       const counts = {};
-      
+
       for (let i = 0; i < imgData.length; i += 4) {
-        const r = imgData[i], g = imgData[i+1], b = imgData[i+2], a = imgData[i+3];
+        const r = imgData[i], g = imgData[i + 1], b = imgData[i + 2], a = imgData[i + 3];
         if (a < 120) continue; // ignore transparency
-        
+
         // Downsample colors to find cluster centers
         const factor = 24;
         const qr = Math.round(r / factor) * factor;
@@ -2908,23 +2912,23 @@ function processAnalyzerImage(file) {
         const key = `${qr},${qg},${qb}`;
         counts[key] = (counts[key] || 0) + 1;
       }
-      
-      const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+
+      const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
       const palette = document.getElementById('analyzer-color-palette');
       palette.innerHTML = '';
       state.analysedImagePalette = [];
-      
+
       const toHex = (r, g, b) => '#' + [r, g, b].map(v => {
         const hex = v.toString(16);
         return hex.length === 1 ? '0' + hex : hex;
       }).join('');
-      
+
       const maxCount = Math.min(4, sorted.length);
       for (let k = 0; k < maxCount; k++) {
         const [r, g, b] = sorted[k].split(',').map(Number);
         const hex = toHex(r, g, b);
         state.analysedImagePalette.push(hex);
-        
+
         const swatch = document.createElement('div');
         swatch.className = 'analyzer-color-swatch';
         swatch.style.backgroundColor = hex;
@@ -2948,7 +2952,7 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
 
   // BUG FIX: Was document.getElementById(id).value — crashes if element doesn't exist
   const getVal = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
-  
+
   DOM.writingResultTitle.textContent = "Processing...";
   DOM.writingResultContent.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--text-muted);padding:12px 0"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div><span style="margin-left:4px;font-size:13px">Generating response…</span></div>`;
   DOM.writingResultMedia.style.display = 'none';
@@ -3120,11 +3124,11 @@ DOM.writingExecuteBtn.addEventListener('click', async () => {
   // Update State & UI Results Panel
   state.latestWritingResult = solutionResult;
   state.latestWritingChatText = chatText;
-  
+
   const modeTitle = mode.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   DOM.writingResultTitle.textContent = `${modeTitle} Output`;
   DOM.writingResultContent.innerHTML = formatMarkdown(solutionResult);
-  
+
   DOM.writingResultMedia.style.display = isMedia ? 'flex' : 'none';
   showAlert('✅ Tool executed!');
 });
@@ -3137,7 +3141,7 @@ DOM.writingCopyBtn.addEventListener('click', () => {
   const temp = document.createElement('div');
   temp.innerHTML = state.latestWritingResult;
   const clean = temp.textContent || temp.innerText || '';
-  
+
   navigator.clipboard.writeText(clean)
     .then(() => showAlert('Copied!'))
     .catch(() => showAlert('Copy failed.'));
@@ -3147,8 +3151,8 @@ DOM.writingCopyBtn.addEventListener('click', () => {
 DOM.writingSendChatBtn.addEventListener('click', () => {
   if (!state.latestWritingResult) return;
   switchWorkspaceMode('chat');
-  
-  const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   appendMessageMarkup('user', state.latestWritingChatText, ts);
   state.chatHistory.push({ sender: 'user', text: state.latestWritingChatText, timestamp: ts });
   saveHistory();
@@ -3168,7 +3172,7 @@ DOM.writingSendChatBtn.addEventListener('click', () => {
 // Client-Side Intelligent NLP Engine for Writing Tools
 function generateClientFallbackPrompt(prompt) {
   const pLower = prompt.toLowerCase();
-  
+
   // Paraphrasing
   if (pLower.includes('paraphrase the following text in a')) {
     const textMatch = prompt.match(/Text:\s*([\s\S]+)$/i);
@@ -3178,12 +3182,12 @@ function generateClientFallbackPrompt(prompt) {
 
     if (style === 'formal') {
       return text.replace(/\bdon't\b/gi, 'do not')
-                 .replace(/\bcan't\b/gi, 'cannot')
-                 .replace(/\bwon't\b/gi, 'will not')
-                 .replace(/\bhelp\b/gi, 'assist')
-                 .replace(/\buse\b/gi, 'utilize')
-                 .replace(/\bstart\b/gi, 'commence')
-                 .replace(/\bshow\b/gi, 'demonstrate');
+        .replace(/\bcan't\b/gi, 'cannot')
+        .replace(/\bwon't\b/gi, 'will not')
+        .replace(/\bhelp\b/gi, 'assist')
+        .replace(/\buse\b/gi, 'utilize')
+        .replace(/\bstart\b/gi, 'commence')
+        .replace(/\bshow\b/gi, 'demonstrate');
     } else if (style === 'concise') {
       return text.split(/\s+/).filter((w, idx) => idx % 7 !== 0).join(' ');
     } else if (style === 'creative') {
@@ -3215,10 +3219,10 @@ function generateClientFallbackPrompt(prompt) {
     const textMatch = prompt.match(/Text:\s*([\s\S]+)$/i);
     let text = textMatch ? textMatch[1].trim() : prompt;
     text = text.replace(/\bfurthermore,?\b/gi, 'also')
-               .replace(/\bmoreover,?\b/gi, 'plus')
-               .replace(/\bdelve into\b/gi, 'explore')
-               .replace(/\ba testament to\b/gi, 'proof of')
-               .replace(/\bin conclusion,?\b/gi, 'to sum up,');
+      .replace(/\bmoreover,?\b/gi, 'plus')
+      .replace(/\bdelve into\b/gi, 'explore')
+      .replace(/\ba testament to\b/gi, 'proof of')
+      .replace(/\bin conclusion,?\b/gi, 'to sum up,');
     return text;
   }
 
@@ -3232,7 +3236,7 @@ async function fetchAI(prompt) {
   }
 
   const apiEndpoint = getApiEndpoint();
-  
+
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -3244,7 +3248,7 @@ async function fetchAI(prompt) {
       signal: controller.signal
     });
     clearTimeout(timeoutId);
-    
+
     if (res.ok) {
       const data = await res.json();
       if (data.reply) return data.reply;
@@ -3258,14 +3262,19 @@ async function fetchAI(prompt) {
     const sysPrompt = "You are a professional master and AI expert. Provide an accurate, high-quality solution to the user's request. Keep formatting clean and professional.";
     const pollRes = await fetch("https://text.pollinations.ai/", {
       method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: sysPrompt + "\n\nUser Request:\n" + prompt
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [
+          { role: "system", content: sysPrompt },
+          { role: "user", content: prompt }
+        ]
+      })
     });
-    
+
     if (pollRes.ok) {
       return await pollRes.text();
     }
-  } catch(e) {
+  } catch (e) {
     console.warn("Pollinations AI also failed.", e.message);
   }
 
@@ -3291,11 +3300,11 @@ async function runAIDetector(text) {
   let score = 50;
   const match = lines[0].match(/(\d+)/);
   if (match) score = parseInt(match[1]);
-  
+
   return `🔍 **AI Content Detector Output**:\n` +
-         `• AI Probability: **${score}%**\n` +
-         `<div class="ai-detector-bar-container"><div class="ai-detector-bar" style="width: ${score}%;"></div></div>\n` +
-         `• Assessment: ${lines.slice(1).join('\n')}`;
+    `• AI Probability: **${score}%**\n` +
+    `<div class="ai-detector-bar-container"><div class="ai-detector-bar" style="width: ${score}%;"></div></div>\n` +
+    `• Assessment: ${lines.slice(1).join('\n')}`;
 }
 
 async function runPlagiarismChecker(text) {
@@ -3315,32 +3324,32 @@ async function runHumanizer(text) {
 }
 
 async function runImageToPrompt(keywords, genre) {
-  const palette = state.analysedImagePalette && state.analysedImagePalette.length > 0 
-    ? state.analysedImagePalette.join(', ') 
+  const palette = state.analysedImagePalette && state.analysedImagePalette.length > 0
+    ? state.analysedImagePalette.join(', ')
     : '#4ade80, #06b6d4, #ec4899';
-    
+
   const prompt = `Write a highly detailed, professional text-to-image prompt (like for Midjourney or DALL-E) based on these details: Genre is ${genre}, Keywords are ${keywords || 'scenic atmosphere'}, and dominant colors are ${palette}. Output just the prompt string.`;
   const result = await fetchAI(prompt);
-  
+
   return `📸 **Image-to-Prompt Analysis**:\n` +
-         `• Extracted Palette: \`${palette}\`\n` +
-         `• Identified Genre: **${genre.charAt(0).toUpperCase() + genre.slice(1)}**\n` +
-         `• Subject Context: **${keywords || 'unspecified'}**\n\n` +
-         `🎨 **Synthesized AI Prompt**:\n` +
-         `"${result.trim()}"`;
+    `• Extracted Palette: \`${palette}\`\n` +
+    `• Identified Genre: **${genre.charAt(0).toUpperCase() + genre.slice(1)}**\n` +
+    `• Subject Context: **${keywords || 'unspecified'}**\n\n` +
+    `🎨 **Synthesized AI Prompt**:\n` +
+    `"${result.trim()}"`;
 }
 
 async function runImageGenerator(prompt, style) {
   const canvas = DOM.genImageCanvas;
   const ctx = canvas.getContext('2d');
-  
+
   // Clear canvas while loading
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#111';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#fff';
   ctx.font = '14px Arial';
-  ctx.fillText('Loading AI Image...', 20, canvas.height/2);
+  ctx.fillText('Loading AI Image...', 20, canvas.height / 2);
 
   return new Promise((resolve) => {
     const imgObj = new Image();
@@ -3353,7 +3362,7 @@ async function runImageGenerator(prompt, style) {
       resolve();
     };
     imgObj.onerror = () => {
-      ctx.fillText('Error loading image', 20, canvas.height/2 + 20);
+      ctx.fillText('Error loading image', 20, canvas.height / 2 + 20);
       resolve();
     };
     // Fetch from Pollinations Image API
@@ -3369,8 +3378,8 @@ async function runTranslation(text, lang) {
     if (data && data.responseData && data.responseData.translatedText) {
       return `🔤 **Offline Translate (${lang.toUpperCase()})**:\n"${data.responseData.translatedText}"`;
     }
-  } catch(e) {}
-  
+  } catch (e) { }
+
   // Fallback to LLM if MyMemory fails
   const prompt = `Translate the following text to language code '${lang}':\n${text}`;
   const result = await fetchAI(prompt);
@@ -3437,7 +3446,7 @@ DOM.pdfExtractBtn.addEventListener('click', async () => {
       txt += `--- Page ${i} ---\n` + textContent.items.map(item => item.str).join(' ') + '\n\n';
     }
     state.loadedFile = { name: state.pdfFiles.file1.name, type: 'PDF', size: buf.byteLength, content: txt };
-    DOM.fileStatus.textContent = state.loadedFile.name.substring(0,10) + '...';
+    DOM.fileStatus.textContent = state.loadedFile.name.substring(0, 10) + '...';
     DOM.fileStatus.classList.add('active');
     DOM.loadedFileName.textContent = state.loadedFile.name;
     DOM.fileInfoContainer.style.display = 'flex';
@@ -3445,12 +3454,12 @@ DOM.pdfExtractBtn.addEventListener('click', async () => {
     switchWorkspaceMode('chat');
 
     const msg = `📕 **System**: Extracted text from PDF **${state.loadedFile.name}** (${pdf.numPages} pages).`;
-    const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     appendMessageMarkup('system', msg, ts);
     state.chatHistory.push({ sender: 'system', text: msg, timestamp: ts });
     saveHistory();
     showAlert('Extracted!');
-  } catch(err) {
+  } catch (err) {
     showAlert('Error: ' + err.message);
   }
 });
@@ -3466,7 +3475,7 @@ DOM.pdfWatermarkBtn.addEventListener('click', async () => {
       const { width, height } = page.getSize();
       const userOpacity = parseFloat(DOM.pdfOpacitySlider.value) || 0.25;
       page.drawText(text, {
-        x: width/2 - 120, y: height/2, size: 36,
+        x: width / 2 - 120, y: height / 2, size: 36,
         color: PDFLib.rgb(0.8, 0.1, 0.2), opacity: userOpacity,
         rotate: PDFLib.degrees(45)
       });
@@ -3474,7 +3483,7 @@ DOM.pdfWatermarkBtn.addEventListener('click', async () => {
     const bytes = await doc.save();
     triggerDownload(bytes, 'watermarked_document.pdf', 'application/pdf');
     showAlert('Downloaded!');
-  } catch(err) {
+  } catch (err) {
     showAlert('Error: ' + err.message);
   }
 });
@@ -3495,7 +3504,7 @@ DOM.pdfMergeBtn.addEventListener('click', async () => {
     const bytes = await merged.save();
     triggerDownload(bytes, 'merged_document.pdf', 'application/pdf');
     showAlert('Merged!');
-  } catch(err) {
+  } catch (err) {
     showAlert('Error: ' + err.message);
   }
 });
@@ -3533,25 +3542,25 @@ DOM.clearChatBtn.addEventListener('click', () => {
   if (confirm("Clear this chat session's history?")) {
     state.chatHistory = [];
     DOM.chatMessages.innerHTML = '';
-    
+
     // BUG FIX: Was incorrectly removing 'aura_chat_history' (legacy key).
     // Now correctly resets the active session messages in 'aura_chat_sessions'.
     const activeSession = state.sessions.find(s => s.id === state.activeSessionId);
     if (activeSession) {
       const welcomeMsg = "Chat cleared. Use the sidebar to access tools, or start typing!";
-      const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       activeSession.messages = [{ sender: 'bot', text: welcomeMsg, timestamp: ts }];
       state.chatHistory = activeSession.messages;
       appendMessageMarkup('bot', welcomeMsg, ts, false);
       localStorage.setItem('aura_chat_sessions', JSON.stringify(state.sessions));
     } else {
-      appendMessageMarkup('bot', 'Chat cleared. Open Manage Skills to use tools.', new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+      appendMessageMarkup('bot', 'Chat cleared. Open Manage Skills to use tools.', new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     }
     showAlert('Chat cleared.');
   }
 });
 
-window.handleChipClick = function(text) {
+window.handleChipClick = function (text) {
   DOM.chatInput.value = text;
   handleUserMessageSubmit(text);
 };
@@ -3568,25 +3577,25 @@ if (imageUploadBtn && imageUploadInput) {
   imageUploadBtn.addEventListener('click', () => {
     imageUploadInput.click();
   });
-  
+
   imageUploadInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     if (!file.type.startsWith('image/')) {
       showAlert('Please select an image file.');
       return;
     }
-    
+
     const reader = new FileReader();
     reader.onload = (evt) => {
       // Show preview in footer
       if (imagePreview) imagePreview.src = evt.target.result;
       if (imagePreviewContainer) imagePreviewContainer.style.display = 'flex';
-      
+
       // Store image context for AI
       state.loadedFile = { name: file.name, type: 'IMAGE', size: file.size, content: `Image uploaded: ${file.name}` };
-      
+
       // Extract dominant colors for AI context
       const tempImg = new Image();
       tempImg.onload = () => {
@@ -3597,15 +3606,15 @@ if (imageUploadBtn && imageUploadInput) {
         const data = ctx.getImageData(0, 0, 15, 15).data;
         const counts = {};
         for (let i = 0; i < data.length; i += 4) {
-          if (data[i+3] < 120) continue;
+          if (data[i + 3] < 120) continue;
           const f = 32;
-          const k = `${Math.round(data[i]/f)*f},${Math.round(data[i+1]/f)*f},${Math.round(data[i+2]/f)*f}`;
-          counts[k] = (counts[k]||0) + 1;
+          const k = `${Math.round(data[i] / f) * f},${Math.round(data[i + 1] / f) * f},${Math.round(data[i + 2] / f) * f}`;
+          counts[k] = (counts[k] || 0) + 1;
         }
-        const top = Object.keys(counts).sort((a,b) => counts[b]-counts[a]).slice(0,4);
+        const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 4);
         state.analysedImagePalette = top.map(k => {
-          const [r,g,b] = k.split(',').map(Number);
-          return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+          const [r, g, b] = k.split(',').map(Number);
+          return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
         });
         showAlert(`Image loaded: ${file.name}`);
       };
@@ -3660,7 +3669,7 @@ DOM.exportJsonBtn.addEventListener('click', () => {
     const bytes = new TextEncoder().encode(dataStr);
     triggerDownload(bytes, 'aura_chat_sessions_backup.json', 'application/json');
     showAlert('Backup downloaded!');
-  } catch(err) {
+  } catch (err) {
     showAlert('Export failed: ' + err.message);
   }
 });
@@ -3670,25 +3679,25 @@ DOM.exportTxtBtn.addEventListener('click', () => {
   try {
     let textOut = `# Aura AI Chat History Transcript Backup\n`;
     textOut += `Generated on: ${new Date().toLocaleString()}\n\n`;
-    
+
     state.sessions.forEach((s, sIdx) => {
       textOut += `========================================\n`;
       textOut += `SESSION #${sIdx + 1}: ${s.title}\n`;
       textOut += `Last Active: ${s.timestamp}\n`;
       textOut += `========================================\n\n`;
-      
+
       s.messages.forEach(m => {
         const sender = m.sender === 'user' ? 'USER' : 'AURA AI';
         textOut += `[${m.timestamp}] ${sender}:\n${m.text}\n\n`;
       });
-      
+
       textOut += `\n\n`;
     });
-    
+
     const bytes = new TextEncoder().encode(textOut);
     triggerDownload(bytes, 'aura_chat_transcript.txt', 'text/plain');
     showAlert('Transcript downloaded!');
-  } catch(err) {
+  } catch (err) {
     showAlert('Export failed: ' + err.message);
   }
 });
@@ -3760,10 +3769,10 @@ renderWritingHubInputs('paraphraser');
 async function processUniversalFile(file) {
   if (!file) return;
   DOM.fileStatus.textContent = "Parsing...";
-  
+
   try {
     let contentText = "";
-    
+
     // 1. Plain Text / JSON / CSV
     if (file.type.match(/text.*/) || file.type.match(/application\/json/)) {
       contentText = await file.text();
@@ -3793,7 +3802,7 @@ async function processUniversalFile(file) {
       // Analyze colors for context
       processAnalyzerImage(file);
       showAlert('Image added to context.');
-      
+
       // Update UI for image
       state.loadedFile = { name: file.name, type: 'IMAGE', size: file.size, content: "Image file uploaded." };
       DOM.fileStatus.textContent = file.name.substring(0, 10) + '...';
@@ -3806,7 +3815,7 @@ async function processUniversalFile(file) {
     else {
       throw new Error('Unsupported file format.');
     }
-    
+
     // Update State & UI for Text files
     state.loadedFile = { name: file.name, type: file.type, size: file.size, content: contentText };
     DOM.fileStatus.textContent = state.loadedFile.name.substring(0, 10) + '...';
@@ -3815,7 +3824,7 @@ async function processUniversalFile(file) {
     DOM.fileInfoContainer.style.display = 'flex';
     DOM.dragDropZone.style.display = 'none';
     showAlert('File parsed to memory.');
-    
+
   } catch (err) {
     showAlert('Error parsing: ' + err.message);
     DOM.fileStatus.textContent = "Error";
@@ -3873,7 +3882,7 @@ if (settingsMenuBtn && settingsDropdown) {
       settingsDropdown.classList.remove('active');
     }
   });
-  
+
   // Close when an option is clicked
   const settingsItems = settingsDropdown.querySelectorAll('.settings-menu-item');
   settingsItems.forEach(item => {
@@ -3995,16 +4004,16 @@ function getReviews() {
 function renderReviews() {
   const container = document.getElementById('reviews-container');
   if (!container) return;
-  
+
   const reviews = getReviews();
   container.innerHTML = '';
-  
+
   reviews.forEach(rev => {
     const item = document.createElement('div');
     item.classList.add('review-item');
-    
+
     let starsHtml = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
-    
+
     item.innerHTML = `
       <div class="review-item-header">
         <span class="review-author">${rev.author}</span>
@@ -4025,16 +4034,16 @@ if (reviewForm) {
     const author = document.getElementById('review-author').value.trim();
     const text = document.getElementById('review-text').value.trim();
     if (!author || !text) return;
-    
+
     const reviews = getReviews();
     reviews.push({ author, rating: selectedRating, text });
     localStorage.setItem('aura_reviews', JSON.stringify(reviews));
-    
+
     // Reset form
     reviewForm.reset();
     selectedRating = 5;
     stars.forEach(s => s.classList.add('selected'));
-    
+
     renderReviews();
     showAlert('Thank you for your review!');
 
@@ -4052,9 +4061,9 @@ if (contactForm) {
     const email = document.getElementById('contact-email').value.trim();
     const message = document.getElementById('contact-message').value.trim();
     if (!name || !email || !message) return;
-    
+
     // Simulate successful message send locally
-    
+
     showAlert('Message sent successfully!');
 
     // Telemetry: Track Contact Lead
