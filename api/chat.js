@@ -270,11 +270,8 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
     if (!botReply) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000);
-        req.on('close', () => {
-          controller.abort();
-          clearTimeout(timeout);
-        });
+        const timeout = setTimeout(() => controller.abort(), 30000);
+        
         const cloudMessages = [
           { 
             role: 'system', 
@@ -295,7 +292,7 @@ app.post(['/api/chat', '/'], upload.single('file'), async (req, res) => {
         clearTimeout(timeout);
         if (cloudRes.ok) {
           const text = await cloudRes.text();
-          if (text && !text.includes('"error":') && text.trim().length > 5) {
+          if (text && !text.includes('"error":') && text.trim().length > 0) {
             botReply = text.trim();
           }
         }
