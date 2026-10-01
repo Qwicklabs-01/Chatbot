@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Aura AI Chatbot",
+  "version": "1.0.0",
+  "description": "A private, high-speed, local client-side chatbot and productivity assistant.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Aura AI"
+  },
+  "icons": {
+    "192": "aura-icon-192.png",
+    "512": "aura-icon-512.png"
+  },
+  "permissions": [
+    "storage"
+  ]
+}
